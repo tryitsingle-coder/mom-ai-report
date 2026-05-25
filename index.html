@@ -27,6 +27,8 @@
     .good { color:var(--green); background:#e7f5ee; border-color:#bee8d3; }
     .warn { color:var(--amber); background:#fff2d8; border-color:#f4d18a; }
     .risk { color:var(--red); background:#fde9e7; border-color:#f3b9b4; }
+    .stale { color:#475467; background:#f2f4f7; border-color:#d0d5dd; }
+    tr.stale td { color:#667085; background:#fafafa; }
     .note { color:var(--muted); font-size:13px; margin:8px 0 0; }
     @media (max-width:760px) { .grid { grid-template-columns:1fr; } table { font-size:13px; } th:nth-child(4),td:nth-child(4),th:nth-child(7),td:nth-child(7) { display:none; } }
   </style>
@@ -37,16 +39,18 @@
       <h1>媽媽台股 AI 看盤版</h1>
       <p class="lead">重點放在台積電、核心持股、高波動 AI 股與主要 AI 供應鏈，以今日方向、支撐壓力、低接提醒與風險警訊為主。</p>
       <div class="grid">
-        <div class="metric"><strong>2026-05-26 07:43:03</strong><span>更新時間</span></div>
+        <div class="metric"><strong>2026-05-26 07:53:44</strong><span>更新時間（台北）</span></div>
         <div class="metric"><strong>9</strong><span>觀察標的</span></div>
-        <div class="metric"><strong>4</strong><span>低接/警訊/不追高</span></div>
+        <div class="metric"><strong>早盤預備</strong><span>目前時段</span></div>
       </div>
     </div>
   </header>
   <main class="wrap">
     <section>
       <h2>今日重點</h2>
-      <p class="note">自動報價已更新；部分標的需手動核對。</p>
+      <p class="note">資料狀態：保留 Excel 原值，需手動核對；自動報價未取得，保留 Excel 目前值；部分標的需手動核對。</p>
+      <p class="note">訊號統計：4 個 低接/警訊/不追高。</p>
+      <p class="note">顏色說明：綠色是接近低接區，黃色是偏強但不追高，紅色是風險警訊，灰色是保留原值或需再核對。</p>
       <p class="note">現價欄位會跟著報價更新程式同步覆蓋，瀏覽器已開啟時請重新整理頁面。</p>
       <p class="note">這份報告只是看盤輔助，不是買賣建議。</p>
     </section>
@@ -54,15 +58,15 @@
       <h2>觀察清單</h2>
       <table>
         <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>題材</th><th>第一低接</th><th>第二低接</th><th>壓力</th><th>訊號</th></tr></thead>
-        <tbody><tr><td>2330</td><td>台積電</td><td class='num'>2310</td><td class='num'>2275</td><td class='num'>2310</td><td class='num'>2275</td><td class='num'>25064</td><td>核心AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
-<tr><td>2308</td><td>台達電</td><td class='num'>2290</td><td class='num'>2205</td><td class='num'>2300</td><td class='num'>2185</td><td class='num'>10107</td><td>真AI</td><td>2185-2200</td><td>2115-2130</td><td>2275-2280 / 2300</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>4958</td><td>臻鼎-KY</td><td class='num'>529</td><td class='num'>558</td><td class='num'>558</td><td class='num'>525</td><td class='num'>45638</td><td>真AI</td><td>525-530</td><td>500-510</td><td>550-558 / 570</td><td><span class='tag good'>接近第一低接</span></td></tr>
-<tr><td>3711</td><td>日月光投控</td><td class='num'>617</td><td class='num'>598</td><td class='num'>617</td><td class='num'>584</td><td class='num'>25645</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
-<tr><td>2455</td><td>全新</td><td class='num'>444</td><td class='num'>435</td><td class='num'>460</td><td class='num'>422.5</td><td class='num'>21452</td><td>真AI</td><td>422.5-425</td><td>415-418</td><td>438-445 / 455</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>2449</td><td>京元電子</td><td class='num'>317</td><td class='num'>305</td><td class='num'>318.5</td><td class='num'>302.5</td><td class='num'>51769</td><td>真AI</td><td>309-312</td><td>302-304</td><td>320-323 / 328</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>3715</td><td>定穎投控</td><td class='num'>179</td><td class='num'>176</td><td class='num'>185</td><td class='num'>176</td><td class='num'>16475</td><td>真AI</td><td>176-179</td><td>170-172</td><td>186-190</td><td><span class='tag good'>接近第一低接</span></td></tr>
-<tr><td>0052</td><td>富邦科技ETF</td><td class='num'>59.6</td><td class='num'>58.9</td><td class='num'>59.95</td><td class='num'>58.9</td><td class='num'>45713</td><td>ETF</td><td>58.9-59.1</td><td>58.0-58.5</td><td>60</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>00403A</td><td>主動統一升級50</td><td class='num'>10.58</td><td class='num'>10.4</td><td class='num'>10.62</td><td class='num'>10.38</td><td class='num'>714325</td><td>ETF</td><td>10.38-10.40</td><td>10.20-10.30</td><td>10.80-10.86</td><td><span class='tag neutral'>觀察</span></td></tr></tbody>
+        <tbody><tr class='stale'><td>2330</td><td>台積電</td><td class='num'>2310</td><td class='num'>2275</td><td class='num'>2310</td><td class='num'>2275</td><td class='num'>25064</td><td>核心AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
+<tr class='stale'><td>2308</td><td>台達電</td><td class='num'>2290</td><td class='num'>2205</td><td class='num'>2300</td><td class='num'>2185</td><td class='num'>10107</td><td>真AI</td><td>2185-2200</td><td>2115-2130</td><td>2275-2280 / 2300</td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>4958</td><td>臻鼎-KY</td><td class='num'>529</td><td class='num'>558</td><td class='num'>558</td><td class='num'>525</td><td class='num'>45638</td><td>真AI</td><td>525-530</td><td>500-510</td><td>550-558 / 570</td><td><span class='tag good'>接近第一低接</span></td></tr>
+<tr class='stale'><td>3711</td><td>日月光投控</td><td class='num'>617</td><td class='num'>598</td><td class='num'>617</td><td class='num'>584</td><td class='num'>25645</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
+<tr class='stale'><td>2455</td><td>全新</td><td class='num'>444</td><td class='num'>435</td><td class='num'>460</td><td class='num'>422.5</td><td class='num'>21452</td><td>真AI</td><td>422.5-425</td><td>415-418</td><td>438-445 / 455</td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>2449</td><td>京元電子</td><td class='num'>317</td><td class='num'>305</td><td class='num'>318.5</td><td class='num'>302.5</td><td class='num'>51769</td><td>真AI</td><td>309-312</td><td>302-304</td><td>320-323 / 328</td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>3715</td><td>定穎投控</td><td class='num'>179</td><td class='num'>176</td><td class='num'>185</td><td class='num'>176</td><td class='num'>16475</td><td>真AI</td><td>176-179</td><td>170-172</td><td>186-190</td><td><span class='tag good'>接近第一低接</span></td></tr>
+<tr class='stale'><td>0052</td><td>富邦科技ETF</td><td class='num'>59.6</td><td class='num'>58.9</td><td class='num'>59.95</td><td class='num'>58.9</td><td class='num'>45713</td><td>ETF</td><td>58.9-59.1</td><td>58.0-58.5</td><td>60</td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>00403A</td><td>主動統一升級50</td><td class='num'>10.58</td><td class='num'>10.4</td><td class='num'>10.62</td><td class='num'>10.38</td><td class='num'>714325</td><td>ETF</td><td>10.38-10.40</td><td>10.20-10.30</td><td>10.80-10.86</td><td><span class='tag neutral'>觀察</span></td></tr></tbody>
       </table>
     </section>
 
@@ -71,34 +75,34 @@
       <p class="note">此區同步自動取得現價，適合掃描所有 AI / ETF 觀察標的。</p>
       <table>
         <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>題材</th><th>第一低接</th><th>第二低接</th><th>壓力</th><th>訊號</th></tr></thead>
-        <tbody><tr><td>2330</td><td>台積電</td><td class='num'>2310</td><td class='num'>2275</td><td class='num'>2310</td><td class='num'>2275</td><td class='num'>25064</td><td>核心AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
-<tr><td>2308</td><td>台達電</td><td class='num'>2290</td><td class='num'>2205</td><td class='num'>2300</td><td class='num'>2185</td><td class='num'>10107</td><td>真AI</td><td>2185-2200</td><td>2115-2130</td><td>2275-2280 / 2300</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>2383</td><td>台光電</td><td class='num'>5505</td><td class='num'>5355</td><td class='num'>5505</td><td class='num'>5205</td><td class='num'>1563</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
-<tr><td>2454</td><td>聯發科</td><td class='num'>4245</td><td class='num'>4245</td><td class='num'>4245</td><td class='num'>4245</td><td class='num'>4173</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
-<tr><td>4958</td><td>臻鼎-KY</td><td class='num'>529</td><td class='num'>558</td><td class='num'>558</td><td class='num'>525</td><td class='num'>45638</td><td>真AI</td><td>525-530</td><td>500-510</td><td>550-558 / 570</td><td><span class='tag good'>接近第一低接</span></td></tr>
-<tr><td>3711</td><td>日月光投控</td><td class='num'>617</td><td class='num'>598</td><td class='num'>617</td><td class='num'>584</td><td class='num'>25645</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
-<tr><td>3017</td><td>奇鋐</td><td class='num'>2575</td><td class='num'>2625</td><td class='num'>2640</td><td class='num'>2545</td><td class='num'>5215</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag risk'>警訊：跌破20日線</span></td></tr>
-<tr><td>6669</td><td>緯穎</td><td class='num'>5610</td><td class='num'>5755</td><td class='num'>5880</td><td class='num'>5555</td><td class='num'>1925</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>3661</td><td>世芯-KY</td><td class='num'>4900</td><td class='num'>5020</td><td class='num'>5050</td><td class='num'>4900</td><td class='num'>1429</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>2345</td><td>智邦</td><td class='num'>2540</td><td class='num'>2535</td><td class='num'>2600</td><td class='num'>2505</td><td class='num'>2528</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>2455</td><td>全新</td><td class='num'>444</td><td class='num'>435</td><td class='num'>460</td><td class='num'>422.5</td><td class='num'>21452</td><td>真AI</td><td>422.5-425</td><td>415-418</td><td>438-445 / 455</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>2449</td><td>京元電子</td><td class='num'>317</td><td class='num'>305</td><td class='num'>318.5</td><td class='num'>302.5</td><td class='num'>51769</td><td>真AI</td><td>309-312</td><td>302-304</td><td>320-323 / 328</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>3715</td><td>定穎投控</td><td class='num'>179</td><td class='num'>176</td><td class='num'>185</td><td class='num'>176</td><td class='num'>16475</td><td>真AI</td><td>176-179</td><td>170-172</td><td>186-190</td><td><span class='tag good'>接近第一低接</span></td></tr>
-<tr><td>3037</td><td>欣興</td><td class='num'>990</td><td class='num'>1020</td><td class='num'>1030</td><td class='num'>978</td><td class='num'>22201</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>8046</td><td>南電</td><td class='num'>884</td><td class='num'>940</td><td class='num'>947</td><td class='num'>879</td><td class='num'>28647</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag risk'>警訊：跌破20日線</span></td></tr>
-<tr><td>3189</td><td>景碩</td><td class='num'>669</td><td class='num'>664</td><td class='num'>669</td><td class='num'>660</td><td class='num'>8260</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
-<tr><td>5347</td><td>世界</td><td class='num'>168.5</td><td class='num'>162.5</td><td class='num'>172.5</td><td class='num'>160</td><td class='num'>42687</td><td>台積電供應鏈</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>8086</td><td>宏捷科</td><td class='num'>163</td><td class='num'>166</td><td class='num'>171.5</td><td class='num'>161</td><td class='num'>9920</td><td>進攻題材</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>2317</td><td>鴻海</td><td class='num'>261</td><td class='num'>255</td><td class='num'>263.5</td><td class='num'>255</td><td class='num'>118569</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>2301</td><td>光寶科</td><td class='num'>227.5</td><td class='num'>212</td><td class='num'>227.5</td><td class='num'>211.5</td><td class='num'>32591</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
-<tr><td>2408</td><td>南亞科</td><td class='num'>296</td><td class='num'>295</td><td class='num'>303.5</td><td class='num'>288</td><td class='num'>151403</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>2356</td><td>英業達</td><td class='num'>65.4</td><td class='num'>65.4</td><td class='num'>65.4</td><td class='num'>62.9</td><td class='num'>133754</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
-<tr><td>3665</td><td>貿聯-KY</td><td class='num'>2385</td><td class='num'>2340</td><td class='num'>2430</td><td class='num'>2340</td><td class='num'>1914</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag risk'>警訊：跌破20日線</span></td></tr>
-<tr><td>2059</td><td>川湖</td><td class='num'>4980</td><td class='num'>5290</td><td class='num'>5290</td><td class='num'>4980</td><td class='num'>233</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>2368</td><td>金像電</td><td class='num'>1425</td><td class='num'>1400</td><td class='num'>1455</td><td class='num'>1360</td><td class='num'>6355</td><td>真AI</td><td>1360-1380</td><td>1298-1330</td><td>1455 / 1500</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>0052</td><td>富邦科技ETF</td><td class='num'>59.6</td><td class='num'>58.9</td><td class='num'>59.95</td><td class='num'>58.9</td><td class='num'>45713</td><td>ETF</td><td>58.9-59.1</td><td>58.0-58.5</td><td>60</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>0050</td><td>元大台灣50</td><td class='num'>100.8</td><td class='num'>99.55</td><td class='num'>101</td><td class='num'>99.55</td><td class='num'>123611</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr><td>00403A</td><td>主動統一升級50</td><td class='num'>10.58</td><td class='num'>10.4</td><td class='num'>10.62</td><td class='num'>10.38</td><td class='num'>714325</td><td>ETF</td><td>10.38-10.40</td><td>10.20-10.30</td><td>10.80-10.86</td><td><span class='tag neutral'>觀察</span></td></tr></tbody>
+        <tbody><tr class='stale'><td>2330</td><td>台積電</td><td class='num'>2310</td><td class='num'>2275</td><td class='num'>2310</td><td class='num'>2275</td><td class='num'>25064</td><td>核心AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
+<tr class='stale'><td>2308</td><td>台達電</td><td class='num'>2290</td><td class='num'>2205</td><td class='num'>2300</td><td class='num'>2185</td><td class='num'>10107</td><td>真AI</td><td>2185-2200</td><td>2115-2130</td><td>2275-2280 / 2300</td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>2383</td><td>台光電</td><td class='num'>5505</td><td class='num'>5355</td><td class='num'>5505</td><td class='num'>5205</td><td class='num'>1563</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
+<tr class='stale'><td>2454</td><td>聯發科</td><td class='num'>4245</td><td class='num'>4245</td><td class='num'>4245</td><td class='num'>4245</td><td class='num'>4173</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
+<tr class='stale'><td>4958</td><td>臻鼎-KY</td><td class='num'>529</td><td class='num'>558</td><td class='num'>558</td><td class='num'>525</td><td class='num'>45638</td><td>真AI</td><td>525-530</td><td>500-510</td><td>550-558 / 570</td><td><span class='tag good'>接近第一低接</span></td></tr>
+<tr class='stale'><td>3711</td><td>日月光投控</td><td class='num'>617</td><td class='num'>598</td><td class='num'>617</td><td class='num'>584</td><td class='num'>25645</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
+<tr class='stale'><td>3017</td><td>奇鋐</td><td class='num'>2575</td><td class='num'>2625</td><td class='num'>2640</td><td class='num'>2545</td><td class='num'>5215</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag risk'>警訊：跌破20日線</span></td></tr>
+<tr class='stale'><td>6669</td><td>緯穎</td><td class='num'>5610</td><td class='num'>5755</td><td class='num'>5880</td><td class='num'>5555</td><td class='num'>1925</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>3661</td><td>世芯-KY</td><td class='num'>4900</td><td class='num'>5020</td><td class='num'>5050</td><td class='num'>4900</td><td class='num'>1429</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>2345</td><td>智邦</td><td class='num'>2540</td><td class='num'>2535</td><td class='num'>2600</td><td class='num'>2505</td><td class='num'>2528</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>2455</td><td>全新</td><td class='num'>444</td><td class='num'>435</td><td class='num'>460</td><td class='num'>422.5</td><td class='num'>21452</td><td>真AI</td><td>422.5-425</td><td>415-418</td><td>438-445 / 455</td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>2449</td><td>京元電子</td><td class='num'>317</td><td class='num'>305</td><td class='num'>318.5</td><td class='num'>302.5</td><td class='num'>51769</td><td>真AI</td><td>309-312</td><td>302-304</td><td>320-323 / 328</td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>3715</td><td>定穎投控</td><td class='num'>179</td><td class='num'>176</td><td class='num'>185</td><td class='num'>176</td><td class='num'>16475</td><td>真AI</td><td>176-179</td><td>170-172</td><td>186-190</td><td><span class='tag good'>接近第一低接</span></td></tr>
+<tr class='stale'><td>3037</td><td>欣興</td><td class='num'>990</td><td class='num'>1020</td><td class='num'>1030</td><td class='num'>978</td><td class='num'>22201</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>8046</td><td>南電</td><td class='num'>884</td><td class='num'>940</td><td class='num'>947</td><td class='num'>879</td><td class='num'>28647</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag risk'>警訊：跌破20日線</span></td></tr>
+<tr class='stale'><td>3189</td><td>景碩</td><td class='num'>669</td><td class='num'>664</td><td class='num'>669</td><td class='num'>660</td><td class='num'>8260</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
+<tr class='stale'><td>5347</td><td>世界</td><td class='num'>168.5</td><td class='num'>162.5</td><td class='num'>172.5</td><td class='num'>160</td><td class='num'>42687</td><td>台積電供應鏈</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>8086</td><td>宏捷科</td><td class='num'>163</td><td class='num'>166</td><td class='num'>171.5</td><td class='num'>161</td><td class='num'>9920</td><td>進攻題材</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>2317</td><td>鴻海</td><td class='num'>261</td><td class='num'>255</td><td class='num'>263.5</td><td class='num'>255</td><td class='num'>118569</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>2301</td><td>光寶科</td><td class='num'>227.5</td><td class='num'>212</td><td class='num'>227.5</td><td class='num'>211.5</td><td class='num'>32591</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
+<tr class='stale'><td>2408</td><td>南亞科</td><td class='num'>296</td><td class='num'>295</td><td class='num'>303.5</td><td class='num'>288</td><td class='num'>151403</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>2356</td><td>英業達</td><td class='num'>65.4</td><td class='num'>65.4</td><td class='num'>65.4</td><td class='num'>62.9</td><td class='num'>133754</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag warn'>偏強，不追高</span></td></tr>
+<tr class='stale'><td>3665</td><td>貿聯-KY</td><td class='num'>2385</td><td class='num'>2340</td><td class='num'>2430</td><td class='num'>2340</td><td class='num'>1914</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag risk'>警訊：跌破20日線</span></td></tr>
+<tr class='stale'><td>2059</td><td>川湖</td><td class='num'>4980</td><td class='num'>5290</td><td class='num'>5290</td><td class='num'>4980</td><td class='num'>233</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>2368</td><td>金像電</td><td class='num'>1425</td><td class='num'>1400</td><td class='num'>1455</td><td class='num'>1360</td><td class='num'>6355</td><td>真AI</td><td>1360-1380</td><td>1298-1330</td><td>1455 / 1500</td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>0052</td><td>富邦科技ETF</td><td class='num'>59.6</td><td class='num'>58.9</td><td class='num'>59.95</td><td class='num'>58.9</td><td class='num'>45713</td><td>ETF</td><td>58.9-59.1</td><td>58.0-58.5</td><td>60</td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>0050</td><td>元大台灣50</td><td class='num'>100.8</td><td class='num'>99.55</td><td class='num'>101</td><td class='num'>99.55</td><td class='num'>123611</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
+<tr class='stale'><td>00403A</td><td>主動統一升級50</td><td class='num'>10.58</td><td class='num'>10.4</td><td class='num'>10.62</td><td class='num'>10.38</td><td class='num'>714325</td><td>ETF</td><td>10.38-10.40</td><td>10.20-10.30</td><td>10.80-10.86</td><td><span class='tag neutral'>觀察</span></td></tr></tbody>
       </table>
     </section>
   </main>
