@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>小駿台股 AI 完整看盤版</title>
+  <title>小駿台股 AI 投資自動更新報告</title>
   <style>
-    :root { --ink:#1f2937; --muted:#667085; --line:#d8dee8; --bg:#f6f8fb; --panel:#fff; --green:#147a5a; --red:#b42318; --amber:#a15c07; }
+    :root { --ink:#1d2430; --muted:#667085; --line:#d8dee8; --bg:#f5f7fb; --panel:#fff; --blue:#2364aa; --green:#147a5a; --red:#b42318; --amber:#a15c07; }
     * { box-sizing:border-box; }
     body { margin:0; background:var(--bg); color:var(--ink); font-family:"Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif; line-height:1.55; }
-    .wrap { width:min(1080px,calc(100% - 28px)); margin:0 auto; }
-    header { background:#edf3f7; border-bottom:1px solid var(--line); padding:26px 0 20px; }
-    h1 { margin:0 0 10px; font-size:clamp(26px,4vw,42px); line-height:1.15; letter-spacing:0; }
-    h2 { margin:0 0 14px; font-size:21px; }
-    main { padding:20px 0 42px; }
-    section { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:14px; }
-    .lead { color:#384253; margin:0; font-size:16px; }
-    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:15px; }
+    .wrap { width:min(1180px,calc(100% - 32px)); margin:0 auto; }
+    header { background:#eef3f8; border-bottom:1px solid var(--line); padding:30px 0 22px; }
+    h1 { margin:0 0 10px; font-size:clamp(28px,4vw,48px); letter-spacing:0; line-height:1.12; }
+    h2 { margin:0 0 14px; font-size:22px; }
+    main { padding:22px 0 44px; }
+    section { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:18px; margin-bottom:16px; }
+    .lead { color:#384253; margin:0; font-size:17px; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px; }
     .metric { background:#fbfcfe; border:1px solid var(--line); border-radius:8px; padding:12px; }
-    .metric strong { display:block; font-size:20px; }
+    .metric strong { display:block; font-size:22px; }
     .metric span { display:block; color:var(--muted); font-size:13px; margin-top:4px; }
     table { width:100%; border-collapse:collapse; font-size:14px; }
     th,td { border-bottom:1px solid var(--line); padding:9px 8px; text-align:left; vertical-align:top; }
@@ -30,70 +30,55 @@
     .stale { color:#475467; background:#f2f4f7; border-color:#d0d5dd; }
     tr.stale td { color:#667085; background:#fafafa; }
     .note { color:var(--muted); font-size:13px; margin:8px 0 0; }
-    @media (max-width:760px) { .grid { grid-template-columns:1fr; } table { font-size:13px; } th:nth-child(4),td:nth-child(4),th:nth-child(7),td:nth-child(7) { display:none; } }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chip { display:inline-flex; align-items:center; min-height:32px; padding:5px 10px; border-radius:999px; background:#eef3f8; border:1px solid #d7e0eb; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { font-size:13px; } }
+    @media (max-width:640px) { .grid { grid-template-columns:1fr; } th:nth-child(4),td:nth-child(4),th:nth-child(7),td:nth-child(7) { display:none; } }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <h1>小駿台股 AI 完整看盤版</h1>
-      <p class="lead">給媽媽看的完整版：以小駿的看盤邏輯整理真 AI 供應鏈、ETF、支撐壓力、低接提醒與警訊，原則是不追高、等支撐、看量價是否配合。此版僅顯示市場資訊與操作觀察。</p>
+      <h1>小駿台股 AI 投資自動更新報告</h1>
+      <p class="lead">這份報告目前使用 Excel 已整理的最新值產生。下一次自動化成功抓報價並寫入 Excel 後，網頁會同步覆蓋成盤中最新版。</p>
       <div class="grid">
-        <div class="metric"><strong>2026-05-26 12:47:51</strong><span>更新時間（台北）</span></div>
-        <div class="metric"><strong>28</strong><span>觀察標的</span></div>
+        <div class="metric"><strong>2026-05-26 13:18:34</strong><span>網頁更新時間（台北）</span></div>
+        <div class="metric"><strong>已載入</strong><span>來自 Excel 目前值</span></div>
+        <div class="metric"><strong>非即時</strong><span>尚未重抓交易所報價</span></div>
         <div class="metric"><strong>盤中更新</strong><span>目前時段</span></div>
       </div>
     </div>
   </header>
   <main class="wrap">
     <section>
-      <h2>今日重點</h2>
-      <p class="note">資料狀態：使用 Excel 現有值；來自 Excel 目前值；無。</p>
+      <h2>優先提醒</h2>
+      <p class="note">資料狀態：使用 Excel 現有值</p>
       <p class="note">全部完成</p>
-      <p class="note">需再確認報價只代表資料來源尚未完整更新，不代表股價本身出現異常。</p>
-      <p class="note">訊號統計：3 個 低接/警訊/不追高。</p>
+      <p class="note">訊號統計：3 個低接/警訊/不追高。</p>
       <p class="note">顏色說明：綠色是接近低接區，黃色是偏強但不追高，紅色是風險警訊，灰色是保留原值或需再核對。</p>
-      <p class="note">現價欄位會跟著報價更新程式同步覆蓋，瀏覽器已開啟時請重新整理頁面。</p>
-      <p class="note">這份報告只是看盤輔助，不是買賣建議。</p>
+      <div class="chips">
+        <span class="chip">資料來源：Excel 目前值</span>
+        <span class="chip">即時報價：等下一次自動化覆蓋</span>
+      </div>
+      <p class="note">備份檔：以 Excel 目前值產生，未重新抓即時報價</p>
     </section>
     <section>
-      <h2>觀察清單</h2>
+      <h2>核心觀察</h2>
       <table>
         <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>題材</th><th>第一低接</th><th>第二低接</th><th>壓力</th><th>訊號</th></tr></thead>
         <tbody><tr class='fresh'><td>2330</td><td>台積電</td><td class='num'>2280</td><td class='num'>2320</td><td class='num'>2325</td><td class='num'>2280</td><td class='num'>12550</td><td>核心AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
 <tr class='fresh'><td>2308</td><td>台達電</td><td class='num'>2375</td><td class='num'>2350</td><td class='num'>2410</td><td class='num'>2290</td><td class='num'>9059</td><td>真AI</td><td>2185-2200</td><td>2115-2130</td><td>2275-2280 / 2300</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>2383</td><td>台光電</td><td class='num'>5290</td><td class='num'>5635</td><td class='num'>5635</td><td class='num'>5160</td><td class='num'>2195</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>2454</td><td>聯發科</td><td class='num'>4275</td><td class='num'>4375</td><td class='num'>4440</td><td class='num'>4180</td><td class='num'>14444</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
 <tr class='fresh'><td>4958</td><td>臻鼎-KY</td><td class='num'>540</td><td class='num'>529</td><td class='num'>540</td><td class='num'>516</td><td class='num'>32678</td><td>真AI</td><td>525-530</td><td>500-510</td><td>550-558 / 570</td><td><span class='tag warn'>偏強，不追高</span></td></tr>
 <tr class='fresh'><td>3711</td><td>日月光投控</td><td class='num'>610</td><td class='num'>636</td><td class='num'>636</td><td class='num'>590</td><td class='num'>30647</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>3017</td><td>奇鋐</td><td class='num'>2710</td><td class='num'>2590</td><td class='num'>2740</td><td class='num'>2570</td><td class='num'>4044</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>6669</td><td>緯穎</td><td class='num'>5325</td><td class='num'>5600</td><td class='num'>5600</td><td class='num'>5155</td><td class='num'>1891</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>3661</td><td>世芯-KY</td><td class='num'>4655</td><td class='num'>4945</td><td class='num'>4955</td><td class='num'>4655</td><td class='num'>943</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>2345</td><td>智邦</td><td class='num'>2590</td><td class='num'>2610</td><td class='num'>2695</td><td class='num'>2560</td><td class='num'>2470</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
 <tr class='fresh'><td>2455</td><td>全新</td><td class='num'>422.5</td><td class='num'>438.5</td><td class='num'>440</td><td class='num'>415.5</td><td class='num'>9467</td><td>真AI</td><td>422.5-425</td><td>415-418</td><td>438-445 / 455</td><td><span class='tag good'>接近第一低接</span></td></tr>
 <tr class='fresh'><td>2449</td><td>京元電子</td><td class='num'>337</td><td class='num'>319.5</td><td class='num'>348.5</td><td class='num'>308</td><td class='num'>85814</td><td>真AI</td><td>309-312</td><td>302-304</td><td>320-323 / 328</td><td><span class='tag neutral'>觀察</span></td></tr>
 <tr class='fresh'><td>3715</td><td>定穎投控</td><td class='num'>186</td><td class='num'>181</td><td class='num'>187.5</td><td class='num'>178</td><td class='num'>14469</td><td>真AI</td><td>176-179</td><td>170-172</td><td>186-190</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>3037</td><td>欣興</td><td class='num'>1050</td><td class='num'>992</td><td class='num'>1060</td><td class='num'>989</td><td class='num'>21855</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>8046</td><td>南電</td><td class='num'>923</td><td class='num'>888</td><td class='num'>924</td><td class='num'>871</td><td class='num'>16416</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>3189</td><td>景碩</td><td class='num'>681</td><td class='num'>670</td><td class='num'>707</td><td class='num'>654</td><td class='num'>35586</td><td>真AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>5347</td><td>世界</td><td class='num'>166.5</td><td class='num'>170</td><td class='num'>172.5</td><td class='num'>164</td><td class='num'>22477</td><td>台積電供應鏈</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>8086</td><td>宏捷科</td><td class='num'>170</td><td class='num'>166</td><td class='num'>172.5</td><td class='num'>158.5</td><td class='num'>8398</td><td>進攻題材</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>2317</td><td>鴻海</td><td class='num'>258.5</td><td class='num'>262.5</td><td class='num'>263.5</td><td class='num'>257</td><td class='num'>44429</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>2301</td><td>光寶科</td><td class='num'>238</td><td class='num'>234</td><td class='num'>241.5</td><td class='num'>224</td><td class='num'>54453</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>2408</td><td>南亞科</td><td class='num'>303.5</td><td class='num'>300.5</td><td class='num'>314</td><td class='num'>295.5</td><td class='num'>122700</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>2356</td><td>英業達</td><td class='num'>62</td><td class='num'>69</td><td class='num'>69.5</td><td class='num'>61.8</td><td class='num'>150900</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>3665</td><td>貿聯-KY</td><td class='num'>2275</td><td class='num'>2410</td><td class='num'>2415</td><td class='num'>2275</td><td class='num'>823</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag risk'>警訊：跌破20日線</span></td></tr>
-<tr class='fresh'><td>2059</td><td>川湖</td><td class='num'>4980</td><td class='num'>4980</td><td class='num'>4985</td><td class='num'>4970</td><td class='num'>174</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>2368</td><td>金像電</td><td class='num'>1455</td><td class='num'>1465</td><td class='num'>1495</td><td class='num'>1425</td><td class='num'>4150</td><td>真AI</td><td>1360-1380</td><td>1298-1330</td><td>1455 / 1500</td><td><span class='tag neutral'>觀察</span></td></tr>
 <tr class='fresh'><td>0052</td><td>富邦科技ETF</td><td class='num'>59.35</td><td class='num'>60.1</td><td class='num'>60.2</td><td class='num'>59.25</td><td class='num'>21396</td><td>ETF</td><td>58.9-59.1</td><td>58.0-58.5</td><td>60</td><td><span class='tag neutral'>觀察</span></td></tr>
-<tr class='fresh'><td>0050</td><td>元大台灣50</td><td class='num'>100.7</td><td class='num'>101.3</td><td class='num'>101.8</td><td class='num'>100.3</td><td class='num'>67614</td><td>觀察</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
 <tr class='fresh'><td>00403A</td><td>主動統一升級50</td><td class='num'>10.64</td><td class='num'>10.76</td><td class='num'>10.76</td><td class='num'>10.48</td><td class='num'>526700</td><td>ETF</td><td>10.38-10.40</td><td>10.20-10.30</td><td>10.80-10.86</td><td><span class='tag neutral'>觀察</span></td></tr></tbody>
       </table>
     </section>
-
     <section>
       <h2>全部追蹤清單</h2>
-      <p class="note">此區同步自動取得現價，適合掃描所有 AI / ETF 觀察標的。</p>
       <table>
         <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>題材</th><th>第一低接</th><th>第二低接</th><th>壓力</th><th>訊號</th></tr></thead>
         <tbody><tr class='fresh'><td>2330</td><td>台積電</td><td class='num'>2280</td><td class='num'>2320</td><td class='num'>2325</td><td class='num'>2280</td><td class='num'>12550</td><td>核心AI</td><td></td><td></td><td></td><td><span class='tag neutral'>觀察</span></td></tr>
