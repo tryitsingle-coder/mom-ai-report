@@ -3,118 +3,134 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mom AI Report</title>
+  <title>AI投資觀察報告</title>
   <style>
-    :root { --ink:#1d2430; --muted:#667085; --line:#d8dee8; --bg:#f5f7fb; --panel:#fff; --green:#147a5a; --red:#b42318; --amber:#a15c07; }
+    :root { --ink:#1F2937; --muted:#475569; --line:#D7DEE8; --bg:#F7F8FA; --panel:#FFFFFF; }
     * { box-sizing:border-box; }
     body { margin:0; background:var(--bg); color:var(--ink); font-family:"Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif; line-height:1.55; }
     .wrap { width:min(1180px,calc(100% - 32px)); margin:0 auto; }
-    header { background:#eef3f8; border-bottom:1px solid var(--line); padding:28px 0 22px; }
+    header { background:#EEF3F8; border-bottom:1px solid var(--line); padding:28px 0 22px; }
     h1 { margin:0 0 10px; font-size:clamp(28px,4vw,46px); line-height:1.12; }
     h2 { margin:0 0 14px; font-size:22px; }
     main { padding:22px 0 44px; }
-    section { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:18px; margin-bottom:16px; }
+    section { background:#FFFFFF; border:1px solid #D7DEE8; border-radius:14px; padding:18px; margin-bottom:16px; }
     .lead { color:#384253; margin:0; font-size:17px; }
     .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px; }
-    .metric { background:#fbfcfe; border:1px solid var(--line); border-radius:9px; padding:12px; }
+    .metric { background:#FFFFFF; border:1px solid #D7DEE8; border-radius:12px; padding:12px; }
     .metric strong { display:block; font-size:22px; }
-    .metric span { display:block; color:var(--muted); font-size:13px; margin-top:4px; }
+    .metric span { display:block; color:#475569; font-size:13px; margin-top:4px; }
     table { width:100%; border-collapse:collapse; font-size:14px; }
-    th,td { border-bottom:1px solid var(--line); padding:9px 8px; text-align:left; vertical-align:top; }
-    th { background:#f0f4f8; color:#344054; }
+    th,td { border-bottom:1px solid #D7DEE8; padding:9px 8px; text-align:left; vertical-align:top; }
+    th { background:#E2E8F0; color:#1F2937; font-weight:800; }
     .num { font-variant-numeric:tabular-nums; white-space:nowrap; }
-    .tag { display:inline-flex; min-height:28px; align-items:center; border-radius:999px; padding:3px 9px; background:#eef3f8; border:1px solid #d7e0eb; white-space:nowrap; }
-    .warn { color:var(--amber); background:#fff2d8; border-color:#f4d18a; }
-    .risk { color:var(--red); background:#fde9e7; border-color:#f3b9b4; }
-    .stale { color:#475467; background:#f2f4f7; border-color:#d0d5dd; }
-    tr.risk-row td { background:#fff6f5; }
-    tr.warn-row td { background:#fffaf0; }
-    tr.watch-row td { background:#f8fafc; color:#475467; }
-    .note { color:var(--muted); font-size:13px; margin:8px 0 0; }
+    .tag { display:inline-flex; min-height:30px; align-items:center; border-radius:999px; padding:5px 11px; background:#FFFFFF; border:2px solid #CBD5E1; white-space:nowrap; font-weight:800; }
+    .warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
+    .risk { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
+    .stale { color:#334155; background:#E2E8F0; border-color:#94A3B8; }
+    .neutral { color:#1F2937; background:#FFFFFF; border-color:#CBD5E1; }
+    tr.risk-row td { background:#FEF2F2; }
+    tr.warn-row td { background:#FFFBEB; }
+    tr.watch-row td { background:#F1F5F9; color:#334155; }
+    tr.neutral-row td { background:#FFFFFF; }
+    .note { color:#475569; font-size:13px; margin:8px 0 0; }
+    .color-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; font-size:14px; font-weight:800; }
+    .legend-item { display:inline-flex; align-items:center; border-radius:999px; padding:6px 10px; border:2px solid transparent; line-height:1.2; }
+    .legend-red { background:#FEE2E2; color:#991B1B; border-color:#FCA5A5; }
+    .legend-gray { background:#E2E8F0; color:#334155; border-color:#94A3B8; }
+    .legend-yellow { background:#FEF3C7; color:#92400E; border-color:#FBBF24; }
+    .legend-white { background:#FFFFFF; color:#1F2937; border-color:#CBD5E1; }
     @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { font-size:13px; } }
-    @media (max-width:640px) { .grid { grid-template-columns:1fr; } th:nth-child(4),td:nth-child(4),th:nth-child(7),td:nth-child(7),th:nth-child(10),td:nth-child(10) { display:none; } }
+    @media (max-width:640px) { .grid { grid-template-columns:1fr; } section { padding:14px; border-radius:12px; } th,td { padding:8px 6px; } .tag { min-height:32px; padding:5px 10px; font-size:13px; } .color-legend { gap:6px; font-size:13px; } th:nth-child(4),td:nth-child(4),th:nth-child(7),td:nth-child(7),th:nth-child(10),td:nth-child(10) { display:none; } }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <h1>Mom AI Report</h1>
-      <p class="lead">Data source: Yuanta DDE -> C:\DDE\yuanta_dde.xlsx -> one-click updater. Cost and share count are not shown on this public page.</p>
+      <h1>AI投資觀察報告</h1>
+      <p class="lead">資料來源：元大點金靈DDE → C:\DDE\yuanta_dde.xlsx → 一鍵更新。公開頁面不顯示成本與持股數。</p>
       <div class="grid">
-        <div class="metric"><strong>2026-05-29 07:35:35</strong><span>Update time</span></div>
-        <div class="metric"><strong>DDE/V12</strong><span>Source</span></div>
-        <div class="metric"><strong>Risk first</strong><span>No weak averaging down</span></div>
-        <div class="metric"><strong>Wait support</strong><span>Do fewer, earn more</span></div>
+        <div class="metric"><strong>2026-05-29 07:54:41</strong><span>更新時間</span></div>
+        <div class="metric"><strong>DDE / V12</strong><span>資料來源</span></div>
+        <div class="metric"><strong>風控優先</strong><span>不弱勢攤平</span></div>
+        <div class="metric"><strong>等待支撐</strong><span>做得少，賺得多</span></div>
       </div>
     </div>
   </header>
   <main class="wrap">
     <section>
-      <h2>Priority notes</h2>
-      <p>4958 cost notes: Mom 509, Yushen 535. Watch 480/476 first; above 500 reduces pressure.</p>
-      <p class="note">This is a watchlist and risk-control page, not a guaranteed trading signal.</p>
+      <h2>優先提醒</h2>
+      <p>臻鼎-KY：目前先不要急著加碼，觀察480 / 476是否守住；若能站回500，壓力會降低。</p>
+      <p>今日總結：AI族群以觀察與風控為主，先看核心股與臻鼎-KY是否止跌。現階段不建議弱勢攤平，等站回壓力區或低點不破再評估。</p>
+      <p class="note">顏色說明：</p>
+      <div class="color-legend">
+        <span class="legend-item legend-red">紅色＝偏弱防守</span>
+        <span class="legend-item legend-gray">灰色＝靠近低點等穩定</span>
+        <span class="legend-item legend-yellow">黃色＝有強但不追高</span>
+        <span class="legend-item legend-white">白色＝一般觀察</span>
+      </div>
+      <p class="note">這是觀察與風控頁面，不是保證獲利或下單指令。</p>
     </section>
     <section>
-      <h2>Core watchlist</h2>
+      <h2>核心觀察</h2>
       <table>
-        <thead><tr><th>Code</th><th>Name</th><th>Price</th><th>Open</th><th>High</th><th>Low</th><th>Vol</th><th>Group</th><th>Sweet zone</th><th>Risk</th><th>Pressure</th><th>Signal</th></tr></thead>
+        <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>分類</th><th>甜區觀察</th><th>風險線</th><th>壓力</th><th>訊號</th></tr></thead>
         <tbody>
-<tr class='neutral-row'><td>2330</td><td>台積電</td><td class='num'>2,295</td><td class='num'>2,350</td><td class='num'>2,360</td><td class='num'>2,270</td><td class='num'>36,837</td><td>S core</td><td>2,259 - 2,281</td><td>2,259</td><td>2,360 / 2,407</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>2308</td><td>台達電</td><td class='num'>2,390</td><td class='num'>2,485</td><td class='num'>2,520</td><td class='num'>2,370</td><td class='num'>10,213</td><td>S core</td><td>2,358 - 2,382</td><td>2,358</td><td>2,520 / 2,570</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>2383</td><td>台光電</td><td class='num'>5,055</td><td class='num'>5,300</td><td class='num'>5,515</td><td class='num'>5,025</td><td class='num'>1,863</td><td>S core</td><td>5,000 - 5,050</td><td>5,000</td><td>5,515 / 5,625</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>3017</td><td>奇鋐</td><td class='num'>2,580</td><td class='num'>2,740</td><td class='num'>2,795</td><td class='num'>2,540</td><td class='num'>4,552</td><td>S core</td><td>2,527 - 2,553</td><td>2,527</td><td>2,795 / 2,851</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='risk-row'><td>2345</td><td>智邦</td><td class='num'>2,435</td><td class='num'>2,575</td><td class='num'>2,580</td><td class='num'>2,395</td><td class='num'>4,510</td><td>S core</td><td>2,383 - 2,407</td><td>2,383</td><td>2,580 / 2,632</td><td><span class='tag risk'>Risk, defend</span></td></tr>
-<tr class='neutral-row'><td>2317</td><td>鴻海</td><td class='num'>263</td><td class='num'>265</td><td class='num'>269.5</td><td class='num'>259.5</td><td class='num'>71,785</td><td>S core</td><td>258.2 - 260.8</td><td>258.2</td><td>269.5 / 274.9</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>2059</td><td>川湖</td><td class='num'>4,700</td><td class='num'>4,930</td><td class='num'>5,120</td><td class='num'>4,615</td><td class='num'>537</td><td>S core</td><td>4,592 - 4,638</td><td>4,592</td><td>5,120 / 5,222</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='neutral-row'><td>3661</td><td>世芯-KY</td><td class='num'>4,300</td><td class='num'>4,530</td><td class='num'>4,575</td><td class='num'>4,230</td><td class='num'>2,102</td><td>S core</td><td>4,209 - 4,251</td><td>4,209</td><td>4,575 / 4,667</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>4958</td><td>臻鼎-KY</td><td class='num'>486</td><td class='num'>521</td><td class='num'>522</td><td class='num'>479</td><td class='num'>18,813</td><td>A attack</td><td>476.6 - 481.4</td><td>476.6</td><td>522 / 532.4</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='neutral-row'><td>3711</td><td>日月光投控</td><td class='num'>627</td><td class='num'>626</td><td class='num'>668</td><td class='num'>617</td><td class='num'>33,499</td><td>A attack</td><td>613.9 - 620.1</td><td>613.9</td><td>668 / 681.4</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='neutral-row'><td>2449</td><td>京元電子</td><td class='num'>320</td><td class='num'>315.5</td><td class='num'>334</td><td class='num'>312</td><td class='num'>70,797</td><td>A attack</td><td>310.4 - 313.6</td><td>310.4</td><td>334 / 340.7</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>2368</td><td>金像電</td><td class='num'>1,305</td><td class='num'>1,395</td><td class='num'>1,420</td><td class='num'>1,290</td><td class='num'>4,749</td><td>A attack</td><td>1,284 - 1,296</td><td>1,284</td><td>1,420 / 1,448</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='neutral-row'><td>3037</td><td>欣興</td><td class='num'>1,025</td><td class='num'>1,125</td><td class='num'>1,130</td><td class='num'>1,000</td><td class='num'>23,704</td><td>A attack</td><td>995 - 1,005</td><td>995</td><td>1,130 / 1,153</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='risk-row'><td>8046</td><td>南電</td><td class='num'>850</td><td class='num'>905</td><td class='num'>909</td><td class='num'>837</td><td class='num'>18,748</td><td>A attack</td><td>832.8 - 841.2</td><td>832.8</td><td>909 / 927.2</td><td><span class='tag risk'>Risk, defend</span></td></tr>
-<tr class='neutral-row'><td>3189</td><td>景碩</td><td class='num'>681</td><td class='num'>702</td><td class='num'>702</td><td class='num'>654</td><td class='num'>7,449</td><td>A attack</td><td>650.7 - 657.3</td><td>650.7</td><td>702 / 716</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>6831</td><td>邁科</td><td class='num'>790</td><td class='num'>830</td><td class='num'>850</td><td class='num'>779</td><td class='num'>473</td><td>A attack</td><td>775.1 - 782.9</td><td>775.1</td><td>850 / 867</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>1504</td><td>東元</td><td class='num'>70.9</td><td class='num'>71.8</td><td class='num'>73.9</td><td class='num'>70.8</td><td class='num'>21,146</td><td>Watch</td><td>70.45 - 71.15</td><td>70.45</td><td>73.9 / 75.38</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>3715</td><td>定穎投控</td><td class='num'>171</td><td class='num'>178.5</td><td class='num'>180</td><td class='num'>170</td><td class='num'>9,366</td><td>Watch</td><td>169.2 - 170.9</td><td>169.2</td><td>180 / 183.6</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>00403A</td><td>主動統一升級50</td><td class='num'>10.47</td><td class='num'>10.87</td><td class='num'>10.89</td><td class='num'>10.4</td><td class='num'>805,065</td><td>ETF</td><td>10.35 - 10.45</td><td>10.35</td><td>10.89 / 11.11</td><td><span class='tag stale'>Near low, wait</span></td></tr>
+<tr class='neutral-row'><td>2330</td><td>台積電</td><td class='num'>2,295</td><td class='num'>2,350</td><td class='num'>2,360</td><td class='num'>2,270</td><td class='num'>36,837</td><td>S級核心</td><td>2,259 - 2,281</td><td>2,259</td><td>2,360 / 2,407</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>2308</td><td>台達電</td><td class='num'>2,390</td><td class='num'>2,485</td><td class='num'>2,520</td><td class='num'>2,370</td><td class='num'>10,213</td><td>S級核心</td><td>2,358 - 2,382</td><td>2,358</td><td>2,520 / 2,570</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>2383</td><td>台光電</td><td class='num'>5,055</td><td class='num'>5,300</td><td class='num'>5,515</td><td class='num'>5,025</td><td class='num'>1,863</td><td>S級核心</td><td>5,000 - 5,050</td><td>5,000</td><td>5,515 / 5,625</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>3017</td><td>奇鋐</td><td class='num'>2,580</td><td class='num'>2,740</td><td class='num'>2,795</td><td class='num'>2,540</td><td class='num'>4,552</td><td>S級核心</td><td>2,527 - 2,553</td><td>2,527</td><td>2,795 / 2,851</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='risk-row'><td>2345</td><td>智邦</td><td class='num'>2,435</td><td class='num'>2,575</td><td class='num'>2,580</td><td class='num'>2,395</td><td class='num'>4,510</td><td>S級核心</td><td>2,383 - 2,407</td><td>2,383</td><td>2,580 / 2,632</td><td><span class='tag risk'>偏弱，先不要加碼</span></td></tr>
+<tr class='neutral-row'><td>2317</td><td>鴻海</td><td class='num'>263</td><td class='num'>265</td><td class='num'>269.5</td><td class='num'>259.5</td><td class='num'>71,785</td><td>S級核心</td><td>258.2 - 260.8</td><td>258.2</td><td>269.5 / 274.9</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>2059</td><td>川湖</td><td class='num'>4,700</td><td class='num'>4,930</td><td class='num'>5,120</td><td class='num'>4,615</td><td class='num'>537</td><td>S級核心</td><td>4,592 - 4,638</td><td>4,592</td><td>5,120 / 5,222</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='neutral-row'><td>3661</td><td>世芯-KY</td><td class='num'>4,300</td><td class='num'>4,530</td><td class='num'>4,575</td><td class='num'>4,230</td><td class='num'>2,102</td><td>S級核心</td><td>4,209 - 4,251</td><td>4,209</td><td>4,575 / 4,667</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>4958</td><td>臻鼎-KY</td><td class='num'>486</td><td class='num'>521</td><td class='num'>522</td><td class='num'>479</td><td class='num'>18,813</td><td>A級攻擊</td><td>476.6 - 481.4</td><td>476.6</td><td>522 / 532.4</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='neutral-row'><td>3711</td><td>日月光投控</td><td class='num'>627</td><td class='num'>626</td><td class='num'>668</td><td class='num'>617</td><td class='num'>33,499</td><td>A級攻擊</td><td>613.9 - 620.1</td><td>613.9</td><td>668 / 681.4</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='neutral-row'><td>2449</td><td>京元電子</td><td class='num'>320</td><td class='num'>315.5</td><td class='num'>334</td><td class='num'>312</td><td class='num'>70,797</td><td>A級攻擊</td><td>310.4 - 313.6</td><td>310.4</td><td>334 / 340.7</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>2368</td><td>金像電</td><td class='num'>1,305</td><td class='num'>1,395</td><td class='num'>1,420</td><td class='num'>1,290</td><td class='num'>4,749</td><td>A級攻擊</td><td>1,284 - 1,296</td><td>1,284</td><td>1,420 / 1,448</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='neutral-row'><td>3037</td><td>欣興</td><td class='num'>1,025</td><td class='num'>1,125</td><td class='num'>1,130</td><td class='num'>1,000</td><td class='num'>23,704</td><td>A級攻擊</td><td>995 - 1,005</td><td>995</td><td>1,130 / 1,153</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='risk-row'><td>8046</td><td>南電</td><td class='num'>850</td><td class='num'>905</td><td class='num'>909</td><td class='num'>837</td><td class='num'>18,748</td><td>A級攻擊</td><td>832.8 - 841.2</td><td>832.8</td><td>909 / 927.2</td><td><span class='tag risk'>偏弱，先不要加碼</span></td></tr>
+<tr class='neutral-row'><td>3189</td><td>景碩</td><td class='num'>681</td><td class='num'>702</td><td class='num'>702</td><td class='num'>654</td><td class='num'>7,449</td><td>A級攻擊</td><td>650.7 - 657.3</td><td>650.7</td><td>702 / 716</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>6831</td><td>邁科</td><td class='num'>790</td><td class='num'>830</td><td class='num'>850</td><td class='num'>779</td><td class='num'>473</td><td>A級攻擊</td><td>775.1 - 782.9</td><td>775.1</td><td>850 / 867</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>1504</td><td>東元</td><td class='num'>70.9</td><td class='num'>71.8</td><td class='num'>73.9</td><td class='num'>70.8</td><td class='num'>21,146</td><td>觀察</td><td>70.45 - 71.15</td><td>70.45</td><td>73.9 / 75.38</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>3715</td><td>定穎投控</td><td class='num'>171</td><td class='num'>178.5</td><td class='num'>180</td><td class='num'>170</td><td class='num'>9,366</td><td>觀察</td><td>169.2 - 170.9</td><td>169.2</td><td>180 / 183.6</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>00403A</td><td>主動統一升級50</td><td class='num'>10.47</td><td class='num'>10.87</td><td class='num'>10.89</td><td class='num'>10.4</td><td class='num'>805,065</td><td>ETF底倉</td><td>10.35 - 10.45</td><td>10.35</td><td>10.89 / 11.11</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
         </tbody>
       </table>
     </section>
     <section>
-      <h2>Full list</h2>
+      <h2>全部追蹤清單</h2>
       <table>
-        <thead><tr><th>Code</th><th>Name</th><th>Price</th><th>Open</th><th>High</th><th>Low</th><th>Vol</th><th>Group</th><th>Sweet zone</th><th>Risk</th><th>Pressure</th><th>Signal</th></tr></thead>
+        <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>分類</th><th>甜區觀察</th><th>風險線</th><th>壓力</th><th>訊號</th></tr></thead>
         <tbody>
-<tr class='neutral-row'><td>2330</td><td>台積電</td><td class='num'>2,295</td><td class='num'>2,350</td><td class='num'>2,360</td><td class='num'>2,270</td><td class='num'>36,837</td><td>S core</td><td>2,259 - 2,281</td><td>2,259</td><td>2,360 / 2,407</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>2308</td><td>台達電</td><td class='num'>2,390</td><td class='num'>2,485</td><td class='num'>2,520</td><td class='num'>2,370</td><td class='num'>10,213</td><td>S core</td><td>2,358 - 2,382</td><td>2,358</td><td>2,520 / 2,570</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>2383</td><td>台光電</td><td class='num'>5,055</td><td class='num'>5,300</td><td class='num'>5,515</td><td class='num'>5,025</td><td class='num'>1,863</td><td>S core</td><td>5,000 - 5,050</td><td>5,000</td><td>5,515 / 5,625</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>3017</td><td>奇鋐</td><td class='num'>2,580</td><td class='num'>2,740</td><td class='num'>2,795</td><td class='num'>2,540</td><td class='num'>4,552</td><td>S core</td><td>2,527 - 2,553</td><td>2,527</td><td>2,795 / 2,851</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='risk-row'><td>2345</td><td>智邦</td><td class='num'>2,435</td><td class='num'>2,575</td><td class='num'>2,580</td><td class='num'>2,395</td><td class='num'>4,510</td><td>S core</td><td>2,383 - 2,407</td><td>2,383</td><td>2,580 / 2,632</td><td><span class='tag risk'>Risk, defend</span></td></tr>
-<tr class='neutral-row'><td>2317</td><td>鴻海</td><td class='num'>263</td><td class='num'>265</td><td class='num'>269.5</td><td class='num'>259.5</td><td class='num'>71,785</td><td>S core</td><td>258.2 - 260.8</td><td>258.2</td><td>269.5 / 274.9</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>2059</td><td>川湖</td><td class='num'>4,700</td><td class='num'>4,930</td><td class='num'>5,120</td><td class='num'>4,615</td><td class='num'>537</td><td>S core</td><td>4,592 - 4,638</td><td>4,592</td><td>5,120 / 5,222</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='neutral-row'><td>3661</td><td>世芯-KY</td><td class='num'>4,300</td><td class='num'>4,530</td><td class='num'>4,575</td><td class='num'>4,230</td><td class='num'>2,102</td><td>S core</td><td>4,209 - 4,251</td><td>4,209</td><td>4,575 / 4,667</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='neutral-row'><td>2454</td><td>聯發科</td><td class='num'>4,410</td><td class='num'>4,620</td><td class='num'>4,685</td><td class='num'>4,270</td><td class='num'>14,419</td><td>Watch</td><td>4,249 - 4,291</td><td>4,249</td><td>4,685 / 4,779</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>4958</td><td>臻鼎-KY</td><td class='num'>486</td><td class='num'>521</td><td class='num'>522</td><td class='num'>479</td><td class='num'>18,813</td><td>A attack</td><td>476.6 - 481.4</td><td>476.6</td><td>522 / 532.4</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='neutral-row'><td>3711</td><td>日月光投控</td><td class='num'>627</td><td class='num'>626</td><td class='num'>668</td><td class='num'>617</td><td class='num'>33,499</td><td>A attack</td><td>613.9 - 620.1</td><td>613.9</td><td>668 / 681.4</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='neutral-row'><td>2449</td><td>京元電子</td><td class='num'>320</td><td class='num'>315.5</td><td class='num'>334</td><td class='num'>312</td><td class='num'>70,797</td><td>A attack</td><td>310.4 - 313.6</td><td>310.4</td><td>334 / 340.7</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>2368</td><td>金像電</td><td class='num'>1,305</td><td class='num'>1,395</td><td class='num'>1,420</td><td class='num'>1,290</td><td class='num'>4,749</td><td>A attack</td><td>1,284 - 1,296</td><td>1,284</td><td>1,420 / 1,448</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='neutral-row'><td>3037</td><td>欣興</td><td class='num'>1,025</td><td class='num'>1,125</td><td class='num'>1,130</td><td class='num'>1,000</td><td class='num'>23,704</td><td>A attack</td><td>995 - 1,005</td><td>995</td><td>1,130 / 1,153</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='risk-row'><td>8046</td><td>南電</td><td class='num'>850</td><td class='num'>905</td><td class='num'>909</td><td class='num'>837</td><td class='num'>18,748</td><td>A attack</td><td>832.8 - 841.2</td><td>832.8</td><td>909 / 927.2</td><td><span class='tag risk'>Risk, defend</span></td></tr>
-<tr class='neutral-row'><td>3189</td><td>景碩</td><td class='num'>681</td><td class='num'>702</td><td class='num'>702</td><td class='num'>654</td><td class='num'>7,449</td><td>A attack</td><td>650.7 - 657.3</td><td>650.7</td><td>702 / 716</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='watch-row'><td>6831</td><td>邁科</td><td class='num'>790</td><td class='num'>830</td><td class='num'>850</td><td class='num'>779</td><td class='num'>473</td><td>A attack</td><td>775.1 - 782.9</td><td>775.1</td><td>850 / 867</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>2455</td><td>全新</td><td class='num'>391.5</td><td class='num'>413</td><td class='num'>420</td><td class='num'>391.5</td><td class='num'>2,139</td><td>Watch</td><td>389.5 - 393.5</td><td>389.5</td><td>420 / 428.4</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>5347</td><td>世界</td><td class='num'>161.5</td><td class='num'>167.5</td><td class='num'>170.5</td><td class='num'>160</td><td class='num'>30,934</td><td>Watch</td><td>159.2 - 160.8</td><td>159.2</td><td>170.5 / 173.9</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='neutral-row'><td>8086</td><td>宏捷科</td><td class='num'>165.5</td><td class='num'>174.5</td><td class='num'>175.5</td><td class='num'>161</td><td class='num'>9,583</td><td>Watch</td><td>160.2 - 161.8</td><td>160.2</td><td>175.5 / 179</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='risk-row'><td>2301</td><td>光寶科</td><td class='num'>230.5</td><td class='num'>242</td><td class='num'>242</td><td class='num'>227</td><td class='num'>52,978</td><td>Watch</td><td>225.9 - 228.1</td><td>225.9</td><td>242 / 246.8</td><td><span class='tag risk'>Risk, defend</span></td></tr>
-<tr class='neutral-row'><td>2408</td><td>南亞科</td><td class='num'>324</td><td class='num'>310</td><td class='num'>339</td><td class='num'>306</td><td class='num'>222,654</td><td>Watch</td><td>304.5 - 307.5</td><td>304.5</td><td>339 / 345.8</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='neutral-row'><td>2356</td><td>英業達</td><td class='num'>63.9</td><td class='num'>62</td><td class='num'>67.3</td><td class='num'>61.3</td><td class='num'>135,032</td><td>Watch</td><td>60.99 - 61.61</td><td>60.99</td><td>67.3 / 68.65</td><td><span class='tag neutral'>Watch</span></td></tr>
-<tr class='warn-row'><td>3665</td><td>貿聯-KY</td><td class='num'>2,115</td><td class='num'>2,030</td><td class='num'>2,115</td><td class='num'>1,950</td><td class='num'>2,786</td><td>Watch</td><td>1,940 - 1,960</td><td>1,940</td><td>2,115 / 2,157</td><td><span class='tag warn'>Strong, do not chase</span></td></tr>
-<tr class='watch-row'><td>1504</td><td>東元</td><td class='num'>70.9</td><td class='num'>71.8</td><td class='num'>73.9</td><td class='num'>70.8</td><td class='num'>21,146</td><td>Watch</td><td>70.45 - 71.15</td><td>70.45</td><td>73.9 / 75.38</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>3715</td><td>定穎投控</td><td class='num'>171</td><td class='num'>178.5</td><td class='num'>180</td><td class='num'>170</td><td class='num'>9,366</td><td>Watch</td><td>169.2 - 170.9</td><td>169.2</td><td>180 / 183.6</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>52</td><td>富邦科技</td><td class='num'>59.4</td><td class='num'>61.25</td><td class='num'>61.55</td><td class='num'>59</td><td class='num'>46,573</td><td>Watch</td><td>58.71 - 59.3</td><td>58.71</td><td>61.55 / 62.78</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>50</td><td>元大台灣50</td><td class='num'>100.5</td><td class='num'>104</td><td class='num'>104.3</td><td class='num'>100.1</td><td class='num'>140,355</td><td>Watch</td><td>99.6 - 100.6</td><td>99.6</td><td>104.3 / 106.3</td><td><span class='tag stale'>Near low, wait</span></td></tr>
-<tr class='watch-row'><td>00403A</td><td>主動統一升級50</td><td class='num'>10.47</td><td class='num'>10.87</td><td class='num'>10.89</td><td class='num'>10.4</td><td class='num'>805,065</td><td>ETF</td><td>10.35 - 10.45</td><td>10.35</td><td>10.89 / 11.11</td><td><span class='tag stale'>Near low, wait</span></td></tr>
+<tr class='neutral-row'><td>2330</td><td>台積電</td><td class='num'>2,295</td><td class='num'>2,350</td><td class='num'>2,360</td><td class='num'>2,270</td><td class='num'>36,837</td><td>S級核心</td><td>2,259 - 2,281</td><td>2,259</td><td>2,360 / 2,407</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>2308</td><td>台達電</td><td class='num'>2,390</td><td class='num'>2,485</td><td class='num'>2,520</td><td class='num'>2,370</td><td class='num'>10,213</td><td>S級核心</td><td>2,358 - 2,382</td><td>2,358</td><td>2,520 / 2,570</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>2383</td><td>台光電</td><td class='num'>5,055</td><td class='num'>5,300</td><td class='num'>5,515</td><td class='num'>5,025</td><td class='num'>1,863</td><td>S級核心</td><td>5,000 - 5,050</td><td>5,000</td><td>5,515 / 5,625</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>3017</td><td>奇鋐</td><td class='num'>2,580</td><td class='num'>2,740</td><td class='num'>2,795</td><td class='num'>2,540</td><td class='num'>4,552</td><td>S級核心</td><td>2,527 - 2,553</td><td>2,527</td><td>2,795 / 2,851</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='risk-row'><td>2345</td><td>智邦</td><td class='num'>2,435</td><td class='num'>2,575</td><td class='num'>2,580</td><td class='num'>2,395</td><td class='num'>4,510</td><td>S級核心</td><td>2,383 - 2,407</td><td>2,383</td><td>2,580 / 2,632</td><td><span class='tag risk'>偏弱，先不要加碼</span></td></tr>
+<tr class='neutral-row'><td>2317</td><td>鴻海</td><td class='num'>263</td><td class='num'>265</td><td class='num'>269.5</td><td class='num'>259.5</td><td class='num'>71,785</td><td>S級核心</td><td>258.2 - 260.8</td><td>258.2</td><td>269.5 / 274.9</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>2059</td><td>川湖</td><td class='num'>4,700</td><td class='num'>4,930</td><td class='num'>5,120</td><td class='num'>4,615</td><td class='num'>537</td><td>S級核心</td><td>4,592 - 4,638</td><td>4,592</td><td>5,120 / 5,222</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='neutral-row'><td>3661</td><td>世芯-KY</td><td class='num'>4,300</td><td class='num'>4,530</td><td class='num'>4,575</td><td class='num'>4,230</td><td class='num'>2,102</td><td>S級核心</td><td>4,209 - 4,251</td><td>4,209</td><td>4,575 / 4,667</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='neutral-row'><td>2454</td><td>聯發科</td><td class='num'>4,410</td><td class='num'>4,620</td><td class='num'>4,685</td><td class='num'>4,270</td><td class='num'>14,419</td><td>觀察</td><td>4,249 - 4,291</td><td>4,249</td><td>4,685 / 4,779</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>4958</td><td>臻鼎-KY</td><td class='num'>486</td><td class='num'>521</td><td class='num'>522</td><td class='num'>479</td><td class='num'>18,813</td><td>A級攻擊</td><td>476.6 - 481.4</td><td>476.6</td><td>522 / 532.4</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='neutral-row'><td>3711</td><td>日月光投控</td><td class='num'>627</td><td class='num'>626</td><td class='num'>668</td><td class='num'>617</td><td class='num'>33,499</td><td>A級攻擊</td><td>613.9 - 620.1</td><td>613.9</td><td>668 / 681.4</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='neutral-row'><td>2449</td><td>京元電子</td><td class='num'>320</td><td class='num'>315.5</td><td class='num'>334</td><td class='num'>312</td><td class='num'>70,797</td><td>A級攻擊</td><td>310.4 - 313.6</td><td>310.4</td><td>334 / 340.7</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>2368</td><td>金像電</td><td class='num'>1,305</td><td class='num'>1,395</td><td class='num'>1,420</td><td class='num'>1,290</td><td class='num'>4,749</td><td>A級攻擊</td><td>1,284 - 1,296</td><td>1,284</td><td>1,420 / 1,448</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='neutral-row'><td>3037</td><td>欣興</td><td class='num'>1,025</td><td class='num'>1,125</td><td class='num'>1,130</td><td class='num'>1,000</td><td class='num'>23,704</td><td>A級攻擊</td><td>995 - 1,005</td><td>995</td><td>1,130 / 1,153</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='risk-row'><td>8046</td><td>南電</td><td class='num'>850</td><td class='num'>905</td><td class='num'>909</td><td class='num'>837</td><td class='num'>18,748</td><td>A級攻擊</td><td>832.8 - 841.2</td><td>832.8</td><td>909 / 927.2</td><td><span class='tag risk'>偏弱，先不要加碼</span></td></tr>
+<tr class='neutral-row'><td>3189</td><td>景碩</td><td class='num'>681</td><td class='num'>702</td><td class='num'>702</td><td class='num'>654</td><td class='num'>7,449</td><td>A級攻擊</td><td>650.7 - 657.3</td><td>650.7</td><td>702 / 716</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='watch-row'><td>6831</td><td>邁科</td><td class='num'>790</td><td class='num'>830</td><td class='num'>850</td><td class='num'>779</td><td class='num'>473</td><td>A級攻擊</td><td>775.1 - 782.9</td><td>775.1</td><td>850 / 867</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>2455</td><td>全新</td><td class='num'>391.5</td><td class='num'>413</td><td class='num'>420</td><td class='num'>391.5</td><td class='num'>2,139</td><td>觀察</td><td>389.5 - 393.5</td><td>389.5</td><td>420 / 428.4</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>5347</td><td>世界</td><td class='num'>161.5</td><td class='num'>167.5</td><td class='num'>170.5</td><td class='num'>160</td><td class='num'>30,934</td><td>觀察</td><td>159.2 - 160.8</td><td>159.2</td><td>170.5 / 173.9</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='neutral-row'><td>8086</td><td>宏捷科</td><td class='num'>165.5</td><td class='num'>174.5</td><td class='num'>175.5</td><td class='num'>161</td><td class='num'>9,583</td><td>觀察</td><td>160.2 - 161.8</td><td>160.2</td><td>175.5 / 179</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='risk-row'><td>2301</td><td>光寶科</td><td class='num'>230.5</td><td class='num'>242</td><td class='num'>242</td><td class='num'>227</td><td class='num'>52,978</td><td>觀察</td><td>225.9 - 228.1</td><td>225.9</td><td>242 / 246.8</td><td><span class='tag risk'>偏弱，先不要加碼</span></td></tr>
+<tr class='neutral-row'><td>2408</td><td>南亞科</td><td class='num'>324</td><td class='num'>310</td><td class='num'>339</td><td class='num'>306</td><td class='num'>222,654</td><td>觀察</td><td>304.5 - 307.5</td><td>304.5</td><td>339 / 345.8</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='neutral-row'><td>2356</td><td>英業達</td><td class='num'>63.9</td><td class='num'>62</td><td class='num'>67.3</td><td class='num'>61.3</td><td class='num'>135,032</td><td>觀察</td><td>60.99 - 61.61</td><td>60.99</td><td>67.3 / 68.65</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='warn-row'><td>3665</td><td>貿聯-KY</td><td class='num'>2,115</td><td class='num'>2,030</td><td class='num'>2,115</td><td class='num'>1,950</td><td class='num'>2,786</td><td>觀察</td><td>1,940 - 1,960</td><td>1,940</td><td>2,115 / 2,157</td><td><span class='tag warn'>有強，但不要追高</span></td></tr>
+<tr class='watch-row'><td>1504</td><td>東元</td><td class='num'>70.9</td><td class='num'>71.8</td><td class='num'>73.9</td><td class='num'>70.8</td><td class='num'>21,146</td><td>觀察</td><td>70.45 - 71.15</td><td>70.45</td><td>73.9 / 75.38</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>3715</td><td>定穎投控</td><td class='num'>171</td><td class='num'>178.5</td><td class='num'>180</td><td class='num'>170</td><td class='num'>9,366</td><td>觀察</td><td>169.2 - 170.9</td><td>169.2</td><td>180 / 183.6</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>52</td><td>富邦科技</td><td class='num'>59.4</td><td class='num'>61.25</td><td class='num'>61.55</td><td class='num'>59</td><td class='num'>46,573</td><td>觀察</td><td>58.71 - 59.3</td><td>58.71</td><td>61.55 / 62.78</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>50</td><td>元大台灣50</td><td class='num'>100.5</td><td class='num'>104</td><td class='num'>104.3</td><td class='num'>100.1</td><td class='num'>140,355</td><td>觀察</td><td>99.6 - 100.6</td><td>99.6</td><td>104.3 / 106.3</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
+<tr class='watch-row'><td>00403A</td><td>主動統一升級50</td><td class='num'>10.47</td><td class='num'>10.87</td><td class='num'>10.89</td><td class='num'>10.4</td><td class='num'>805,065</td><td>ETF底倉</td><td>10.35 - 10.45</td><td>10.35</td><td>10.89 / 11.11</td><td><span class='tag stale'>靠近低點，等穩定</span></td></tr>
         </tbody>
       </table>
     </section>
