@@ -1,8 +1,4 @@
-
-# 小駿媽媽AI網頁一鍵更新
-# 讀取 C:\DDE\yuanta_dde.xlsx 目前 Excel 內的即時值，產生 index.html，並嘗試 git push。
-
-$ErrorActionPreference = "Stop"
+﻿$ErrorActionPreference = "Stop"
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
 $DdePath = "C:\DDE\yuanta_dde.xlsx"
@@ -33,74 +29,78 @@ function Fmt($v) {
 function GetTopic($code, $name) {
     $s = [string]$code
     switch ($s) {
-        "2330" { return "S級｜大盤方向盤" }
-        "2308" { return "S級｜AI電源" }
-        "2383" { return "S級｜AI CCL" }
-        "3017" { return "S級｜散熱" }
-        "2345" { return "S級｜AI網通" }
-        "2317" { return "S級｜AI伺服器" }
-        "2059" { return "S級｜機構件" }
-        "3661" { return "S級｜ASIC" }
-        "4958" { return "A級｜AI PCB" }
-        "3711" { return "A級｜封測" }
-        "2449" { return "A級｜AI測試" }
-        "2368" { return "A級｜AI PCB" }
-        "3037" { return "A級｜ABF/PCB" }
-        "8046" { return "A級｜ABF載板" }
-        "3189" { return "A級｜載板" }
-        "6831" { return "A級｜高波動" }
-        "0052" { return "ETF｜科技底倉" }
-        "0050" { return "ETF｜台灣50" }
-        "00403A" { return "ETF｜升級50" }
-        default { return "觀察" }
+        "2330" { return "S core" }
+        "2308" { return "S core" }
+        "2383" { return "S core" }
+        "3017" { return "S core" }
+        "2345" { return "S core" }
+        "2317" { return "S core" }
+        "2059" { return "S core" }
+        "3661" { return "S core" }
+        "4958" { return "A attack" }
+        "3711" { return "A attack" }
+        "2449" { return "A attack" }
+        "2368" { return "A attack" }
+        "3037" { return "A attack" }
+        "8046" { return "A attack" }
+        "3189" { return "A attack" }
+        "6831" { return "A attack" }
+        "0052" { return "ETF" }
+        "0050" { return "ETF" }
+        "00403A" { return "ETF" }
+        default { return "Watch" }
     }
 }
 
 function GetSignal($price, $open, $high, $low, $prev) {
-    $p = ToNumber $price; $o = ToNumber $open; $h = ToNumber $high; $l = ToNumber $low; $pr = ToNumber $prev
-    if ($null -eq $p) { return @{Text="無資料"; Class="stale-row"; Tag="stale"} }
+    $p = ToNumber $price
+    $h = ToNumber $high
+    $l = ToNumber $low
+    $pr = ToNumber $prev
+    if ($null -eq $p) { return @{Text="No data"; Class="stale-row"; Tag="stale"} }
     if ($null -ne $h -and $null -ne $l -and $h -ne $l) {
         $pos = ($p - $l) / ($h - $l)
-        if ($pos -le 0.18) { return @{Text="收近低點，等止跌"; Class="watch-row"; Tag="watch"} }
-        if ($pos -ge 0.82) { return @{Text="偏強，不追高"; Class="warn-row"; Tag="warn"} }
+        if ($pos -le 0.18) { return @{Text="Near low, wait"; Class="watch-row"; Tag="stale"} }
+        if ($pos -ge 0.82) { return @{Text="Strong, do not chase"; Class="warn-row"; Tag="warn"} }
     }
     if ($null -ne $pr -and $pr -ne 0) {
         $chg = ($p - $pr) / $pr
-        if ($chg -le -0.06) { return @{Text="跌幅較大，先防守"; Class="risk-row"; Tag="risk"} }
-        if ($chg -ge 0.04) { return @{Text="轉強觀察，不追高"; Class="warn-row"; Tag="warn"} }
+        if ($chg -le -0.06) { return @{Text="Risk, defend"; Class="risk-row"; Tag="risk"} }
+        if ($chg -ge 0.04) { return @{Text="Strong watch"; Class="warn-row"; Tag="warn"} }
     }
-    return @{Text="觀察"; Class="neutral-row"; Tag="neutral"}
+    return @{Text="Watch"; Class="neutral-row"; Tag="neutral"}
 }
 
 function LowZone($low, $price) {
-    $l = ToNumber $low; $p = ToNumber $price
+    $l = ToNumber $low
+    $p = ToNumber $price
     if ($null -eq $l -and $null -eq $p) { return "" }
     if ($null -eq $l) { $l = $p }
-    return ("{0}～{1}" -f (Fmt ($l*0.995)), (Fmt ($l*1.005)))
+    return ("{0} - {1}" -f (Fmt ($l*0.995)), (Fmt ($l*1.005)))
 }
 
 function RiskLine($low, $price) {
-    $l = ToNumber $low; $p = ToNumber $price
+    $l = ToNumber $low
+    $p = ToNumber $price
     if ($null -eq $l -and $null -eq $p) { return "" }
     if ($null -eq $l) { $l = $p }
     return Fmt ($l*0.995)
 }
 
 function Pressure($high, $price) {
-    $h = ToNumber $high; $p = ToNumber $price
+    $h = ToNumber $high
+    $p = ToNumber $price
     if ($null -eq $h -and $null -eq $p) { return "" }
     if ($null -eq $h) { $h = $p }
     return ("{0} / {1}" -f (Fmt $h), (Fmt ($h*1.02)))
 }
 
-Write-Host "讀取元大報價檔：$DdePath"
+Write-Host "Reading DDE file: $DdePath"
 
 if (!(Test-Path $DdePath)) {
-    throw "找不到 $DdePath，請先用點金靈 DDE 輸出並另存成 yuanta_dde.xlsx"
+    throw "Cannot find C:\DDE\yuanta_dde.xlsx. Please start Yuanta DDE first."
 }
 
-# 連到正在執行的 Excel；讀取開著的 DDE 活頁簿，確保讀到即時跳動值。
-$excel = $null
 try {
     $excel = [Runtime.InteropServices.Marshal]::GetActiveObject("Excel.Application")
 } catch {
@@ -110,47 +110,29 @@ try {
 
 $wb = $null
 foreach ($book in $excel.Workbooks) {
-    if ($book.FullName -eq $DdePath) {
-        $wb = $book
-        break
-    }
+    if ($book.FullName -eq $DdePath) { $wb = $book; break }
 }
-if ($null -eq $wb) {
-    $wb = $excel.Workbooks.Open($DdePath)
-}
+if ($null -eq $wb) { $wb = $excel.Workbooks.Open($DdePath) }
 
 $ws = $wb.Worksheets.Item("Sheet1")
 $used = $ws.UsedRange
 $rowCount = $used.Rows.Count
-$colCount = $used.Columns.Count
 
-$headers = @{}
-for ($c = 1; $c -le $colCount; $c++) {
-    $name = [string]$ws.Cells.Item(1,$c).Text
-    if ($name -ne "") { $headers[$name.Trim()] = $c }
-}
-
-$required = @("代號","名稱","昨收","開盤","成交價","最高","最低","成交量")
-foreach ($r in $required) {
-    if (!$headers.ContainsKey($r)) {
-        throw "yuanta_dde.xlsx 第1列找不到欄位：$r。請確認 DDE 欄位標題。"
-    }
-}
-
+# Current yuanta_dde.xlsx layout:
+# A code, B name, C prev, D open, E price, G high, H low, J volume
 $records = @()
 for ($r = 2; $r -le $rowCount; $r++) {
-    $code = [string]$ws.Cells.Item($r, $headers["代號"]).Text
-    $name = [string]$ws.Cells.Item($r, $headers["名稱"]).Text
-    $price = $ws.Cells.Item($r, $headers["成交價"]).Value2
+    $code = [string]$ws.Cells.Item($r, 1).Text
+    $name = [string]$ws.Cells.Item($r, 2).Text
+    $prev = $ws.Cells.Item($r, 3).Value2
+    $open = $ws.Cells.Item($r, 4).Value2
+    $price = $ws.Cells.Item($r, 5).Value2
+    $high = $ws.Cells.Item($r, 7).Value2
+    $low = $ws.Cells.Item($r, 8).Value2
+    $vol = $ws.Cells.Item($r, 10).Value2
     if (($code.Trim() -eq "") -and ($name.Trim() -eq "") -and ($null -eq $price)) { continue }
 
-    $prev = $ws.Cells.Item($r, $headers["昨收"]).Value2
-    $open = $ws.Cells.Item($r, $headers["開盤"]).Value2
-    $high = $ws.Cells.Item($r, $headers["最高"]).Value2
-    $low = $ws.Cells.Item($r, $headers["最低"]).Value2
-    $vol = $ws.Cells.Item($r, $headers["成交量"]).Value2
     $sig = GetSignal $price $open $high $low $prev
-
     $records += [pscustomobject]@{
         Code = $code.Trim()
         Name = $name.Trim()
@@ -170,43 +152,33 @@ for ($r = 2; $r -le $rowCount; $r++) {
     }
 }
 
-$updateTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-
-# 重要持股與家人風險提醒
 function FindRec($code) {
-    return $records | Where-Object { $_.Code -eq $code -or ($code -eq "0052" -and $_.Name -like "*富邦科技*") -or ($code -eq "0050" -and $_.Name -like "*台灣50*") } | Select-Object -First 1
+    return $records | Where-Object { $_.Code -eq $code } | Select-Object -First 1
 }
 
-$tsmc = FindRec "2330"
-$zd = FindRec "4958"
-$jyk = FindRec "2449"
-$teco = FindRec "1504"
-$dy = FindRec "3715"
-$etf52 = FindRec "0052"
-$etf403 = FindRec "00403A"
-
 $focusCodes = @("2330","2308","2383","3017","2345","2317","2059","3661","4958","3711","2449","2368","3037","8046","3189","6831","0052","0050","00403A","1504","3715")
-$core = $records | Where-Object { $focusCodes -contains $_.Code -or $_.Name -like "*富邦科技*" -or $_.Name -like "*升級50*" } | Select-Object -First 30
+$core = $records | Where-Object { $focusCodes -contains $_.Code } | Select-Object -First 30
 
 function RowHtml($x) {
     $tagClass = switch ($x.TagClass) {
-        "risk" {"risk"}
-        "warn" {"warn"}
-        "watch" {"stale"}
-        "stale" {"stale"}
-        default {"neutral"}
+        "risk" { "risk" }
+        "warn" { "warn" }
+        "stale" { "stale" }
+        default { "neutral" }
     }
     return "<tr class='$($x.RowClass)'><td>$(HtmlEncode $x.Code)</td><td>$(HtmlEncode $x.Name)</td><td class='num'>$(Fmt $x.Price)</td><td class='num'>$(Fmt $x.Open)</td><td class='num'>$(Fmt $x.High)</td><td class='num'>$(Fmt $x.Low)</td><td class='num'>$(Fmt $x.Volume)</td><td>$(HtmlEncode $x.Topic)</td><td>$(HtmlEncode $x.LowZone)</td><td>$(HtmlEncode $x.RiskLine)</td><td>$(HtmlEncode $x.Pressure)</td><td><span class='tag $tagClass'>$(HtmlEncode $x.Signal)</span></td></tr>"
 }
 
 $coreRows = ($core | ForEach-Object { RowHtml $_ }) -join "`n"
 $allRows = ($records | ForEach-Object { RowHtml $_ }) -join "`n"
+$updateTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 
+$zd = FindRec "4958"
 $zdPrice = if ($zd) { ToNumber $zd.Price } else { $null }
-$momZdText = "臻鼎媽媽成本509、祐玄成本535；先看480/476是否守住，站回500再減壓。"
+$zdNote = "4958 cost notes: Mom 509, Yushen 535. Watch 480/476 first; above 500 reduces pressure."
 if ($null -ne $zdPrice) {
-    if ($zdPrice -ge 500) { $momZdText = "臻鼎已站回500附近，媽媽509壓力下降；祐玄535仍需分段解套。" }
-    elseif ($zdPrice -lt 476) { $momZdText = "臻鼎跌破476風險線，不加碼攤平，先防守。" }
+    if ($zdPrice -ge 500) { $zdNote = "4958 is back near/above 500. Mom 509 pressure is lower; Yushen 535 still needs staged recovery." }
+    elseif ($zdPrice -lt 476) { $zdNote = "4958 is below 476 risk line. Do not average down weakly; defend first." }
 }
 
 $html = @"
@@ -215,9 +187,9 @@ $html = @"
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>小駿台股 AI 投資自動更新報告</title>
+  <title>Mom AI Report</title>
   <style>
-    :root { --ink:#1d2430; --muted:#667085; --line:#d8dee8; --bg:#f5f7fb; --panel:#fff; --green:#147a5a; --red:#b42318; --amber:#a15c07; --blue:#2364aa; }
+    :root { --ink:#1d2430; --muted:#667085; --line:#d8dee8; --bg:#f5f7fb; --panel:#fff; --green:#147a5a; --red:#b42318; --amber:#a15c07; }
     * { box-sizing:border-box; }
     body { margin:0; background:var(--bg); color:var(--ink); font-family:"Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif; line-height:1.55; }
     .wrap { width:min(1180px,calc(100% - 32px)); margin:0 auto; }
@@ -231,14 +203,11 @@ $html = @"
     .metric { background:#fbfcfe; border:1px solid var(--line); border-radius:9px; padding:12px; }
     .metric strong { display:block; font-size:22px; }
     .metric span { display:block; color:var(--muted); font-size:13px; margin-top:4px; }
-    .chips { display:flex; flex-wrap:wrap; gap:8px; }
-    .chip { display:inline-flex; align-items:center; min-height:32px; padding:5px 10px; border-radius:999px; background:#eef3f8; border:1px solid #d7e0eb; }
     table { width:100%; border-collapse:collapse; font-size:14px; }
     th,td { border-bottom:1px solid var(--line); padding:9px 8px; text-align:left; vertical-align:top; }
-    th { background:#f0f4f8; color:#344054; position:sticky; top:0; }
+    th { background:#f0f4f8; color:#344054; }
     .num { font-variant-numeric:tabular-nums; white-space:nowrap; }
     .tag { display:inline-flex; min-height:28px; align-items:center; border-radius:999px; padding:3px 9px; background:#eef3f8; border:1px solid #d7e0eb; white-space:nowrap; }
-    .good { color:var(--green); background:#e7f5ee; border-color:#bee8d3; }
     .warn { color:var(--amber); background:#fff2d8; border-color:#f4d18a; }
     .risk { color:var(--red); background:#fde9e7; border-color:#f3b9b4; }
     .stale { color:#475467; background:#f2f4f7; border-color:#d0d5dd; }
@@ -246,7 +215,6 @@ $html = @"
     tr.warn-row td { background:#fffaf0; }
     tr.watch-row td { background:#f8fafc; color:#475467; }
     .note { color:var(--muted); font-size:13px; margin:8px 0 0; }
-    .cardline { margin:8px 0; }
     @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { font-size:13px; } }
     @media (max-width:640px) { .grid { grid-template-columns:1fr; } th:nth-child(4),td:nth-child(4),th:nth-child(7),td:nth-child(7),th:nth-child(10),td:nth-child(10) { display:none; } }
   </style>
@@ -254,45 +222,35 @@ $html = @"
 <body>
   <header>
     <div class="wrap">
-      <h1>小駿台股 AI 投資自動更新報告</h1>
-      <p class="lead">資料由元大點金靈 DDE → yuanta_dde.xlsx → 一鍵更新腳本產生。媽媽網頁不顯示成本與持股數。</p>
+      <h1>Mom AI Report</h1>
+      <p class="lead">Data source: Yuanta DDE -> C:\DDE\yuanta_dde.xlsx -> one-click updater. Cost and share count are not shown on this public page.</p>
       <div class="grid">
-        <div class="metric"><strong>$updateTime</strong><span>網頁更新時間（台北）</span></div>
-        <div class="metric"><strong>V12/DDE</strong><span>資料來源</span></div>
-        <div class="metric"><strong>一鍵更新</strong><span>GitHub Pages</span></div>
-        <div class="metric"><strong>風控優先</strong><span>做得少，賺得多</span></div>
+        <div class="metric"><strong>$updateTime</strong><span>Update time</span></div>
+        <div class="metric"><strong>DDE/V12</strong><span>Source</span></div>
+        <div class="metric"><strong>Risk first</strong><span>No weak averaging down</span></div>
+        <div class="metric"><strong>Wait support</strong><span>Do fewer, earn more</span></div>
       </div>
     </div>
   </header>
   <main class="wrap">
     <section>
-      <h2>優先提醒</h2>
-      <p class="cardline">臻鼎-KY：$momZdText</p>
-      <p class="cardline">媽媽帳戶：京元電子、定穎投控、東元仍以成本防守與不弱勢攤平為主。</p>
-      <p class="cardline">操作原則：開高不追、急跌不攤、等回測不破與止跌訊號。</p>
-      <div class="chips">
-        <span class="chip">綠色：接近甜區/可觀察</span>
-        <span class="chip">黃色：偏強但不追</span>
-        <span class="chip">紅色：風險警訊</span>
-        <span class="chip">灰色：收近低點，等止跌</span>
-      </div>
-      <p class="note">這是投資觀察表，不是保證獲利或下單指令。</p>
+      <h2>Priority notes</h2>
+      <p>$zdNote</p>
+      <p class="note">This is a watchlist and risk-control page, not a guaranteed trading signal.</p>
     </section>
-
     <section>
-      <h2>核心觀察</h2>
+      <h2>Core watchlist</h2>
       <table>
-        <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>分類</th><th>甜區觀察</th><th>風險線</th><th>壓力</th><th>訊號</th></tr></thead>
+        <thead><tr><th>Code</th><th>Name</th><th>Price</th><th>Open</th><th>High</th><th>Low</th><th>Vol</th><th>Group</th><th>Sweet zone</th><th>Risk</th><th>Pressure</th><th>Signal</th></tr></thead>
         <tbody>
 $coreRows
         </tbody>
       </table>
     </section>
-
     <section>
-      <h2>全部追蹤清單</h2>
+      <h2>Full list</h2>
       <table>
-        <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>分類</th><th>甜區觀察</th><th>風險線</th><th>壓力</th><th>訊號</th></tr></thead>
+        <thead><tr><th>Code</th><th>Name</th><th>Price</th><th>Open</th><th>High</th><th>Low</th><th>Vol</th><th>Group</th><th>Sweet zone</th><th>Risk</th><th>Pressure</th><th>Signal</th></tr></thead>
         <tbody>
 $allRows
         </tbody>
@@ -304,9 +262,8 @@ $allRows
 "@
 
 [System.IO.File]::WriteAllText($IndexPath, $html, [System.Text.Encoding]::UTF8)
-Write-Host "已產生：$IndexPath"
+Write-Host "Created index.html"
 
-# 嘗試 git push
 Push-Location $RepoPath
 try {
     if (Test-Path ".git") {
@@ -315,13 +272,12 @@ try {
         if ($status) {
             git commit -m "Update mom AI report from DDE" | Out-Null
             git push | Out-Null
-            Write-Host "已推送到 GitHub Pages。"
+            Write-Host "Pushed to GitHub Pages."
         } else {
-            Write-Host "index.html 沒有變更，不需要推送。"
+            Write-Host "No index.html changes to push."
         }
     } else {
-        Write-Host "此資料夾不是 Git 專案，已只產生 index.html，未自動 push。"
-        Write-Host "請把本檔案放在 mom-ai-report 專案資料夾內執行。"
+        Write-Host "This folder is not a Git repository. index.html was created only."
     }
 } finally {
     Pop-Location
