@@ -15,6 +15,17 @@
     main { padding:22px 0 44px; }
     section { background:#FFFFFF; border:1px solid #D7DEE8; border-radius:14px; padding:18px; margin-bottom:16px; }
     .lead { color:#384253; margin:0; font-size:17px; }
+
+    .top-line { display:flex; flex-wrap:wrap; gap:10px; align-items:center; color:#384253; font-size:17px; margin:0; }
+    .update-inline { font-weight:800; color:#0F172A; background:#FFFFFF; border:1px solid #CBD5E1; border-radius:999px; padding:4px 10px; }
+    .radar-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .radar-pill { display:inline-flex; align-items:center; border-radius:999px; padding:7px 11px; border:2px solid #CBD5E1; background:#FFF; font-weight:800; }
+    .radar-sweet { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
+    .radar-risk { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
+    .radar-warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
+    .radar-watch,.radar-neutral { color:#334155; background:#F8FAFC; border-color:#CBD5E1; }
+    .infra-pill { border-style:dashed; }
+
     .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px; }
     .metric { background:#FFFFFF; border:1px solid #D7DEE8; border-radius:12px; padding:12px; }
     .metric strong { display:block; font-size:22px; }
@@ -79,12 +90,12 @@
   <header>
     <div class="wrap">
       <h1>AI投資觀察報告</h1>
-      <p class="lead">盤中資料自動更新｜不顯示成本與持股資訊。</p>
+      <p class="top-line">盤中資料自動更新｜不顯示成本與持股資訊 <span class="update-inline">更新時間：2026-05-30 04:08:43</span></p>
       <div class="grid">
-        <div class="metric"><strong>2026-05-30 04:07:42</strong><span>更新時間</span></div>
         <div class="metric"><strong>即時觀察</strong><span>盤中更新</span></div>
         <div class="metric"><strong>風控優先</strong><span>不弱勢攤平</span></div>
         <div class="metric"><strong>S/A主線</strong><span>真AI＋真電力</span></div>
+        <div class="metric"><strong>AI主線雷達</strong><span>資金強弱</span></div>
       </div>
     </div>
   </header>
@@ -93,8 +104,8 @@
     <section>
       <h2>AI主線雷達</h2>
       <p class="note">先看資金在哪條主線，不急著從全部股票裡找。</p>
-      <div class="power-list">
-        <span class='power-pill'>AI晶片：⚪ 觀察</span><span class='power-pill'>AI伺服器：⚪ 觀察</span><span class='power-pill'>AI網通：⚪ 觀察</span><span class='power-pill'>AI電力：⚪ 觀察</span><span class='power-pill'>AI封裝：🟡 強勢不追</span><span class='power-pill'>記憶體：⚪ 觀察</span>
+      <div class="radar-list">
+        <span class='radar-pill radar-neutral'><strong>AI晶片：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI伺服器：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI網通：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI電力：</strong> ⚪ 觀察</span><span class='radar-pill radar-warn'><strong>AI封裝：</strong> 🟡 強勢不追</span><span class='radar-pill radar-neutral'><strong>記憶體：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI基礎建設：</strong> ⚪ 觀察</span>
       </div>
     </section>
 
@@ -109,9 +120,16 @@
     </section>
     <section>
       <h2>AI電力主線</h2>
-      <p class="note">這區是「真電力」觀察池，會跟著即時資料顯示現價與顏色訊號。</p>
+      <p class="note">這區只放重電/電網/資料中心供電股，不放中華電。</p>
       <div class="power-list">
-        <span class='power-pill power-warn'>1519 華城｜874</span><span class='power-pill'>1513 中興電｜166.5</span><span class='power-pill'>1503 士電｜219</span><span class='power-pill power-sweet'>1514 亞力｜125.5</span><span class='power-pill'>2412 中華電｜137</span>
+        <span class='power-pill power-warn'>1519 華城｜874</span><span class='power-pill'>1513 中興電｜166.5</span><span class='power-pill'>1503 士電｜219</span><span class='power-pill power-sweet'>1514 亞力｜125.5</span>
+      </div>
+    </section>
+    <section>
+      <h2>AI基礎建設</h2>
+      <p class="note">這區放資料中心、IDC、雲端、網路骨幹。2412 中華電屬於基建，不是重電。</p>
+      <div class="power-list">
+        <span class='power-pill infra-pill'>2412 中華電｜137</span>
       </div>
     </section>
     <section>
@@ -150,18 +168,24 @@
     </section>
     <section>
       <h2>A級攻擊主線</h2>
-      <p class="note">這區是主要波段池，等甜區與轉強，不追高。</p>
+      <p class="note">波段觀察池，只等甜區或轉強，不追高。</p>
       <table>
         <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>分類</th><th>可低接區</th><th>跌破先停手</th><th>反彈壓力</th><th>訊號</th></tr></thead>
         <tbody>
 <tr class='warn-row'><td>4958</td><td>臻鼎-KY</td><td class='num'>515</td><td class='num'>504</td><td class='num'>515</td><td class='num'>499.5</td><td class='num'>10,607</td><td>A級攻擊</td><td>497 - 502</td><td>497</td><td>515 / 525.3</td><td><span class='tag warn'>強勢高檔，不追高</span></td></tr>
 <tr class='sweet-row'><td>3711</td><td>日月光投控</td><td class='num'>611</td><td class='num'>642</td><td class='num'>644</td><td class='num'>608</td><td class='num'>41,547</td><td>A級攻擊</td><td>605 - 611</td><td>605</td><td>644 / 656.9</td><td><span class='tag sweet'>接近低點，可小買</span></td></tr>
 <tr class='warn-row'><td>2449</td><td>京元電子</td><td class='num'>328.5</td><td class='num'>329</td><td class='num'>329.5</td><td class='num'>311.5</td><td class='num'>67,261</td><td>A級攻擊</td><td>309.9 - 313.1</td><td>309.9</td><td>329.5 / 336.1</td><td><span class='tag warn'>強勢高檔，不追高</span></td></tr>
+<tr class='neutral-row'><td>2368</td><td>金像電</td><td class='num'>1,320</td><td class='num'>1,335</td><td class='num'>1,360</td><td class='num'>1,275</td><td class='num'>6,218</td><td>A級攻擊</td><td>1,269 - 1,281</td><td>1,269</td><td>1,360 / 1,387</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='neutral-row'><td>3037</td><td>欣興</td><td class='num'>1,055</td><td class='num'>1,090</td><td class='num'>1,095</td><td class='num'>1,035</td><td class='num'>20,357</td><td>A級攻擊</td><td>1,030 - 1,040</td><td>1,030</td><td>1,095 / 1,117</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='neutral-row'><td>8046</td><td>南電</td><td class='num'>848</td><td class='num'>860</td><td class='num'>867</td><td class='num'>825</td><td class='num'>16,981</td><td>A級攻擊</td><td>820.9 - 829.1</td><td>820.9</td><td>867 / 884.3</td><td><span class='tag neutral'>一般觀察</span></td></tr>
+<tr class='warn-row'><td>3189</td><td>景碩</td><td class='num'>729</td><td class='num'>707</td><td class='num'>746</td><td class='num'>704</td><td class='num'>6,914</td><td>A級攻擊</td><td>700.5 - 707.5</td><td>700.5</td><td>746 / 760.9</td><td><span class='tag warn'>漲多了，不追高</span></td></tr>
+<tr class='risk-row'><td>6831</td><td>邁科</td><td class='num'>742</td><td class='num'>808</td><td class='num'>809</td><td class='num'>717</td><td class='num'>2,103</td><td>A級攻擊</td><td>713.4 - 720.6</td><td>713.4</td><td>809 / 825.2</td><td><span class='tag risk'>跌太深，先停手</span></td></tr>
 <tr class='warn-row'><td>2455</td><td>全新</td><td class='num'>422</td><td class='num'>399</td><td class='num'>422</td><td class='num'>392</td><td class='num'>2,014</td><td>A級攻擊</td><td>390 - 394</td><td>390</td><td>422 / 430.4</td><td><span class='tag warn'>強勢高檔，不追高</span></td></tr>
 <tr class='sweet-row'><td>3665</td><td>貿聯-KY</td><td class='num'>2,085</td><td class='num'>2,315</td><td class='num'>2,315</td><td class='num'>2,085</td><td class='num'>2,547</td><td>觀察</td><td>2,075 - 2,095</td><td>2,075</td><td>2,315 / 2,361</td><td><span class='tag sweet'>很接近低點，可小買</span></td></tr>
         </tbody>
       </table>
     </section>
+
     <section>
       <h2>全部追蹤清單｜S/A與ETF觀察</h2>
       <table>
