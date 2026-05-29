@@ -22,7 +22,7 @@
     .strength-badge { display:inline-flex; align-items:center; border-radius:999px; padding:5px 10px; border:2px solid #CBD5E1; font-weight:900; white-space:nowrap; }
     .strength-main { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
     .strength-up { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
-    .strength-watch { color:#334155; background:#F8FAFC; border-color:#CBD5E1; }
+    .strength-watch { color:#334155; background:#F8FAFC; border-color:#F8FAFC; }
     .strength-cool { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
 
     .radar-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
@@ -30,7 +30,7 @@
     .radar-sweet { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
     .radar-risk { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
     .radar-warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
-    .radar-watch,.radar-neutral { color:#334155; background:#F8FAFC; border-color:#CBD5E1; }
+    .radar-watch,.radar-neutral { color:#334155; background:#F8FAFC; border-color:#F8FAFC; }
     .infra-pill { border-style:dashed; }
 
     .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px; }
@@ -54,8 +54,8 @@
     .sweet { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
     .warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
     .risk { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
-    .stale { color:#334155; background:#E2E8F0; border-color:#94A3B8; }
-    .neutral { color:#1F2937; background:#FFFFFF; border-color:#CBD5E1; }
+    .stale { color:#334155; background:#E2E8F0; border-color:#F1F5F9; }
+    .neutral { color:#1F2937; background:#FFFFFF; border-color:#F8FAFC; }
     tr.sweet-row td { background:#F0FDF4; }
     tr.risk-row td { background:#FEF2F2; }
     tr.warn-row td { background:#FFFBEB; }
@@ -68,7 +68,7 @@
     .alert-box li { margin:6px 0; }
     .alert-sweet { background:#F0FDF4; border-color:#86EFAC; color:#14532D; }
     .alert-risk { background:#FEF2F2; border-color:#FCA5A5; color:#7F1D1D; }
-    .alert-neutral { background:#F8FAFC; border-color:#CBD5E1; color:#334155; }
+    .alert-neutral { background:#F8FAFC; border-color:#F8FAFC; color:#334155; }
 
     .summary-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:12px; }
     .summary-card { border:1px solid #D7DEE8; border-radius:12px; padding:12px; background:#FFFFFF; }
@@ -77,14 +77,14 @@
     .summary-green { background:#F0FDF4; border-color:#86EFAC; color:#14532D; }
     .summary-red { background:#FEF2F2; border-color:#FCA5A5; color:#7F1D1D; }
     .summary-yellow { background:#FFFBEB; border-color:#FBBF24; color:#92400E; }
-    .summary-gray { background:#F8FAFC; border-color:#CBD5E1; color:#334155; }
+    .summary-gray { background:#F8FAFC; border-color:#F8FAFC; color:#334155; }
     .power-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
     .power-pill { display:inline-flex; align-items:center; border-radius:999px; padding:7px 11px; border:2px solid #CBD5E1; background:#FFF; font-weight:800; }
 
     .power-sweet { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
     .power-risk { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
     .power-warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
-    .power-watch { color:#334155; background:#E2E8F0; border-color:#94A3B8; }
+    .power-watch { color:#334155; background:#E2E8F0; border-color:#F1F5F9; }
     .summary-card .names { display:block; margin-top:6px; color:#334155; font-size:13px; line-height:1.45; }
 
     @media (max-width:900px) { .summary-grid { grid-template-columns:1fr 1fr; } }
@@ -98,8 +98,8 @@
     .status-badge { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:6px 10px; font-weight:900; border:2px solid #CBD5E1; white-space:nowrap; }
     .deepgreen { color:#14532D; background:#BBF7D0; border-color:#22C55E; }
     .softgreen { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
-    .graywhite { color:#334155; background:#E2E8F0; border-color:#94A3B8; }
-    .whitezone { color:#1F2937; background:#FFFFFF; border-color:#CBD5E1; }
+    .graywhite { color:#334155; background:#E2E8F0; border-color:#F1F5F9; }
+    .whitezone { color:#1F2937; background:#FFFFFF; border-color:#F8FAFC; }
     .softyellow { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
     .deepyellow { color:#78350F; background:#FDE68A; border-color:#F59E0B; }
     .softred { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
@@ -111,9 +111,9 @@
     .legend-item { display:inline-flex; align-items:center; border-radius:999px; padding:6px 10px; border:2px solid transparent; line-height:1.2; }
     .legend-green { background:#DCFCE7; color:#166534; border-color:#86EFAC; }
     .legend-red { background:#FEE2E2; color:#991B1B; border-color:#FCA5A5; }
-    .legend-gray { background:#E2E8F0; color:#334155; border-color:#94A3B8; }
+    .legend-gray { background:#E2E8F0; color:#334155; border-color:#F1F5F9; }
     .legend-yellow { background:#FEF3C7; color:#92400E; border-color:#FBBF24; }
-    .legend-white { background:#FFFFFF; color:#1F2937; border-color:#CBD5E1; }
+    .legend-white { background:#FFFFFF; color:#1F2937; border-color:#F8FAFC; }
     @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { font-size:13px; } }
     @media (max-width:640px) { .grid { grid-template-columns:1fr; } section { padding:14px; border-radius:12px; } th,td { padding:8px 6px; } .tag { min-height:32px; padding:5px 10px; font-size:13px; } .color-legend { gap:6px; font-size:13px; } th:nth-child(4),td:nth-child(4),th:nth-child(7),td:nth-child(7),th:nth-child(10),td:nth-child(10) { display:none; } }
   
@@ -131,7 +131,7 @@
     body { background:#0F172A; color:#F8FAFC; }
     header { background:linear-gradient(135deg,#0F172A 0%,#111827 55%,#1E293B 100%); border-bottom:1px solid #334155; }
     h1,h2,h3 { color:#F8FAFC; }
-    .lead,.top-line,.note { color:#CBD5E1; }
+    .lead,.top-line,.note { color:#F8FAFC; }
     .update-inline {
       background:#1E293B;
       border-color:#475569;
@@ -149,7 +149,7 @@
       color:#F8FAFC;
     }
     .metric strong { color:#F8FAFC; }
-    .metric span { color:#CBD5E1; }
+    .metric span { color:#F8FAFC; }
 
     table { color:#E2E8F0; }
     th {
@@ -189,26 +189,26 @@
       border-color:#EF4444;
     }
     .tag.stale,.stale {
-      color:#CBD5E1;
+      color:#F8FAFC;
       background:#334155;
-      border-color:#64748B;
+      border-color:#E2E8F0;
     }
 
     .alert-box { background:#111827; border-color:#334155; }
     .alert-sweet { background:#123524; border-color:#22C55E; color:#DCFCE7; }
     .alert-risk { background:#3B1717; border-color:#EF4444; color:#FEE2E2; }
-    .alert-neutral { background:#111827; border-color:#475569; color:#CBD5E1; }
+    .alert-neutral { background:#111827; border-color:#475569; color:#F8FAFC; }
 
     .summary-card {
       background:#111827;
       border-color:#334155;
       color:#F8FAFC;
     }
-    .summary-card span { color:#CBD5E1; }
+    .summary-card span { color:#F8FAFC; }
     .summary-green { background:#123524; border-color:#22C55E; color:#DCFCE7; }
     .summary-red { background:#3B1717; border-color:#EF4444; color:#FEE2E2; }
     .summary-yellow { background:#3B2E12; border-color:#FACC15; color:#FEF3C7; }
-    .summary-gray { background:#111827; border-color:#475569; color:#CBD5E1; }
+    .summary-gray { background:#111827; border-color:#475569; color:#F8FAFC; }
 
     .radar-pill,.power-pill,.theme-card span {
       background:#111827;
@@ -231,7 +231,7 @@
       border-color:#EF4444;
     }
     .radar-watch,.radar-neutral,.power-watch,.strength-watch {
-      color:#CBD5E1;
+      color:#F8FAFC;
       background:#111827;
       border-color:#475569;
     }
@@ -262,7 +262,7 @@
     }
     .status-badge.deepgreen,.deepgreen { color:#BBF7D0; background:#14532D; border-color:#22C55E; }
     .status-badge.softgreen,.softgreen { color:#DCFCE7; background:#166534; border-color:#4ADE80; }
-    .status-badge.graywhite,.graywhite { color:#E2E8F0; background:#334155; border-color:#64748B; }
+    .status-badge.graywhite,.graywhite { color:#E2E8F0; background:#334155; border-color:#E2E8F0; }
     .status-badge.whitezone,.whitezone { color:#E2E8F0; background:#111827; border-color:#475569; }
     .status-badge.softyellow,.softyellow { color:#FEF3C7; background:#854D0E; border-color:#FACC15; }
     .status-badge.deepyellow,.deepyellow { color:#FFFBEB; background:#92400E; border-color:#F59E0B; }
@@ -273,7 +273,7 @@
     .color-legend .legend-item { border-color:#475569; }
     .legend-green { background:#14532D; color:#BBF7D0; border-color:#22C55E; }
     .legend-red { background:#7F1D1D; color:#FECACA; border-color:#EF4444; }
-    .legend-gray { background:#334155; color:#CBD5E1; border-color:#64748B; }
+    .legend-gray { background:#334155; color:#F8FAFC; border-color:#E2E8F0; }
     .legend-yellow { background:#78350F; color:#FEF3C7; border-color:#FACC15; }
     .legend-white { background:#111827; color:#E2E8F0; border-color:#475569; }
 
@@ -285,7 +285,7 @@
   <header>
     <div class="wrap">
       <h1>AI投資觀察報告</h1>
-      <p class="top-line">盤中資料自動更新｜不顯示成本與持股資訊 <span class="update-inline">更新時間：2026-05-30 07:29:07</span></p>
+      <p class="top-line">盤中資料自動更新｜不顯示成本與持股資訊 <span class="update-inline">更新時間：2026-05-30 07:32:46</span></p>
       <div class="grid">
         <div class="metric"><strong>即時觀察</strong><span>盤中更新</span></div>
         <div class="metric"><strong>風控優先</strong><span>不弱勢攤平</span></div>
