@@ -75,6 +75,22 @@
     @media (max-width:640px) { .summary-grid { grid-template-columns:1fr; } }
 
 
+
+    .legend-table { width:100%; border-collapse:collapse; margin-top:10px; font-size:14px; }
+    .legend-table th,.legend-table td { border-bottom:1px solid #D7DEE8; padding:9px 8px; text-align:left; }
+    .legend-table th { background:#E2E8F0; font-weight:800; }
+    .status-badge { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:6px 10px; font-weight:900; border:2px solid #CBD5E1; white-space:nowrap; }
+    .deepgreen { color:#14532D; background:#BBF7D0; border-color:#22C55E; }
+    .softgreen { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
+    .graywhite { color:#334155; background:#E2E8F0; border-color:#94A3B8; }
+    .whitezone { color:#1F2937; background:#FFFFFF; border-color:#CBD5E1; }
+    .softyellow { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
+    .deepyellow { color:#78350F; background:#FDE68A; border-color:#F59E0B; }
+    .softred { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
+    .deepred { color:#7F1D1D; background:#FCA5A5; border-color:#EF4444; }
+    .star { color:#F59E0B; font-weight:900; letter-spacing:1px; }
+    .guide-img { max-width:100%; border:1px solid #D7DEE8; border-radius:14px; margin-top:12px; display:block; }
+
     .color-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; font-size:14px; font-weight:800; }
     .legend-item { display:inline-flex; align-items:center; border-radius:999px; padding:6px 10px; border:2px solid transparent; line-height:1.2; }
     .legend-green { background:#DCFCE7; color:#166534; border-color:#86EFAC; }
@@ -90,7 +106,7 @@
   <header>
     <div class="wrap">
       <h1>AI投資觀察報告</h1>
-      <p class="top-line">盤中資料自動更新｜不顯示成本與持股資訊 <span class="update-inline">更新時間：2026-05-30 04:43:33</span></p>
+      <p class="top-line">盤中資料自動更新｜不顯示成本與持股資訊 <span class="update-inline">更新時間：2026-05-30 04:45:16</span></p>
       <div class="grid">
         <div class="metric"><strong>即時觀察</strong><span>盤中更新</span></div>
         <div class="metric"><strong>風控優先</strong><span>不弱勢攤平</span></div>
@@ -110,7 +126,8 @@
     </section>
 
     <section>
-      <h2>今日盤勢摘要</h2>
+      <h2>📊 今日目前盤勢摘要</h2>
+      <p class="note">盤中訊號可能隨價格變動，請重新整理網頁確認上方最新更新時間。</p>
       <div class="summary-grid">
         <div class="summary-card summary-green"><strong>🟢 小甜區：3檔</strong><span>可小量觀察，不一次打滿</span><span class="names">3711 日月光投控、3665 貿聯-KY、1514 亞力</span></div>
         <div class="summary-card summary-red"><strong>🔴 危險區：1檔</strong><span>先停手，不弱勢攤平</span><span class="names">6831 邁科</span></div>
@@ -133,22 +150,40 @@
       </div>
     </section>
     <section>
-      <h2>優先提醒</h2>
-      <div class='alert-box alert-sweet'><h3>🟢 今日小甜區（可小買）</h3><ul><li><strong>3711 日月光投控</strong>：現價 <span class='num'>611</span>，已到可低接區 <span class='num'>605 - 611</span>；只適合小量分批。跌破 <span class='num'>605</span> 先停手，反彈壓力 <span class='num'>644 / 656.9</span>。</li>
-<li><strong>3665 貿聯-KY</strong>：現價 <span class='num'>2,085</span>，已到可低接區 <span class='num'>2,075 - 2,095</span>；只適合小量分批。跌破 <span class='num'>2,075</span> 先停手，反彈壓力 <span class='num'>2,315 / 2,361</span>。</li>
-<li><strong>1514 亞力</strong>：現價 <span class='num'>125.5</span>，已到可低接區 <span class='num'>124.4 - 125.6</span>；只適合小量分批。跌破 <span class='num'>124.4</span> 先停手，反彈壓力 <span class='num'>129 / 131.6</span>。</li></ul></div>
-<div class='alert-box alert-risk'><h3>重點危險通知</h3><ul><li><strong>6831 邁科</strong>：現價 <span class='num'>742</span>，訊號：跌太深，先停手。風險線 <span class='num'>713.4</span>；先停手，不弱勢攤平。</li></ul></div>
+      <h2>🚨 優先提醒</h2>
+      <p class="note">盤中價格波動快，請先確認上方更新時間是否為最新。星級代表優先度，不代表一次買滿。</p>
+      <div class='alert-box alert-sweet'><h3>🟢 今日小甜區（可小買）</h3><ul>
+<li><strong>3711 日月光投控</strong>｜<span class='status-badge softgreen'>🟢 小甜區</span> <span class='star'>★★★☆</span>｜封測波段｜可小量布局<br><span class='num'>現價 611</span>，可低接區 <span class='num'>605 - 611</span>；跌破 <span class='num'>605</span> 先停手，反彈壓力 <span class='num'>644 / 656.9</span>。</li>
+<li><strong>3665 貿聯-KY</strong>｜<span class='status-badge softgreen'>🟢 小甜區</span> <span class='star'>★★★</span>｜觀察標的｜可小量布局<br><span class='num'>現價 2,085</span>，可低接區 <span class='num'>2,075 - 2,095</span>；跌破 <span class='num'>2,075</span> 先停手，反彈壓力 <span class='num'>2,315 / 2,361</span>。</li>
+<li><strong>1514 亞力</strong>｜<span class='status-badge softgreen'>🟢 小甜區</span> <span class='star'>★★★</span>｜觀察標的｜可小量布局<br><span class='num'>現價 125.5</span>，可低接區 <span class='num'>124.4 - 125.6</span>；跌破 <span class='num'>124.4</span> 先停手，反彈壓力 <span class='num'>129 / 131.6</span>。</li>
+
+      </ul></div>
+      <div class='alert-box alert-risk'><h3>🔴 重點危險通知</h3><ul>
+<li><strong>6831 邁科</strong>｜<span class='status-badge deepred'>🔴🔴 高危險區</span> <span class='star'>🚫</span>｜觀察標的｜先停手<br><span class='num'>現價 742</span>，可低接區 <span class='num'>713.4 - 720.6</span>；跌破 <span class='num'>713.4</span> 先停手，反彈壓力 <span class='num'>809 / 825.2</span>。</li>
+
+      </ul></div>
       <p class="note">只顯示當下可小買名單或重大危險通知；公開頁面不顯示任何成本與持股數。</p>
-      <p class="note">顏色說明：</p>
-      <div class="color-legend">
-        <span class="legend-item legend-green">🟢 小甜區（可小買）</span>
-        <span class="legend-item legend-red">🔴 危險區（先停手）</span>
-        <span class="legend-item legend-gray">⚪ 觀察區（等待機會）</span>
-        <span class="legend-item legend-yellow">🟡 強勢區（不追高）</span>
-        <span class="legend-item legend-white">白色＝一般觀察</span>
-      </div>
-      <p class="note">這是觀察與風控頁面，不是保證獲利或下單指令。</p>
     </section>
+    <section>
+      <h2>顏色與星級說明</h2>
+      <p class="note">顏色先判斷風險，星級再判斷優先度。星級越高代表越值得優先看，不代表一次買滿。</p>
+      <table class="legend-table">
+        <thead><tr><th>顏色</th><th>名稱</th><th>星級</th><th>動作</th></tr></thead>
+        <tbody>
+          <tr><td><span class="status-badge deepgreen">🟢🟢 深綠</span></td><td>深甜區</td><td><span class="star">★★★★★</span></td><td>優先布局</td></tr>
+          <tr><td><span class="status-badge softgreen">🟢 淺綠</span></td><td>小甜區</td><td><span class="star">★★★★</span></td><td>可小量布局</td></tr>
+          <tr><td><span class="status-badge graywhite">⚪ 灰白</span></td><td>普通甜區</td><td><span class="star">★★★</span></td><td>觀察分批</td></tr>
+          <tr><td><span class="status-badge whitezone">⚪ 白色</span></td><td>觀察區</td><td><span class="star">★★</span></td><td>等訊號</td></tr>
+          <tr><td><span class="status-badge softyellow">🟡 淺黃</span></td><td>漲勢區</td><td><span class="star">★★</span></td><td>可續抱不追</td></tr>
+          <tr><td><span class="status-badge deepyellow">🟡🟡 深黃</span></td><td>過熱區</td><td><span class="star">★</span></td><td>不追高</td></tr>
+          <tr><td><span class="status-badge softred">🔴 淺紅</span></td><td>危險區</td><td>⚠️</td><td>停看聽</td></tr>
+          <tr><td><span class="status-badge deepred">🔴🔴 深紅</span></td><td>高危險區</td><td>🚫</td><td>先停手</td></tr>
+        </tbody>
+      </table>
+      <p class="note">圖表說明檔：<a href="color_star_guide.png" target="_blank">點我開啟顏色與星級對照圖</a></p>
+      <img class="guide-img" src="color_star_guide.png" alt="顏色與星級對照圖">
+    </section>
+
     <section>
       <h2>S級核心主線</h2>
       <table>
