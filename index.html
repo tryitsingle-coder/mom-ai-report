@@ -43,6 +43,20 @@
     .alert-risk { background:#FEF2F2; border-color:#FCA5A5; color:#7F1D1D; }
     .alert-neutral { background:#F8FAFC; border-color:#CBD5E1; color:#334155; }
 
+    .summary-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:12px; }
+    .summary-card { border:1px solid #D7DEE8; border-radius:12px; padding:12px; background:#FFFFFF; }
+    .summary-card strong { display:block; font-size:20px; margin-bottom:4px; }
+    .summary-card span { color:#475569; font-size:13px; }
+    .summary-green { background:#F0FDF4; border-color:#86EFAC; color:#14532D; }
+    .summary-red { background:#FEF2F2; border-color:#FCA5A5; color:#7F1D1D; }
+    .summary-yellow { background:#FFFBEB; border-color:#FBBF24; color:#92400E; }
+    .summary-gray { background:#F8FAFC; border-color:#CBD5E1; color:#334155; }
+    .power-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .power-pill { display:inline-flex; align-items:center; border-radius:999px; padding:7px 11px; border:2px solid #CBD5E1; background:#FFF; font-weight:800; }
+    @media (max-width:900px) { .summary-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:640px) { .summary-grid { grid-template-columns:1fr; } }
+
+
     .color-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; font-size:14px; font-weight:800; }
     .legend-item { display:inline-flex; align-items:center; border-radius:999px; padding:6px 10px; border:2px solid transparent; line-height:1.2; }
     .legend-green { background:#DCFCE7; color:#166534; border-color:#86EFAC; }
@@ -60,7 +74,7 @@
       <h1>AI投資觀察報告</h1>
       <p class="lead">盤中資料自動更新｜不顯示成本與持股資訊公開頁面不顯示成本與持股數。</p>
       <div class="grid">
-        <div class="metric"><strong>2026-05-30 02:51:31</strong><span>更新時間</span></div>
+        <div class="metric"><strong>2026-05-30 03:19:39</strong><span>更新時間</span></div>
         <div class="metric"><strong>即時觀察</strong><span>盤中更新</span></div>
         <div class="metric"><strong>風控優先</strong><span>不弱勢攤平</span></div>
         <div class="metric"><strong>S/A主線</strong><span>真AI＋真電力</span></div>
@@ -68,19 +82,41 @@
     </div>
   </header>
   <main class="wrap">
+
+    <section>
+      <h2>今日盤勢摘要</h2>
+      <div class="summary-grid">
+        <div class="summary-card summary-green"><strong>🟢  檔</strong><span>小甜區，可小量觀察</span></div>
+        <div class="summary-card summary-red"><strong>🔴  檔</strong><span>危險區，先停手</span></div>
+        <div class="summary-card summary-gray"><strong>⚪  檔</strong><span>觀察區，等待機會</span></div>
+        <div class="summary-card summary-yellow"><strong>🟡  檔</strong><span>強勢區，不追高</span></div>
+      </div>
+    </section>
+    <section>
+      <h2>AI電力主線</h2>
+      <p class="note">這區是「真電力」觀察池，和AI晶片/伺服器分開看。</p>
+      <div class="power-list">
+        <span class="power-pill">1519 華城</span>
+        <span class="power-pill">1513 中興電</span>
+        <span class="power-pill">1503 士電</span>
+        <span class="power-pill">1514 亞力</span>
+        <span class="power-pill">2412 中華電</span>
+      </div>
+    </section>
+
     <section>
       <h2>優先提醒</h2>
-      <div class='alert-box alert-sweet'><h3>可小買名單（接近低點）</h3><ul><li><strong>3711 日月光投控</strong>：現價 <span class='num'>611</span>，已到可低接區 <span class='num'>605 - 611</span>；只適合小量分批。跌破 <span class='num'>605</span> 先停手，反彈壓力 <span class='num'>644 / 656.9</span>。</li>
+      <div class='alert-box alert-sweet'><h3>🟢 今日小甜區（可小買）</h3><ul><li><strong>3711 日月光投控</strong>：現價 <span class='num'>611</span>，已到可低接區 <span class='num'>605 - 611</span>；只適合小量分批。跌破 <span class='num'>605</span> 先停手，反彈壓力 <span class='num'>644 / 656.9</span>。</li>
 <li><strong>3665 貿聯-KY</strong>：現價 <span class='num'>2,085</span>，已到可低接區 <span class='num'>2,075 - 2,095</span>；只適合小量分批。跌破 <span class='num'>2,075</span> 先停手，反彈壓力 <span class='num'>2,315 / 2,361</span>。</li>
 <li><strong>1514 亞力</strong>：現價 <span class='num'>125.5</span>，已到可低接區 <span class='num'>124.4 - 125.6</span>；只適合小量分批。跌破 <span class='num'>124.4</span> 先停手，反彈壓力 <span class='num'>129 / 131.6</span>。</li></ul></div>
 <div class='alert-box alert-risk'><h3>重點危險通知</h3><ul><li><strong>6831 邁科</strong>：現價 <span class='num'>742</span>，訊號：跌太深，先停手。風險線 <span class='num'>713.4</span>；先停手，不弱勢攤平。</li></ul></div>
       <p class="note">只顯示當下可小買名單或重大危險通知；公開頁面不顯示任何成本與持股數。</p>
       <p class="note">顏色說明：</p>
       <div class="color-legend">
-        <span class="legend-item legend-green">綠色＝接近低點，可小買</span>
-        <span class="legend-item legend-red">紅色＝跌太深，先停手</span>
-        <span class="legend-item legend-gray">灰色＝低但還沒穩，先等</span>
-        <span class="legend-item legend-yellow">黃色＝強勢高檔，不追</span>
+        <span class="legend-item legend-green">🟢 小甜區（可小買）</span>
+        <span class="legend-item legend-red">🔴 危險區（先停手）</span>
+        <span class="legend-item legend-gray">⚪ 觀察區（等待機會）</span>
+        <span class="legend-item legend-yellow">🟡 強勢區（不追高）</span>
         <span class="legend-item legend-white">白色＝一般觀察</span>
       </div>
       <p class="note">這是觀察與風控頁面，不是保證獲利或下單指令。</p>
