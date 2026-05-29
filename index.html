@@ -34,6 +34,15 @@
     th,td { border-bottom:1px solid #D7DEE8; padding:9px 8px; text-align:left; vertical-align:top; }
     th { background:#E2E8F0; color:#1F2937; font-weight:800; }
     .num { font-variant-numeric:tabular-nums; white-space:nowrap; }
+
+    .cat-badge { display:inline-flex; align-items:center; margin-left:6px; border-radius:999px; padding:3px 8px; background:#EEF2FF; color:#3730A3; border:1px solid #C7D2FE; font-size:12px; font-weight:900; white-space:nowrap; }
+    .theme-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:12px; }
+    .theme-card { border:1px solid #D7DEE8; border-radius:12px; padding:12px; background:#FFFFFF; }
+    .theme-card strong { display:block; font-size:16px; margin-bottom:6px; color:#0F172A; }
+    .theme-card span { display:inline-flex; margin:3px 4px 3px 0; border-radius:999px; padding:4px 8px; background:#F8FAFC; border:1px solid #CBD5E1; font-size:13px; font-weight:800; }
+    @media (max-width:900px) { .theme-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:640px) { .theme-grid { grid-template-columns:1fr; } .cat-badge { display:flex; width:max-content; margin-left:0; margin-top:4px; } }
+
     .tag { display:inline-flex; min-height:30px; align-items:center; border-radius:999px; padding:5px 11px; background:#FFFFFF; border:2px solid #CBD5E1; white-space:nowrap; font-weight:800; }
     .sweet { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
     .warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
@@ -106,7 +115,7 @@
   <header>
     <div class="wrap">
       <h1>AI投資觀察報告</h1>
-      <p class="top-line">盤中資料自動更新｜不顯示成本與持股資訊 <span class="update-inline">更新時間：2026-05-30 06:26:07</span></p>
+      <p class="top-line">盤中資料自動更新｜不顯示成本與持股資訊 <span class="update-inline">更新時間：2026-05-30 06:51:48</span></p>
       <div class="grid">
         <div class="metric"><strong>即時觀察</strong><span>盤中更新</span></div>
         <div class="metric"><strong>風控優先</strong><span>不弱勢攤平</span></div>
@@ -123,6 +132,9 @@
       <div class="radar-list">
         <span class='radar-pill radar-neutral'><strong>AI晶片：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI伺服器：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI封裝：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>ASIC：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI PCB：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>ABF載板：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>散熱：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>CPO/矽光子：</strong> ⚪ 觀察</span><span class='radar-pill radar-warn'><strong>HBM記憶體：</strong> 🟡 轉強</span><span class='radar-pill radar-neutral'><strong>AI電力：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI基礎建設：</strong> ⚪ 觀察</span>
       </div>
+
+      <p class="note">主線範例：4958 臻鼎＝AI PCB、3711 日月光＝AI封裝、8046 南電＝ABF載板、3661 世芯＝ASIC。</p>
+
 
       <div class="radar-legend" style="margin-top:10px;font-size:14px;">
         <strong>燈號說明：</strong>
@@ -162,13 +174,13 @@
       <h2>🚨 優先提醒</h2>
       <p class="note">盤中價格波動快，請先確認上方更新時間是否為最新。星級代表優先度，不代表一次買滿。</p>
       <div class='alert-box alert-sweet'><h3>🟢 今日小甜區（可小買）</h3><ul>
-<li><strong>3711 日月光投控</strong>｜<span class='status-badge softgreen'>🟢 小甜區</span> <span class='star'>★★★☆</span>｜封測波段｜可小量布局<br><span class='num'>現價 611</span>，可低接區 <span class='num'>605 - 611</span>；跌破 <span class='num'>605</span> 先停手，反彈壓力 <span class='num'>644 / 656.9</span>。</li>
-<li><strong>3665 貿聯-KY</strong>｜<span class='status-badge softgreen'>🟢 小甜區</span> <span class='star'>★★★</span>｜觀察標的｜可小量布局<br><span class='num'>現價 2,085</span>，可低接區 <span class='num'>2,075 - 2,095</span>；跌破 <span class='num'>2,075</span> 先停手，反彈壓力 <span class='num'>2,315 / 2,361</span>。</li>
-<li><strong>1514 亞力</strong>｜<span class='status-badge softgreen'>🟢 小甜區</span> <span class='star'>★★★</span>｜觀察標的｜可小量布局<br><span class='num'>現價 125.5</span>，可低接區 <span class='num'>124.4 - 125.6</span>；跌破 <span class='num'>124.4</span> 先停手，反彈壓力 <span class='num'>129 / 131.6</span>。</li>
+<li><strong>3711 日月光投控</strong> <span class='cat-badge'>【AI封裝】</span>｜<span class='status-badge softgreen'>🟢 小甜區</span> <span class='star'>★★★☆</span>｜封測波段｜可小量布局<br><span class='num'>現價 611</span>，可低接區 <span class='num'>605 - 611</span>；跌破 <span class='num'>605</span> 先停手，反彈壓力 <span class='num'>644 / 656.9</span>。</li>
+<li><strong>3665 貿聯-KY</strong> <span class='cat-badge'>【觀察】</span>｜<span class='status-badge softgreen'>🟢 小甜區</span> <span class='star'>★★★</span>｜觀察標的｜可小量布局<br><span class='num'>現價 2,085</span>，可低接區 <span class='num'>2,075 - 2,095</span>；跌破 <span class='num'>2,075</span> 先停手，反彈壓力 <span class='num'>2,315 / 2,361</span>。</li>
+<li><strong>1514 亞力</strong> <span class='cat-badge'>【AI電力】</span>｜<span class='status-badge softgreen'>🟢 小甜區</span> <span class='star'>★★★</span>｜觀察標的｜可小量布局<br><span class='num'>現價 125.5</span>，可低接區 <span class='num'>124.4 - 125.6</span>；跌破 <span class='num'>124.4</span> 先停手，反彈壓力 <span class='num'>129 / 131.6</span>。</li>
 
       </ul></div>
       <div class='alert-box alert-risk'><h3>🔴 重點危險通知</h3><ul>
-<li><strong>6831 邁科</strong>｜<span class='status-badge deepred'>🔴🔴 高危險區</span> <span class='star'>🚫</span>｜觀察標的｜先停手<br><span class='num'>現價 742</span>，可低接區 <span class='num'>713.4 - 720.6</span>；跌破 <span class='num'>713.4</span> 先停手，反彈壓力 <span class='num'>809 / 825.2</span>。</li>
+<li><strong>6831 邁科</strong> <span class='cat-badge'>【觀察】</span>｜<span class='status-badge deepred'>🔴🔴 高危險區</span> <span class='star'>🚫</span>｜觀察標的｜先停手<br><span class='num'>現價 742</span>，可低接區 <span class='num'>713.4 - 720.6</span>；跌破 <span class='num'>713.4</span> 先停手，反彈壓力 <span class='num'>809 / 825.2</span>。</li>
 
       </ul></div>
       <p class="note">只顯示當下可小買名單或重大危險通知；公開頁面不顯示任何成本與持股數。</p>
@@ -271,6 +283,26 @@
         </tbody>
       </table>
     </section>
+
+    <section>
+      <h2>AI題材分類對照表</h2>
+      <p class="note">媽媽版快速對照：先看股票是哪一條 AI 主線，再看顏色與星級決定動作。</p>
+      <div class="theme-grid">
+        <div class="theme-card"><strong>AI晶片</strong><span>2330 台積電</span><span>2454 聯發科</span></div>
+        <div class="theme-card"><strong>AI伺服器</strong><span>2382 廣達</span><span>6669 緯穎</span><span>2317 鴻海</span><span>2356 英業達</span><span>2308 台達電</span></div>
+        <div class="theme-card"><strong>AI封裝/測試</strong><span>3711 日月光</span><span>2449 京元電子</span></div>
+        <div class="theme-card"><strong>ASIC</strong><span>3661 世芯-KY</span><span>3443 創意</span></div>
+        <div class="theme-card"><strong>AI PCB</strong><span>4958 臻鼎-KY</span><span>2368 金像電</span><span>2383 台光電</span></div>
+        <div class="theme-card"><strong>ABF載板</strong><span>3037 欣興</span><span>8046 南電</span><span>3189 景碩</span></div>
+        <div class="theme-card"><strong>散熱/機構件</strong><span>3017 奇鋐</span><span>3324 雙鴻</span><span>2059 川湖</span></div>
+        <div class="theme-card"><strong>CPO/矽光子</strong><span>2455 全新</span><span>3163 波若威</span><span>4979 華星光</span><span>3081 聯亞</span></div>
+        <div class="theme-card"><strong>HBM記憶體</strong><span>2408 南亞科</span><span>8046 南電</span><span>3189 景碩</span></div>
+        <div class="theme-card"><strong>AI電力</strong><span>1519 華城</span><span>1513 中興電</span><span>1503 士電</span><span>1514 亞力</span></div>
+        <div class="theme-card"><strong>AI基礎建設</strong><span>2412 中華電</span></div>
+        <div class="theme-card"><strong>ETF</strong><span>0052 富邦科技</span><span>0050 元大台灣50</span><span>00403A 主動統一升級50</span></div>
+      </div>
+    </section>
+
   </main>
 </body>
 </html>
