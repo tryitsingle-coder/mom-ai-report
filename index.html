@@ -53,6 +53,13 @@
     .summary-gray { background:#F8FAFC; border-color:#CBD5E1; color:#334155; }
     .power-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
     .power-pill { display:inline-flex; align-items:center; border-radius:999px; padding:7px 11px; border:2px solid #CBD5E1; background:#FFF; font-weight:800; }
+
+    .power-sweet { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
+    .power-risk { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
+    .power-warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
+    .power-watch { color:#334155; background:#E2E8F0; border-color:#94A3B8; }
+    .summary-card .names { display:block; margin-top:6px; color:#334155; font-size:13px; line-height:1.45; }
+
     @media (max-width:900px) { .summary-grid { grid-template-columns:1fr 1fr; } }
     @media (max-width:640px) { .summary-grid { grid-template-columns:1fr; } }
 
@@ -74,7 +81,7 @@
       <h1>AI投資觀察報告</h1>
       <p class="lead">盤中資料自動更新｜不顯示成本與持股資訊公開頁面不顯示成本與持股數。</p>
       <div class="grid">
-        <div class="metric"><strong>2026-05-30 03:26:01</strong><span>更新時間</span></div>
+        <div class="metric"><strong>2026-05-30 03:26:28</strong><span>更新時間</span></div>
         <div class="metric"><strong>即時觀察</strong><span>盤中更新</span></div>
         <div class="metric"><strong>風控優先</strong><span>不弱勢攤平</span></div>
         <div class="metric"><strong>S/A主線</strong><span>真AI＋真電力</span></div>
@@ -86,24 +93,19 @@
     <section>
       <h2>今日盤勢摘要</h2>
       <div class="summary-grid">
-        <div class="summary-card summary-green"><strong>🟢  檔</strong><span>小甜區，可小量觀察</span></div>
-        <div class="summary-card summary-red"><strong>🔴  檔</strong><span>危險區，先停手</span></div>
-        <div class="summary-card summary-gray"><strong>⚪  檔</strong><span>觀察區，等待機會</span></div>
-        <div class="summary-card summary-yellow"><strong>🟡  檔</strong><span>強勢區，不追高</span></div>
+        <div class="summary-card summary-green"><strong></strong><span>可小量觀察，不一次打滿</span><span class="names"></span></div>
+        <div class="summary-card summary-red"><strong></strong><span>先停手，不弱勢攤平</span><span class="names"></span></div>
+        <div class="summary-card summary-gray"><strong></strong><span>等待機會，不急著追</span></div>
+        <div class="summary-card summary-yellow"><strong></strong><span>強勢高檔，不追高</span></div>
       </div>
     </section>
     <section>
       <h2>AI電力主線</h2>
-      <p class="note">這區是「真電力」觀察池，和AI晶片/伺服器分開看。</p>
+      <p class="note">這區是「真電力」觀察池，會跟著即時資料顯示現價與顏色訊號。</p>
       <div class="power-list">
-        <span class="power-pill">1519 華城</span>
-        <span class="power-pill">1513 中興電</span>
-        <span class="power-pill">1503 士電</span>
-        <span class="power-pill">1514 亞力</span>
-        <span class="power-pill">2412 中華電</span>
+        
       </div>
     </section>
-
     <section>
       <h2>優先提醒</h2>
       <div class='alert-box alert-sweet'><h3>🟢 今日小甜區（可小買）</h3><ul><li><strong>3711 日月光投控</strong>：現價 <span class='num'>611</span>，已到可低接區 <span class='num'>605 - 611</span>；只適合小量分批。跌破 <span class='num'>605</span> 先停手，反彈壓力 <span class='num'>644 / 656.9</span>。</li>
