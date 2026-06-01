@@ -376,7 +376,7 @@
     }
 
 
-    /* V10 今日 AI 作戰情報：手動貼上版 */
+    /* V10.6 今日 AI 作戰情報：自動版 */
     .intel-card {
       background:linear-gradient(135deg,#111827 0%,#1E293B 60%,#172554 100%);
       border:1px solid #334155;
@@ -438,6 +438,15 @@
     }
     @media (max-width:900px) { .intel-grid { grid-template-columns:1fr; } }
 
+  
+    /* V10.6 auto intel additions */
+    .intel-auto-note { color:#CBD5E1; font-size:13px; margin:4px 0 0; line-height:1.55; }
+    .intel-rank { display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+    .intel-rank-item { border-radius:12px; padding:10px 12px; background:#0F172A; border:1px solid #334155; color:#E2E8F0; font-weight:800; }
+    .intel-rank-item b { color:#FACC15; margin-right:6px; }
+    .intel-watch { display:flex; flex-wrap:wrap; gap:7px; margin-top:8px; }
+    .intel-watch span { display:inline-flex; border-radius:999px; padding:5px 9px; background:#111827; border:1px solid #475569; color:#E2E8F0; font-weight:800; font-size:13px; }
+
   </style>
 </head>
 <body>
@@ -445,7 +454,7 @@
     <div class="wrap">
       <h1>🎯 小駿 AI 投資紀律｜少做、多賺</h1>
       <p class="discipline-line">主線優先｜成交量優先｜波段幅度優先｜主力資金優先｜甜區才出手</p>
-      <p class="top-line">媽媽版看燈號｜不顯示成本與持股資訊｜綠燈小買、黃燈等待、紅燈停手、紫燈不追 <span class="update-inline">更新時間：2026-06-01 13:27:01</span></p>
+      <p class="top-line">媽媽版看燈號｜不顯示成本與持股資訊｜綠燈小買、黃燈等待、紅燈停手、紫燈不追 <span class="update-inline">更新時間：2026-06-01 13:27:55</span></p>
       <div class="grid">
         <div class="metric"><strong>少做、多賺</strong><span>只挑主線甜區</span></div>
         <div class="metric"><strong>風控優先</strong><span>紅燈停手</span></div>
@@ -455,46 +464,38 @@
     </div>
   </header>
   <main class="wrap">
-
     <section class="intel-card">
       <div class="intel-head">
-        <h2>📰 今日 AI 作戰情報｜手動貼上版</h2>
-        <span class="intel-badge">每日可由小駿貼上更新</span>
+        <h2>🔥 今日 AI 作戰情報｜自動版</h2>
+        <span class="intel-badge">依 Excel 即時資料產生</span>
       </div>
-      <p class="note">這區用來放盤前/盤中重大時事，不自動抓新聞，避免壞掉；每天可把我整理的內容貼進來。</p>
+      <p class="intel-auto-note">依目前 Excel 的漲幅、量比與族群同步率自動排序；不抓外部新聞，避免網頁壞掉。</p>
       <div class="intel-grid">
         <div class="intel-box">
-          <strong>🔥 今日 AI 熱度</strong>
-          <ul>
-            <li>AI主線：依下方強度排行判斷</li>
-            <li>強勢族群：優先看 S/A 主線</li>
-            <li>弱勢族群：紅燈停手，不弱勢攤平</li>
-          </ul>
-        </div>
-        <div class="intel-box">
-          <strong>🗞️ 今日重大事件</strong>
-          <ul>
-            <li>NVIDIA / 美股 AI：盤前先看方向</li>
-            <li>台積電 ADR / 台指夜盤：影響開盤情緒</li>
-            <li>政策消息：晶片、關稅、AI資料中心</li>
-          </ul>
+          <strong>📡 即時主線資金流向</strong>
+          <div class="intel-rank"><div class='intel-rank-item'><b>🥇 AI伺服器</b>｜均漲 7.16%｜同步率 100%｜6669 緯穎 +10%、2317 鴻海 +9.89%、2356 英業達 +9.86%</div>
+<div class='intel-rank-item'><b>🥈 AI儲存鏈</b>｜均漲 4.35%｜同步率 100%｜2408 南亞科 +7.1%、8299 群聯 +5.1%、4973 廣穎 +4.92%</div>
+<div class='intel-rank-item'><b>🥉 AI電力</b>｜均漲 2.22%｜同步率 80%｜1504 東元 +5.78%、1519 華城 +3.31%、1503 士電 +1.39%</div>
+</div>
         </div>
         <div class="intel-box">
           <strong>🎯 今日優先觀察</strong>
+          <div class="intel-watch"><span>3711 日月光投控 611（-2.55%）</span><span>3037 欣興 1,055（+2.93%）</span><span>4958 臻鼎-KY 515（+5.97%）</span><span>8046 南電 848（-0.24%）</span><span>3189 景碩 729（+7.05%）</span><span>3661 世芯-KY 4,415（+2.67%）</span><span>2408 南亞科 347（+7.1%）</span><span>8299 群聯 2,575（+5.1%）</span><span>3693 營邦 581（+3.75%）</span></div>
+        </div>
+        <div class="intel-box">
+          <strong>👤 目前持股作戰區</strong>
           <ul>
-            <li>2330 台積電：AI核心方向</li>
-            <li>4958 臻鼎-KY：AI PCB</li>
-            <li>3711 日月光：先進封裝</li>
+            <li>3711 日月光：看 600~605 支撐、615 壓力。</li>
+            <li>3037 欣興：看 1025~1045 支撐、1070 / 1100 壓力。</li>
+            <li>強勢股不追價，回到支撐與甜區才出手。</li>
           </ul>
         </div>
       </div>
       <div class="intel-strategy">
-        今日策略：只低接，不追高；綠燈小量、深綠分批、黃燈等待、紅燈停手、紫燈不追。
+        今日策略：少做、多賺｜主線優先｜成交量優先｜強勢股續抱不追｜弱勢股不攤平｜甜區才出手。
       </div>
     </section>
-
-
-    <section>
+<section>
       <h2>AI主線雷達</h2>
       <p class="note">先看資金在哪條 AI 主線，不急著從全部股票裡找；已加入 ABF載板。</p>
       <div class="radar-list">
