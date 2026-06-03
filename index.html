@@ -549,6 +549,20 @@
       color:#FACC15;
     }
 
+
+    /* V13 甜度 + 訊號 + 操作 三合一 */
+    .v13-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin-top:12px; }
+    .v13-card { background:#111827; border:1px solid #334155; border-radius:14px; padding:12px; color:#E2E8F0; }
+    .v13-card strong { display:block; color:#FFFFFF; font-size:16px; margin-bottom:6px; }
+    .v13-stars { color:#FACC15; font-weight:900; letter-spacing:1px; }
+    .v13-signal { margin-top:5px; font-weight:900; color:#E2E8F0; }
+    .v13-action { margin-top:7px; display:inline-flex; border-radius:999px; padding:5px 9px; font-weight:900; border:1px solid #475569; }
+    .v13-buy { background:#14532D; color:#BBF7D0; border-color:#22C55E; }
+    .v13-watch { background:#78350F; color:#FEF3C7; border-color:#FACC15; }
+    .v13-stop { background:#7F1D1D; color:#FECACA; border-color:#EF4444; }
+    .v13-note { color:#CBD5E1; font-size:13px; margin-top:8px; line-height:1.55; }
+    @media (max-width:900px) { .v13-grid { grid-template-columns:1fr; } }
+
   </style>
 </head>
 <body>
@@ -556,7 +570,7 @@
     <div class="wrap">
       <h1>🎯 小駿 AI 投資紀律｜少做、多賺</h1>
       <p class="discipline-line">主線優先｜成交量優先｜波段幅度優先｜主力資金優先｜甜區才出手</p>
-      <p class="top-line">媽媽版看燈號｜不顯示成本與持股資訊｜綠燈小買、黃燈等待、紅燈停手、紫燈不追 <span class="update-inline">更新時間：2026-06-03 08:59:04</span></p>
+      <p class="top-line">媽媽版看燈號｜不顯示成本與持股資訊｜綠燈小買、黃燈等待、紅燈停手、紫燈不追 <span class="update-inline">更新時間：2026-06-03 08:59:37</span></p>
       <div class="grid">
         <div class="metric"><strong>少做、多賺</strong><span>只挑主線甜區</span></div>
         <div class="metric"><strong>風控優先</strong><span>紅燈停手</span></div>
@@ -575,15 +589,12 @@
       <div class="intel-grid">
         <div class="intel-box">
           <strong>📡 即時主線資金流向</strong>
-          <div class="intel-rank"><div class='intel-rank-item'><b>🥇 AI高速互連</b>｜均漲 -100%｜同步率 0%｜2455 全新 -100%、3665 貿聯-KY -100%、2345 智邦 -100%</div>
-<div class='intel-rank-item'><b>🥈 AI封裝/封測</b>｜均漲 -100%｜同步率 0%｜6239 力成 -100%、2449 京元電子 -100%、3711 日月光投控 -100%</div>
-<div class='intel-rank-item'><b>🥉 AI電力</b>｜均漲 -100%｜同步率 0%｜1514 亞力 -100%、1504 東元 -100%、1503 士電 -100%</div>
-</div>
+          <div class="intel-rank"></div>
         </div>
         <div class="intel-box">
           <strong>🎯 今日優先觀察</strong>
           <p class="intel-auto-note">※ 此區會依盤中資料自動變動，不一定等於本週主攻股。</p>
-          <div class="intel-watch"><span>2308 台達電 （-100%）</span><span>3037 欣興 （-100%）</span><span>4958 臻鼎-KY （-100%）</span><span>2330 台積電 （-100%）</span><span>3711 日月光投控 （-100%）</span><span>8064 東捷 （-100%）</span><span>2408 南亞科 （-100%）</span><span>3260 威剛 （-100%）</span><span>6533 晶心科 （-100%）</span></div>
+          <div class="intel-watch"><span>盤前DDE尚未有正式成交價，避免誤判為 -100%；等09:05後再刷新。</span></div>
         </div>
         <div class="intel-box">
           <strong>👥 共用作戰提醒</strong>
@@ -598,10 +609,11 @@
         今日策略：少做、多賺｜主線優先｜成交量優先｜強勢股續抱不追｜弱勢股不攤平｜甜區才出手。
       </div>
     </section>
+
     <section>
       <h2>👥 共用作戰區｜支撐、壓力與獲利區</h2>
       <p class="note">本區不顯示個人成本與股數，只提供市場支撐、壓力與獲利區參考。每個人請依自己的成本、股數與現金部位分批操作。</p>
-      <div class="focus-list"><strong style="color:#F8FAFC;margin-right:6px;">🔥 本週主攻股</strong><span>4958 臻鼎</span><span>3037 欣興</span><span>2308 台達電</span></div>
+      <div class="focus-list"><strong style="color:#F8FAFC;margin-right:6px;">🔥 本週主攻股</strong><span>🥇 2308 台達電</span><span>🥈 3711 日月光</span><span>🥉 2330 台積電</span><span>⚡ 4958 臻鼎</span><span>⚡ 3037 欣興</span></div>
       <div class="explain-note">
         <strong>📌 備註說明：</strong><br>
         🔥 本週主攻股＝本週優先關注與布局標的，屬於手動維護的戰略名單。<br>
@@ -612,33 +624,33 @@
       <div class="shared-battle-grid">
       <div class="shared-battle-card">
         <h3>2308 台達電</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 （-100%）</span></div>
+        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 （）</span></div>
         <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">2330~2360</span></div>
         <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">2380~2420</span></div>
         <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">2450~2500</span></div>
         <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">2550~2600</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回2380並守住，且量縮止跌</span></div>
-        <div class="battle-note">📌 收盤2360，守住媽媽成本；明天先看2330支撐，站回2380才轉穩，不追高。</div>
+        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回2380並守住，且量增紅K</span></div>
+        <div class="battle-note">📌 試撮2395轉強；若開盤守2380，台達電是今日第一主攻，不追高，回測才分批。</div>
       </div>
       <div class="shared-battle-card">
-        <h3>3037 欣興</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 （-100%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">950~975</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">980~1030</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">1045~1050</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">1070~1100</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回980並守住，站回1030才轉強</span></div>
-        <div class="battle-note">📌 今日ABF整族被提款，950有守住但仍弱；先觀察止跌，不急著攤平。</div>
+        <h3>3711 日月光投控</h3>
+        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 （）</span></div>
+        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">585~600</span></div>
+        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">610~620</span></div>
+        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">620~625</span></div>
+        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">630~640</span></div>
+        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站穩610~620且量增</span></div>
+        <div class="battle-note">📌 試撮619；媽媽可620附近部分獲利，不建議一次全賣。</div>
       </div>
       <div class="shared-battle-card">
-        <h3>4958 臻鼎-KY</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 （-100%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">500~520</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">521~535</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">545~555</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">565~570</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回535且量增</span></div>
-        <div class="battle-note">📌 收盤520，低點501後拉回520；500為關鍵防守，跌破500轉保守。</div>
+        <h3>2330 台積電</h3>
+        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 （）</span></div>
+        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">2380~2400</span></div>
+        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">2415~2450</span></div>
+        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">2450~2480</span></div>
+        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">2500以上</span></div>
+        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站穩2400且台指續強</span></div>
+        <div class="battle-note">📌 ADR強勢，台積電為防守核心；開高不追，回測支撐再看。</div>
       </div>
       </div>
     </section>
