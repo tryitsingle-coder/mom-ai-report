@@ -558,6 +558,43 @@
     .signal-profit { color:#FEF9C3; background:#854D0E; border-color:#FDE047; }
     .signal-stop { color:#FEE2E2; background:#7F1D1D; border-color:#EF4444; }
 
+
+
+    /* V20.1 mom decision layout patch */
+    .global-radar-compact {
+      padding:12px 14px;
+      opacity:.94;
+    }
+    .global-radar-compact h2 {
+      font-size:18px;
+      margin-bottom:6px;
+    }
+    .global-radar-compact .summary-grid {
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:8px;
+      margin-top:8px;
+    }
+    .global-radar-compact .summary-card {
+      padding:8px 10px;
+      border-radius:10px;
+    }
+    .global-radar-compact .summary-card strong {
+      font-size:15px;
+      margin-bottom:2px;
+    }
+    .global-radar-compact .summary-card span,
+    .global-radar-compact .summary-card .names {
+      font-size:12px;
+      line-height:1.35;
+    }
+    .global-radar-note { font-size:12px; opacity:.9; }
+    @media (max-width:900px) {
+      .global-radar-compact .summary-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:640px) {
+      .global-radar-compact .summary-grid { grid-template-columns:1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -565,7 +602,7 @@
     <div class="wrap">
       <h1>🎯 小駿 AI 投資紀律｜少做、多賺</h1>
       <p class="discipline-line">主線優先｜成交量優先｜波段幅度優先｜主力資金優先｜甜區才出手</p>
-      <p class="top-line">媽媽版看燈號｜不顯示成本與持股資訊｜低接看綠區｜高檔不追高｜過熱分批獲利 <span class="update-inline">最後更新：2026/06/05 15:04:57｜V19 媽媽決策版</span></p>
+      <p class="top-line">媽媽版看燈號｜不顯示成本與持股資訊｜低接看綠區｜高檔不追高｜過熱分批獲利 <span class="update-inline">最後更新：2026/06/05 15:22:59</span></p>
       <div class="grid">
         <div class="metric"><strong>少做、多賺</strong><span>只挑主線甜區</span></div>
         <div class="metric"><strong>風控優先</strong><span>紅燈停手</span></div>
@@ -575,44 +612,21 @@
     </div>
   </header>
   <main class="wrap">
-    <!-- GLOBAL_MARKET_BLOCK_START -->
     <section>
-      <h2>🌙 國際盤前雷達｜自動更新</h2>
-      <p class="note">資料來源：Twelve Data｜更新時間：2026-06-05 10:33:34</p>
+      <h2>📢 媽媽快速看｜AI主線快訊</h2>
       <div class="summary-grid">
-        <div class="summary-card summary-yellow">
-          <strong>盤前總燈號</strong>
-          <span>🟢 偏多</span>
-          <span class="names">平均分數：1.5</span>
-        </div>
-        <div class="summary-card summary-green">
-          <strong>NVDA</strong>
-          <span>218.66</span>
-          <span class="names">1.82%｜偏多</span>
-        </div>
-        <div class="summary-card summary-green">
-          <strong>TSM ADR</strong>
-          <span>444.92</span>
-          <span class="names">1.88%｜偏多</span>
-        </div>
-        <div class="summary-card summary-yellow">
-          <strong>USD/TWD</strong>
-          <span>31.50</span>
-          <span class="names">0.07%｜中性</span>
-        </div>
+        <div class='summary-card summary-green'><strong>4958 臻鼎-KY</strong><span>504（+2.34%）</span><span class='names'>站穩500偏強；跌回500下先等495/490。</span></div>
+<div class='summary-card summary-yellow'><strong>3711 日月光投控</strong><span>577（-2.7%）</span><span class='names'>站回585才轉穩；570附近才是低接觀察。</span></div>
+<div class='summary-card summary-red'><strong>3037 欣興</strong><span>933（-3.91%）</span><span class='names'>站回950較穩；跌破930先保守。</span></div>
+<div class='summary-card summary-yellow'><strong>2330 台積電</strong><span>2,365（-0.84%）</span><span class='names'>站回2400才修復；跌破2370大盤偏弱。</span></div>
 
-        <div class="summary-card summary-yellow">
-          <strong>小駿判讀</strong>
-          <span>🟢 偏多</span>
-          <span class="names">NVDA與TSM ADR偏強，AI與台積電供應鏈盤前加分；仍需搭配台指夜盤與試撮價確認。</span>
-        </div>
       </div>
+      <div class="explain-note"><strong>🎯 下單提醒：</strong>快訊只看方向；真正買賣請接著看下方「🚦下單規則」與「🔥AI主線健康度」。<br><strong>今日策略：</strong>不追高，不弱勢攤平；只買有承接、能站回關鍵價的主線股。</div>
     </section>
-    <!-- GLOBAL_MARKET_BLOCK_END -->
     <section>
-      <h2>📅 今日盤勢總結｜V19.1 媽媽決策版</h2>
-      <p class="note"><strong>最後更新：</strong>2026/06/05 15:04:57</p>
-      <p class="note">此版為家族共用決策版。不顯示成本、持股數與損益；首頁只保留盤勢燈號、主攻前三、避免前三與風險提醒。</p>
+      <h2>👩 媽媽快速看｜今日決策總結</h2>
+      <p class="note"><strong>最後更新：</strong>2026/06/05 15:22:59</p>
+      <p class="note">家族共用決策版：不顯示成本、持股數與損益；先看燈號與風險，再看下單規則。</p>
       <div class="summary-grid">
         <div class="summary-card summary-red">
           <strong>🔴 風險偏高｜暫停加碼</strong>
@@ -716,52 +730,52 @@
             <div class="shared-battle-card">
         <h3>2308 台達電</h3>
         <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 2,300（-5.15%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">2415~2440</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">2455~2500</span></div>
+        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">2275~2300</span></div>
+        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">2380~2400</span></div>
         <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">2440~2480</span></div>
         <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">2550~2600</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">守住2420且站回2450</span></div>
-        <div class="battle-note">📌 📌 AI電力主線強；強勢續抱，不追高加碼。</div>
+        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">重新站回2380/2400才看修復</span></div>
+        <div class="battle-note">📌 跌破原支撐先防守；重新站回2380/2400以上再看修復。</div>
       </div>
             <div class="shared-battle-card">
         <h3>3711 日月光投控</h3>
         <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 577（-2.7%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">585~595</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">600~610</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">620~630</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">630~640</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回600且守住590</span></div>
-        <div class="battle-note">📌 📌 收盤593進入深甜區；明日先看590~595能否守住，站回600才轉穩。</div>
+        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">570~573</span></div>
+        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">585~590</span></div>
+        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">600~610</span></div>
+        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">620~630</span></div>
+        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回585/590才轉穩</span></div>
+        <div class="battle-note">📌 盤中以現價與下單規則為準；站回585/590才轉穩，570附近才是低接觀察。</div>
       </div>
             <div class="shared-battle-card">
         <h3>2330 台積電</h3>
         <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 2,365（-0.84%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">2370~2385</span></div>
+        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">2350~2370</span></div>
         <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">2400~2415</span></div>
         <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">2415~2440</span></div>
         <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">2440~2480</span></div>
         <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回2400並守住2385</span></div>
-        <div class="battle-note">📌 📌 權值撐盤；續抱不追，跌破2420再轉觀察。</div>
+        <div class="battle-note">📌 站回2400才修復；未站回前大盤保守，跌破2370轉保守。</div>
       </div>
             <div class="shared-battle-card">
         <h3>3037 欣興</h3>
         <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 933（-3.91%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">950~970</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">980~1000</span></div>
+        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">930~950</span></div>
+        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">969~988</span></div>
         <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">1030~1050</span></div>
         <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">1050~1100</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回980並守住970</span></div>
-        <div class="battle-note">📌 📌 收盤971仍在支撐測試；明日站回980轉穩，站回1000才算反攻成立。</div>
+        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回950/970才轉穩</span></div>
+        <div class="battle-note">📌 盤中以現價與下單規則為準；站回950較穩，跌破930先停手。</div>
       </div>
             <div class="shared-battle-card">
         <h3>4958 臻鼎-KY</h3>
         <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 504（+2.34%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">485~490</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">500~510</span></div>
+        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">495~500</span></div>
+        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">520~535</span></div>
         <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">520~530</span></div>
         <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">535~550</span></div>
         <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回500並守住490</span></div>
-        <div class="battle-note">📌 📌 收盤492.5守住485~490支撐；未站回500前只觀察，不追價。</div>
+        <div class="battle-note">📌 站穩500偏強；跌回500下先等495/490，不追高。</div>
       </div>
       </div>
     </section>
@@ -776,17 +790,36 @@
       </div>
       <div class="explain-note"><strong>📌 即時結論：</strong>目前以 DDE 價格判斷；台積電、台達電、聯發科若同步偏弱，低接部位要縮小。</div>
     </section>
-    <section>
-      <h2>📢 今日AI主線快訊｜動態版</h2>
+    <!-- GLOBAL_MARKET_BLOCK_START -->
+    <section class="global-radar-compact">
+      <h2>🌙 國際盤前雷達｜自動更新</h2>
+      <p class="note global-radar-note">資料來源：Twelve Data｜更新時間：2026-06-05 10:33:34</p>
       <div class="summary-grid">
-        <div class='summary-card summary-green'><strong>4958 臻鼎-KY</strong><span>504（+2.34%）</span><span class='names'>站穩500偏強；跌回500下先等495/490。</span></div>
-<div class='summary-card summary-yellow'><strong>3711 日月光投控</strong><span>577（-2.7%）</span><span class='names'>站回585才轉穩；570附近才是低接觀察。</span></div>
-<div class='summary-card summary-red'><strong>3037 欣興</strong><span>933（-3.91%）</span><span class='names'>站回950較穩；跌破930先保守。</span></div>
-<div class='summary-card summary-yellow'><strong>2330 台積電</strong><span>2,365（-0.84%）</span><span class='names'>站回2400才修復；跌破2370大盤偏弱。</span></div>
+        <div class="summary-card summary-yellow">
+          <strong>國際訊號</strong>
+          <span>🟢 國際有利</span>
+          <span class="names">只代表盤前條件加分，不代表台股一定上漲。</span>
+        </div>
+        <div class="summary-card summary-green">
+          <strong>NVDA</strong>
+          <span>218.66</span>
+          <span class="names">1.82%｜情緒加分</span>
+        </div>
+        <div class="summary-card summary-green">
+          <strong>TSM ADR</strong>
+          <span>444.92</span>
+          <span class="names">1.88%｜情緒加分</span>
+        </div>
+        <div class="summary-card summary-yellow">
+          <strong>USD/TWD</strong>
+          <span>31.50</span>
+          <span class="names">0.07%｜中性觀察</span>
+        </div>
 
+        <div class="summary-card summary-yellow"><strong>盤前提醒</strong><span>⚠️ 看資金是否跟進</span><span class="names">國際有利 ≠ 台股結果；開盤後仍以台指期、試撮價與資金流為準。</span></div>
       </div>
-      <div class="explain-note"><strong>🎯 今日策略：</strong>不追高，不弱勢攤平；只買有承接、能站回關鍵價的主線股。</div>
     </section>
+    <!-- GLOBAL_MARKET_BLOCK_END -->
     <section>
       <h2>📊 今日盤勢摘要</h2>
       <p class="note">媽媽版只看燈號：🟢可小買、🟩好買區、🟡先觀察、🔴危險停手、🟣漲太多不追。盤中訊號會隨價格變動，請優先確認上方「最後更新」時間。</p>
