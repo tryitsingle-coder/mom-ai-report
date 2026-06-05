@@ -1,0 +1,47 @@
+﻿{
+    "updated_at":  "2026-06-05 08:47:49",
+    "source":  "Twelve Data",
+    "global_signal":  "BULLISH",
+    "average_score":  1.5,
+    "items":  [
+                  {
+                      "key":  "nvda",
+                      "name":  "NVDA",
+                      "symbol":  "NVDA",
+                      "kind":  "stock",
+                      "ok":  true,
+                      "price":  218.66,
+                      "change":  3.91,
+                      "percent_change":  1.82072,
+                      "status":  "Bullish",
+                      "message":  "",
+                      "datetime":  "2026-06-05 08:47:48"
+                  },
+                  {
+                      "key":  "tsm",
+                      "name":  "TSM ADR",
+                      "symbol":  "TSM",
+                      "kind":  "stock",
+                      "ok":  true,
+                      "price":  444.92001,
+                      "change":  8.23001,
+                      "percent_change":  1.88463,
+                      "status":  "Bullish",
+                      "message":  "",
+                      "datetime":  "2026-06-05 08:47:49"
+                  },
+                  {
+                      "key":  "usdtwd",
+                      "name":  "USD/TWD",
+                      "symbol":  "USD/TWD",
+                      "kind":  "forex",
+                      "ok":  true,
+                      "price":  31.50233,
+                      "change":  0.02616,
+                      "percent_change":  0.083110493,
+                      "status":  "Neutral",
+                      "message":  "",
+                      "datetime":  "2026-06-05 08:47:49"
+                  }
+              ]
+}
