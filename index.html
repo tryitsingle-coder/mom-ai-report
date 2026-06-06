@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
@@ -595,6 +595,54 @@
       .global-radar-compact .summary-grid { grid-template-columns:1fr; }
     }
 
+  
+    /* V21 safe mom layout patch */
+    .mom-quick-section {
+      border:2px solid #FACC15;
+      box-shadow:0 0 0 1px rgba(250,204,21,.18), 0 10px 26px rgba(0,0,0,.28);
+    }
+    .mom-quick-section h2::after {
+      content:"｜快訊只看方向，買賣看下單規則";
+      display:inline-block;
+      margin-left:8px;
+      font-size:13px;
+      color:#FACC15;
+      font-weight:900;
+    }
+    .global-radar-compact {
+      padding:12px 14px;
+      opacity:.94;
+    }
+    .global-radar-compact h2 {
+      font-size:18px;
+      margin-bottom:6px;
+    }
+    .global-radar-compact .summary-grid {
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:8px;
+      margin-top:8px;
+    }
+    .global-radar-compact .summary-card {
+      padding:8px 10px;
+      border-radius:10px;
+    }
+    .global-radar-compact .summary-card strong {
+      font-size:15px;
+      margin-bottom:2px;
+    }
+    .global-radar-compact .summary-card span,
+    .global-radar-compact .summary-card .names {
+      font-size:12px;
+      line-height:1.35;
+    }
+    .global-radar-note { font-size:12px; opacity:.9; }
+    @media (max-width:900px) {
+      .global-radar-compact .summary-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:640px) {
+      .global-radar-compact .summary-grid { grid-template-columns:1fr; }
+      .mom-quick-section h2::after { display:block; margin-left:0; margin-top:4px; }
+    }
   </style>
 </head>
 <body>
@@ -612,8 +660,7 @@
     </div>
   </header>
   <main class="wrap">
-    <section>
-      <h2>📢 媽媽快速看｜AI主線快訊</h2>
+媽媽快速看｜AI主線快訊</h2>
       <div class="summary-grid">
         <div class='summary-card summary-green'><strong>4958 臻鼎-KY</strong><span>504（+2.34%）</span><span class='names'>站穩500偏強；跌回500下先等495/490。</span></div>
 <div class='summary-card summary-yellow'><strong>3711 日月光投控</strong><span>577（-2.7%）</span><span class='names'>站回585才轉穩；570附近才是低接觀察。</span></div>
@@ -624,35 +671,13 @@
       <div class="explain-note"><strong>🎯 下單提醒：</strong>快訊只看方向；真正買賣請接著看下方「🚦下單規則」與「🔥AI主線健康度」。<br><strong>今日策略：</strong>不追高，不弱勢攤平；只買有承接、能站回關鍵價的主線股。</div>
     </section>
     <section>
-      <h2>👩 媽媽快速看｜今日決策總結</h2>
-      <p class="note"><strong>最後更新：</strong>2026/06/07 06:48:20</p>
-      <p class="note">家族共用決策版：不顯示成本、持股數與損益；先看燈號與風險，再看下單規則。</p>
-      <div class="summary-grid">
-        <div class="summary-card summary-red">
-          <strong>🔴 風險偏高｜暫停加碼</strong>
-          <span>風險分數：20 / 100</span>
-          <span class="names">不急買，等重新站回再看。</span>
-        </div>
-        <div class="summary-card summary-green">
-          <strong>🥇 今日主攻前三</strong>
-          <span>強弱排行</span>
-          <span class="names">3189 景碩 712（+2.89%）｜4958 臻鼎-KY 504（+2.34%）｜3665 貿聯-KY 2,200（+2.09%）</span>
-        </div>
-        <div class="summary-card summary-red">
-          <strong>⚠️ 今日避免前三</strong>
-          <span>弱勢先觀察</span>
-          <span class="names">2308 台達電 2,300（-5.15%）｜3017 奇鋐 2,600（-4.06%）｜3037 欣興 933（-3.91%）</span>
-        </div>
-        <div class="summary-card summary-yellow">
-          <strong>📌 今日一句話</strong>
-          <span>只低接，不追高</span>
-          <span class="names">臻鼎強但等回測；日月光未站回585前不急；欣興跌深先看950能否收復。</span>
-        </div>
-      </div>
-    </section>
+      <h2>📢 
+    <section>
+      <h2>👩 
 
     <section>
       <h2>🚦 下單規則｜盤中動態版</h2>
+      <div class="explain-note"><strong>🛡️ 大跌規則：</strong>真AI主線大跌時，持股不恐慌砍，現金等甜區低接；弱勢股不攤平，強勢股不追高。</div>
       <div class="summary-grid">
         <div class="summary-card summary-yellow"><strong>① 臻鼎</strong><span>4958 臻鼎-KY 504（+2.34%）</span><span class="names">強股回測接：500附近小量，495/490再分批；不追510以上。</span></div>
         <div class="summary-card summary-yellow"><strong>② 日月光</strong><span>3711 日月光投控 577（-2.7%）</span><span class="names">低掛不追：570~573觀察；站回585才轉穩。</span></div>
@@ -813,7 +838,7 @@
         <div class="summary-card summary-yellow">
           <strong>USD/TWD</strong>
           <span>31.50</span>
-          <span class="names">0.07%｜中性觀察</span>
+          <span class="names">0.07%｜中性觀察觀察</span>
         </div>
 
         <div class="summary-card summary-yellow"><strong>盤前提醒</strong><span>⚠️ 看資金是否跟進</span><span class="names">國際有利 ≠ 台股結果；開盤後仍以台指期、試撮價與資金流為準。</span></div>
