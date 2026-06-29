@@ -1,6 +1,4 @@
-﻿﻿# fetch_global_market_now_v24.ps1
-# Clean public version. Fetch Yahoo Finance chart API and generate global_market.json + global_market_block.html.
-$ErrorActionPreference = "SilentlyContinue"
+﻿$ErrorActionPreference = "SilentlyContinue"
 Set-Location -Path $PSScriptRoot
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 

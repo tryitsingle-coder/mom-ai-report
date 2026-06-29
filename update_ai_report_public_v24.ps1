@@ -1,6 +1,4 @@
-﻿﻿# update_ai_report_public_v24.ps1
-# Clean public DDE generator. No personal/family holding data.
-$ErrorActionPreference = "SilentlyContinue"
+﻿$ErrorActionPreference = "SilentlyContinue"
 Set-Location -Path $PSScriptRoot
 
 $ExcelPath = "C:\DDE\yuanta_dde.xlsx"
