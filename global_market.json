@@ -1,47 +1,148 @@
 ﻿{
-    "updated_at":  "2026-06-05 08:47:49",
-    "source":  "Twelve Data",
-    "global_signal":  "BULLISH",
-    "average_score":  1.5,
+    "updated_at":  "2026-06-29 23:16:41",
+    "source":  "Yahoo Finance chart API",
+    "score":  50,
+    "status":  "中性 - 等 09:08 真方向",
     "items":  [
                   {
-                      "key":  "nvda",
-                      "name":  "NVDA",
+                      "label":  "NVIDIA",
                       "symbol":  "NVDA",
-                      "kind":  "stock",
-                      "ok":  true,
-                      "price":  218.66,
-                      "change":  3.91,
-                      "percent_change":  1.82072,
-                      "status":  "Bullish",
-                      "message":  "",
-                      "datetime":  "2026-06-05 08:47:48"
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
                   },
                   {
-                      "key":  "tsm",
-                      "name":  "TSM ADR",
+                      "label":  "台積電ADR",
                       "symbol":  "TSM",
-                      "kind":  "stock",
-                      "ok":  true,
-                      "price":  444.92001,
-                      "change":  8.23001,
-                      "percent_change":  1.88463,
-                      "status":  "Bullish",
-                      "message":  "",
-                      "datetime":  "2026-06-05 08:47:49"
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
                   },
                   {
-                      "key":  "usdtwd",
-                      "name":  "USD/TWD",
-                      "symbol":  "USD/TWD",
-                      "kind":  "forex",
-                      "ok":  true,
-                      "price":  31.50233,
-                      "change":  0.02616,
-                      "percent_change":  0.083110493,
-                      "status":  "Neutral",
-                      "message":  "",
-                      "datetime":  "2026-06-05 08:47:49"
+                      "label":  "Nasdaq 100期貨",
+                      "symbol":  "NQ=F",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "S\u0026P 500期貨",
+                      "symbol":  "ES=F",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "QQQ",
+                      "symbol":  "QQQ",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "Nasdaq",
+                      "symbol":  "^IXIC",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "S\u0026P 500",
+                      "symbol":  "^GSPC",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "VIX",
+                      "symbol":  "^VIX",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  true,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "美元指數",
+                      "symbol":  "DX-Y.NYB",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  true,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "美元/台幣",
+                      "symbol":  "TWD=X",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  true,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "SOXX",
+                      "symbol":  "SOXX",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "SMH",
+                      "symbol":  "SMH",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "Dow 30",
+                      "symbol":  "^DJI",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
+                  },
+                  {
+                      "label":  "Russell 2000",
+                      "symbol":  "^RUT",
+                      "price":  null,
+                      "previous":  null,
+                      "pct":  null,
+                      "ok":  false,
+                      "inverse":  false,
+                      "source":  "fetch-failed"
                   }
               ]
 }

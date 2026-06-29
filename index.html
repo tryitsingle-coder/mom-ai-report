@@ -1,1377 +1,174 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI投資觀察報告｜06/26收盤＋06/29盤前準備版</title>
-  <style>
-    :root { --ink:#1F2937; --muted:#475569; --line:#D7DEE8; --bg:#F7F8FA; --panel:#FFFFFF; }
-    * { box-sizing:border-box; }
-    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif; line-height:1.55; }
-    .wrap { width:min(1180px,calc(100% - 32px)); margin:0 auto; }
-    header { background:#EEF3F8; border-bottom:1px solid var(--line); padding:28px 0 22px; }
-    h1 { margin:0 0 10px; font-size:clamp(28px,4vw,46px); line-height:1.12; }
-    h2 { margin:0 0 14px; font-size:22px; }
-    main { padding:22px 0 44px; }
-    section { background:#FFFFFF; border:1px solid #D7DEE8; border-radius:14px; padding:18px; margin-bottom:16px; }
-    .lead { color:#384253; margin:0; font-size:17px; }
-    .discipline-line{margin:8px 0 4px;font-size:18px;font-weight:900;color:#DBEAFE;letter-spacing:.5px}
-
-    .top-line { display:flex; flex-wrap:wrap; gap:10px; align-items:center; color:#384253; font-size:17px; margin:0; }
-    .update-inline { font-weight:800; color:#0F172A; background:#FFFFFF; border:1px solid #CBD5E1; border-radius:999px; padding:4px 10px; }
-
-    .strength-badge { display:inline-flex; align-items:center; border-radius:999px; padding:5px 10px; border:2px solid #CBD5E1; font-weight:900; white-space:nowrap; }
-    .strength-main { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
-    .strength-up { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
-    .strength-watch { color:#334155; background:#F8FAFC; border-color:#F8FAFC; }
-    .strength-cool { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
-
-    .radar-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .radar-pill { display:inline-flex; align-items:center; border-radius:999px; padding:7px 11px; border:2px solid #CBD5E1; background:#FFF; font-weight:800; }
-    .radar-sweet { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
-    .radar-risk { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
-    .radar-warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
-    .radar-watch,.radar-neutral { color:#334155; background:#F8FAFC; border-color:#F8FAFC; }
-    .infra-pill { border-style:dashed; }
-
-    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px; }
-    .metric { background:#FFFFFF; border:1px solid #D7DEE8; border-radius:12px; padding:12px; }
-    .metric strong { display:block; font-size:22px; }
-    .metric span { display:block; color:#475569; font-size:13px; margin-top:4px; }
-    table { width:100%; border-collapse:collapse; font-size:14px; }
-    th,td { border-bottom:1px solid #D7DEE8; padding:9px 8px; text-align:left; vertical-align:top; }
-    th { background:#E2E8F0; color:#1F2937; font-weight:800; }
-    .num { font-variant-numeric:tabular-nums; white-space:nowrap; }
-
-    .cat-badge { display:inline-flex; align-items:center; margin-left:6px; border-radius:999px; padding:3px 8px; background:#EEF2FF; color:#3730A3; border:1px solid #C7D2FE; font-size:12px; font-weight:900; white-space:nowrap; }
-    .theme-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:12px; }
-    .theme-card { border:1px solid #D7DEE8; border-radius:12px; padding:12px; background:#FFFFFF; }
-    .theme-card strong { display:block; font-size:16px; margin-bottom:6px; color:#0F172A; }
-    .theme-card span { display:inline-flex; margin:3px 4px 3px 0; border-radius:999px; padding:4px 8px; background:#F8FAFC; border:1px solid #CBD5E1; font-size:13px; font-weight:800; }
-    @media (max-width:900px) { .theme-grid { grid-template-columns:1fr 1fr; } }
-    @media (max-width:640px) { .theme-grid { grid-template-columns:1fr; } .cat-badge { display:flex; width:max-content; margin-left:0; margin-top:4px; } }
-
-    .tag { display:inline-flex; min-height:30px; align-items:center; border-radius:999px; padding:5px 11px; background:#FFFFFF; border:2px solid #CBD5E1; white-space:nowrap; font-weight:800; }
-    .sweet { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
-    .warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
-    .risk { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
-    .stale { color:#334155; background:#E2E8F0; border-color:#F1F5F9; }
-    .neutral { color:#1F2937; background:#FFFFFF; border-color:#F8FAFC; }
-    tr.sweet-row td { background:#F0FDF4; }
-    tr.risk-row td { background:#FEF2F2; }
-    tr.warn-row td { background:#FFFBEB; }
-    tr.watch-row td { background:#F1F5F9; color:#334155; }
-    tr.neutral-row td { background:#FFFFFF; }
-    .note { color:#475569; font-size:13px; margin:8px 0 0; }
-    .alert-box { border-radius:12px; padding:12px 14px; margin:10px 0; border:2px solid #CBD5E1; }
-    .alert-box h3 { margin:0 0 8px; font-size:17px; }
-    .alert-box ul { margin:0; padding-left:20px; }
-    .alert-box li { margin:6px 0; }
-    .alert-sweet { background:#F0FDF4; border-color:#86EFAC; color:#14532D; }
-    .alert-risk { background:#FEF2F2; border-color:#FCA5A5; color:#7F1D1D; }
-    .alert-neutral { background:#F8FAFC; border-color:#F8FAFC; color:#334155; }
-
-    .summary-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:12px; }
-    .summary-card { border:1px solid #D7DEE8; border-radius:12px; padding:12px; background:#FFFFFF; }
-    .summary-card strong { display:block; font-size:20px; margin-bottom:4px; }
-    .summary-card span { color:#475569; font-size:13px; }
-    .summary-green { background:#F0FDF4; border-color:#86EFAC; color:#14532D; }
-    .summary-red { background:#FEF2F2; border-color:#FCA5A5; color:#7F1D1D; }
-    .summary-yellow { background:#FFFBEB; border-color:#FBBF24; color:#92400E; }
-    .summary-gray { background:#F8FAFC; border-color:#F8FAFC; color:#334155; }
-    .power-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .power-pill { display:inline-flex; align-items:center; border-radius:999px; padding:7px 11px; border:2px solid #CBD5E1; background:#FFF; font-weight:800; }
-
-    .power-sweet { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
-    .power-risk { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
-    .power-warn { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
-    .power-watch { color:#334155; background:#E2E8F0; border-color:#F1F5F9; }
-    .summary-card .names { display:block; margin-top:6px; color:#334155; font-size:13px; line-height:1.45; }
-
-    @media (max-width:900px) { .summary-grid { grid-template-columns:1fr 1fr; } }
-    @media (max-width:640px) { .summary-grid { grid-template-columns:1fr; } }
-
-
-
-    .legend-table { width:100%; border-collapse:collapse; margin-top:10px; font-size:14px; }
-    .legend-table th,.legend-table td { border-bottom:1px solid #D7DEE8; padding:9px 8px; text-align:left; }
-    .legend-table th { background:#E2E8F0; font-weight:800; }
-    .status-badge { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:6px 10px; font-weight:900; border:2px solid #CBD5E1; white-space:nowrap; }
-    .deepgreen { color:#14532D; background:#BBF7D0; border-color:#22C55E; }
-    .softgreen { color:#166534; background:#DCFCE7; border-color:#86EFAC; }
-    .graywhite { color:#334155; background:#E2E8F0; border-color:#F1F5F9; }
-    .whitezone { color:#1F2937; background:#FFFFFF; border-color:#F8FAFC; }
-    .softyellow { color:#92400E; background:#FEF3C7; border-color:#FBBF24; }
-    .deepyellow { color:#78350F; background:#FDE68A; border-color:#F59E0B; }
-    .softred { color:#991B1B; background:#FEE2E2; border-color:#FCA5A5; }
-    .deepred { color:#7F1D1D; background:#FCA5A5; border-color:#EF4444; }
-    .star { color:#F59E0B; font-weight:900; letter-spacing:1px; }
-    .guide-img { max-width:100%; border:1px solid #D7DEE8; border-radius:14px; margin-top:12px; display:block; }
-
-    .color-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; font-size:14px; font-weight:800; }
-    .legend-item { display:inline-flex; align-items:center; border-radius:999px; padding:6px 10px; border:2px solid transparent; line-height:1.2; }
-    .legend-green { background:#DCFCE7; color:#166534; border-color:#86EFAC; }
-    .legend-red { background:#FEE2E2; color:#991B1B; border-color:#FCA5A5; }
-    .legend-gray { background:#E2E8F0; color:#334155; border-color:#F1F5F9; }
-    .legend-yellow { background:#FEF3C7; color:#92400E; border-color:#FBBF24; }
-    .legend-white { background:#FFFFFF; color:#1F2937; border-color:#F8FAFC; }
-    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { font-size:13px; } }
-    @media (max-width:640px) { .grid { grid-template-columns:1fr; } section { padding:14px; border-radius:12px; } th,td { padding:8px 6px; } .tag { min-height:32px; padding:5px 10px; font-size:13px; } .color-legend { gap:6px; font-size:13px; } th:nth-child(4),td:nth-child(4),th:nth-child(7),td:nth-child(7),th:nth-child(10),td:nth-child(10) { display:none; } }
-  
-    /* =========================
-       V9 Night Edition overrides
-       深色護眼版：不改 DDE 與計算邏輯，只覆蓋視覺
-       ========================= */
-    :root {
-      --ink:#F8FAFC;
-      --muted:#CBD5E1;
-      --line:#334155;
-      --bg:#0F172A;
-      --panel:#1E293B;
-    }
-    body { background:#0F172A; color:#F8FAFC; }
-    header { background:linear-gradient(135deg,#0F172A 0%,#111827 55%,#1E293B 100%); border-bottom:1px solid #334155; }
-    h1,h2,h3 { color:#F8FAFC; }
-    .lead,.top-line,.note { color:#F8FAFC; }
-    .update-inline {
-      background:#1E293B;
-      border-color:#475569;
-      color:#FACC15;
-      box-shadow:0 0 0 1px rgba(250,204,21,0.12);
-    }
-    section {
-      background:#1E293B;
-      border-color:#334155;
-      box-shadow:0 8px 24px rgba(0,0,0,0.22);
-    }
-    .metric {
-      background:#111827;
-      border-color:#334155;
-      color:#F8FAFC;
-    }
-    .metric strong { color:#F8FAFC; }
-    .metric span { color:#F8FAFC; }
-
-    table { color:#E2E8F0; }
-    th {
-      background:#334155;
-      color:#F8FAFC;
-      border-bottom-color:#475569;
-    }
-    td {
-      border-bottom-color:#334155;
-      color:#E2E8F0;
-    }
-    tr.neutral-row td { background:#1E293B; }
-    tr.watch-row td { background:#243142; color:#E2E8F0; }
-    tr.sweet-row td { background:#123524; color:#DCFCE7; }
-    tr.warn-row td { background:#3B2E12; color:#FEF3C7; }
-    tr.risk-row td { background:#3B1717; color:#FEE2E2; }
-
-    .num { color:#F8FAFC; }
-    .tag.neutral,.neutral {
-      color:#E2E8F0;
-      background:#111827;
-      border-color:#475569;
-    }
-    .tag.sweet,.sweet {
-      color:#BBF7D0;
-      background:#14532D;
-      border-color:#22C55E;
-    }
-    .tag.warn,.warn {
-      color:#FEF3C7;
-      background:#78350F;
-      border-color:#FACC15;
-    }
-    .tag.risk,.risk {
-      color:#FECACA;
-      background:#7F1D1D;
-      border-color:#EF4444;
-    }
-    .tag.stale,.stale {
-      color:#F8FAFC;
-      background:#334155;
-      border-color:#E2E8F0;
-    }
-
-    .alert-box { background:#111827; border-color:#334155; }
-    .alert-sweet { background:#123524; border-color:#22C55E; color:#DCFCE7; }
-    .alert-risk { background:#3B1717; border-color:#EF4444; color:#FEE2E2; }
-    .alert-neutral { background:#111827; border-color:#475569; color:#F8FAFC; }
-
-    .summary-card {
-      background:#111827;
-      border-color:#334155;
-      color:#F8FAFC;
-    }
-    .summary-card span { color:#F8FAFC; }
-    .summary-green { background:#123524; border-color:#22C55E; color:#DCFCE7; }
-    .summary-red { background:#3B1717; border-color:#EF4444; color:#FEE2E2; }
-    .summary-yellow { background:#3B2E12; border-color:#FACC15; color:#FEF3C7; }
-    .summary-gray { background:#111827; border-color:#475569; color:#F8FAFC; }
-
-    .radar-pill,.power-pill,.theme-card span {
-      background:#111827;
-      border-color:#475569;
-      color:#E2E8F0;
-    }
-    .radar-sweet,.power-sweet,.strength-main {
-      color:#BBF7D0;
-      background:#14532D;
-      border-color:#22C55E;
-    }
-    .radar-warn,.power-warn,.strength-up {
-      color:#FEF3C7;
-      background:#78350F;
-      border-color:#FACC15;
-    }
-    .radar-risk,.power-risk,.strength-cool {
-      color:#FECACA;
-      background:#7F1D1D;
-      border-color:#EF4444;
-    }
-    .radar-watch,.radar-neutral,.power-watch,.strength-watch {
-      color:#F8FAFC;
-      background:#111827;
-      border-color:#475569;
-    }
-
-    .strength-badge {
-      box-shadow:0 0 0 1px rgba(255,255,255,0.04);
-    }
-
-    .cat-badge {
-      background:#312E81;
-      color:#C7D2FE;
-      border-color:#6366F1;
-    }
-    .theme-card {
-      background:#111827;
-      border-color:#334155;
-    }
-    .theme-card strong { color:#F8FAFC; }
-
-    .legend-table th {
-      background:#334155;
-      color:#F8FAFC;
-    }
-    .legend-table td {
-      background:#1E293B;
-      color:#E2E8F0;
-      border-bottom-color:#334155;
-    }
-    .status-badge.deepgreen,.deepgreen { color:#BBF7D0; background:#14532D; border-color:#22C55E; }
-    .status-badge.softgreen,.softgreen { color:#DCFCE7; background:#166534; border-color:#4ADE80; }
-    .status-badge.graywhite,.graywhite { color:#E2E8F0; background:#334155; border-color:#E2E8F0; }
-    .status-badge.whitezone,.whitezone { color:#E2E8F0; background:#111827; border-color:#475569; }
-    .status-badge.softyellow,.softyellow { color:#FEF3C7; background:#854D0E; border-color:#FACC15; }
-    .status-badge.deepyellow,.deepyellow { color:#FFFBEB; background:#92400E; border-color:#F59E0B; }
-    .status-badge.softred,.softred { color:#FEE2E2; background:#7F1D1D; border-color:#FCA5A5; }
-    .status-badge.deepred,.deepred { color:#FFFFFF; background:#991B1B; border-color:#EF4444; }
-    .star { color:#FACC15; }
-
-    .color-legend .legend-item { border-color:#475569; }
-    .legend-green { background:#14532D; color:#BBF7D0; border-color:#22C55E; }
-    .legend-red { background:#7F1D1D; color:#FECACA; border-color:#EF4444; }
-    .legend-gray { background:#334155; color:#F8FAFC; border-color:#E2E8F0; }
-    .legend-yellow { background:#78350F; color:#FEF3C7; border-color:#FACC15; }
-    .legend-white { background:#111827; color:#E2E8F0; border-color:#475569; }
-
-    a { color:#93C5FD; }
-
-  
-    /* V9.1 summary text readability fix */
-    .summary-card,
-    .summary-card * {
-      color:#F8FAFC !important;
-    }
-    .summary-card span,
-    .summary-card p,
-    .summary-card div,
-    .summary-card li {
-      color:#E2E8F0 !important;
-      opacity:1 !important;
-    }
-    .summary-card strong {
-      color:#FFFFFF !important;
-      opacity:1 !important;
-    }
-    .summary-green,
-    .summary-green * {
-      color:#DCFCE7 !important;
-      opacity:1 !important;
-    }
-    .summary-red,
-    .summary-red * {
-      color:#FEE2E2 !important;
-      opacity:1 !important;
-    }
-    .summary-gray,
-    .summary-gray * {
-      color:#E2E8F0 !important;
-      opacity:1 !important;
-    }
-    .summary-yellow,
-    .summary-yellow * {
-      color:#FEF3C7 !important;
-      opacity:1 !important;
-    }
-    .summary-green .summary-names,
-    .summary-red .summary-names,
-    .summary-gray .summary-names,
-    .summary-yellow .summary-names {
-      color:#F8FAFC !important;
-      font-weight:800 !important;
-      opacity:1 !important;
-    }
-
-  
-    /* V9.1 SAFE summary text readability fix - CSS only */
-    .summary-card p,
-    .summary-card span,
-    .summary-card div,
-    .summary-card li {
-      color:#E2E8F0 !important;
-      opacity:1 !important;
-    }
-    .summary-card strong,
-    .summary-card b {
-      color:#FFFFFF !important;
-      opacity:1 !important;
-    }
-    .summary-green p,
-    .summary-green span,
-    .summary-green div,
-    .summary-green li {
-      color:#DCFCE7 !important;
-      opacity:1 !important;
-    }
-    .summary-red p,
-    .summary-red span,
-    .summary-red div,
-    .summary-red li {
-      color:#FEE2E2 !important;
-      opacity:1 !important;
-    }
-    .summary-gray p,
-    .summary-gray span,
-    .summary-gray div,
-    .summary-gray li {
-      color:#E2E8F0 !important;
-      opacity:1 !important;
-    }
-    .summary-yellow p,
-    .summary-yellow span,
-    .summary-yellow div,
-    .summary-yellow li {
-      color:#FEF3C7 !important;
-      opacity:1 !important;
-    }
-    .summary-green,
-    .summary-red,
-    .summary-gray,
-    .summary-yellow {
-      opacity:1 !important;
-    }
-
-
-    /* V10.6 今日 AI 作戰情報：自動版 */
-    .intel-card {
-      background:linear-gradient(135deg,#111827 0%,#1E293B 60%,#172554 100%);
-      border:1px solid #334155;
-      border-radius:16px;
-      padding:16px;
-      margin-top:14px;
-      box-shadow:0 8px 24px rgba(0,0,0,0.22);
-    }
-    .intel-head {
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:10px;
-    }
-    .intel-head h2 { margin:0; font-size:22px; }
-    .intel-badge {
-      display:inline-flex;
-      align-items:center;
-      border-radius:999px;
-      padding:6px 11px;
-      font-weight:900;
-      color:#FEF3C7;
-      background:#78350F;
-      border:2px solid #FACC15;
-      white-space:nowrap;
-    }
-    .intel-grid {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:10px;
-      margin-top:10px;
-    }
-    .intel-box {
-      background:#0F172A;
-      border:1px solid #334155;
-      border-radius:13px;
-      padding:12px;
-      color:#E2E8F0;
-    }
-    .intel-box strong {
-      display:block;
-      color:#FFFFFF;
-      margin-bottom:6px;
-      font-size:16px;
-    }
-    .intel-box ul { margin:0; padding-left:18px; }
-    .intel-box li { margin:4px 0; }
-    .intel-strategy {
-      margin-top:10px;
-      border-radius:13px;
-      padding:12px;
-      background:#123524;
-      border:1px solid #22C55E;
-      color:#DCFCE7;
-      font-weight:900;
-      line-height:1.6;
-    }
-    @media (max-width:900px) { .intel-grid { grid-template-columns:1fr; } }
-
-  
-    /* V10.6 auto intel additions */
-    .intel-auto-note { color:#CBD5E1; font-size:13px; margin:4px 0 0; line-height:1.55; }
-    .intel-rank { display:flex; flex-direction:column; gap:8px; margin-top:8px; }
-    .intel-rank-item { border-radius:12px; padding:10px 12px; background:#0F172A; border:1px solid #334155; color:#E2E8F0; font-weight:800; }
-    .intel-rank-item b { color:#FACC15; margin-right:6px; }
-    .intel-watch { display:flex; flex-wrap:wrap; gap:7px; margin-top:8px; }
-    .intel-watch span { display:inline-flex; border-radius:999px; padding:5px 9px; background:#111827; border:1px solid #475569; color:#E2E8F0; font-weight:800; font-size:13px; }
-
-  
-    /* V2.0 purple zone and shared battle zone */
-    .summary-purple {
-      background:#312E81;
-      border-color:#8B5CF6;
-      color:#EDE9FE;
-    }
-    .summary-purple,
-    .summary-purple * {
-      color:#EDE9FE !important;
-      opacity:1 !important;
-    }
-    tr.purple-row td {
-      background:#241744;
-      color:#EDE9FE;
-    }
-    .tag.purple,.purple {
-      color:#EDE9FE;
-      background:#4C1D95;
-      border-color:#A78BFA;
-    }
-    .radar-purple,.power-purple {
-      color:#EDE9FE;
-      background:#4C1D95;
-      border-color:#A78BFA;
-    }
-    .shared-battle-grid {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:12px;
-      margin-top:12px;
-    }
-    .shared-battle-card {
-      background:#111827;
-      border:1px solid #334155;
-      border-radius:14px;
-      padding:14px;
-      color:#E2E8F0;
-    }
-    .shared-battle-card h3 {
-      margin:0 0 8px;
-      font-size:18px;
-      color:#FFFFFF;
-    }
-    .battle-row {
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      border-top:1px solid #334155;
-      padding:7px 0;
-      font-size:13px;
-    }
-    .battle-row:first-of-type { border-top:0; }
-    .battle-label {
-      color:#CBD5E1;
-      font-weight:800;
-      white-space:nowrap;
-    }
-    .battle-value {
-      color:#F8FAFC;
-      font-weight:900;
-      text-align:right;
-    }
-    .battle-note {
-      margin-top:10px;
-      color:#CBD5E1;
-      font-size:13px;
-      line-height:1.55;
-    }
-    .focus-list {
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:10px;
-    }
-    .focus-list span {
-      display:inline-flex;
-      border-radius:999px;
-      padding:6px 10px;
-      background:#0F172A;
-      border:1px solid #475569;
-      color:#FACC15;
-      font-weight:900;
-    }
-    @media (max-width:900px) { .shared-battle-grid { grid-template-columns:1fr; } }
-
-  
-    /* V2.2 explanation note for weekly focus vs daily watch */
-    .explain-note {
-      margin-top:10px;
-      border:1px solid #475569;
-      background:#0F172A;
-      color:#E2E8F0;
-      border-radius:12px;
-      padding:11px 12px;
-      font-size:13px;
-      line-height:1.65;
-    }
-    .explain-note strong {
-      color:#FACC15;
-    }
-
-
-    /* V13.3 table signal badges */
-    .signal-table td { line-height:1.5; }
-    .signal-rocket { color:#DCFCE7; background:#14532D; border-color:#22C55E; }
-    .signal-wait { color:#FEF3C7; background:#78350F; border-color:#FACC15; }
-    .signal-fire { color:#FFEDD5; background:#9A3412; border-color:#FB923C; }
-    .signal-profit { color:#FEF9C3; background:#854D0E; border-color:#FDE047; }
-    .signal-stop { color:#FEE2E2; background:#7F1D1D; border-color:#EF4444; }
-
-
-
-    /* V20.1 decision layout patch */
-    .global-radar-compact {
-      padding:12px 14px;
-      opacity:.94;
-    }
-    .global-radar-compact h2 {
-      font-size:18px;
-      margin-bottom:6px;
-    }
-    .global-radar-compact .summary-grid {
-      grid-template-columns:repeat(5,minmax(0,1fr));
-      gap:8px;
-      margin-top:8px;
-    }
-    .global-radar-compact .summary-card {
-      padding:8px 10px;
-      border-radius:10px;
-    }
-    .global-radar-compact .summary-card strong {
-      font-size:15px;
-      margin-bottom:2px;
-    }
-    .global-radar-compact .summary-card span,
-    .global-radar-compact .summary-card .names {
-      font-size:12px;
-      line-height:1.35;
-    }
-    .global-radar-note { font-size:12px; opacity:.9; }
-    @media (max-width:900px) {
-      .global-radar-compact .summary-grid { grid-template-columns:1fr 1fr; }
-    }
-    @media (max-width:640px) {
-      .global-radar-compact .summary-grid { grid-template-columns:1fr; }
-    }
-
-  
-
-    /* V22 clean single-script layout */
-    .quick-section {
-      border:2px solid #FACC15;
-      box-shadow:0 0 0 1px rgba(250,204,21,.18), 0 10px 26px rgba(0,0,0,.28);
-    }
-    .quick-section h2::after {
-      content:"｜先看這區，再看下單規則";
-      display:inline-block;
-      margin-left:8px;
-      font-size:13px;
-      color:#FACC15;
-      font-weight:900;
-    }
-    .global-radar-compact {
-      padding:12px 14px;
-      opacity:.94;
-    }
-    .global-radar-compact h2 { font-size:18px; margin-bottom:6px; }
-    .global-radar-compact .summary-grid {
-      grid-template-columns:repeat(5,minmax(0,1fr));
-      gap:8px;
-      margin-top:8px;
-    }
-    .global-radar-compact .summary-card { padding:8px 10px; border-radius:10px; }
-    .global-radar-compact .summary-card strong { font-size:15px; margin-bottom:2px; }
-    .global-radar-compact .summary-card span,
-    .global-radar-compact .summary-card .names { font-size:12px; line-height:1.35; }
-    .global-radar-note { font-size:12px; opacity:.9; }
-    @media (max-width:900px) { .global-radar-compact .summary-grid { grid-template-columns:1fr 1fr; } }
-    @media (max-width:640px) {
-      .global-radar-compact .summary-grid { grid-template-columns:1fr; }
-      .quick-section h2::after { display:block; margin-left:0; margin-top:4px; }
-    }
-
-
-    /* V25 strong rebound short trade radar */
-    .shorttrade-section {
-      border:2px solid #A78BFA;
-      background:linear-gradient(135deg,#1E1B4B 0%,#111827 58%,#312E81 100%);
-      box-shadow:0 0 0 1px rgba(167,139,250,.22), 0 10px 26px rgba(0,0,0,.28);
-    }
-    .shorttrade-section h2 { color:#EDE9FE; }
-    .shorttrade-grid {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:12px;
-      margin-top:12px;
-    }
-    .shorttrade-card {
-      background:#0F172A;
-      border:1px solid #6D28D9;
-      border-radius:14px;
-      padding:14px;
-      color:#EDE9FE;
-    }
-    .shorttrade-card h3 {
-      margin:0 0 8px;
-      font-size:18px;
-      color:#FFFFFF;
-    }
-    .shorttrade-card ul { margin:0; padding-left:20px; }
-    .shorttrade-card li { margin:6px 0; line-height:1.55; }
-    .shorttrade-card .battle-row { border-top:1px solid #4C1D95; }
-    .shorttrade-card .battle-row:first-of-type { border-top:0; }
-    @media (max-width:900px) { .shorttrade-grid { grid-template-columns:1fr; } }
-
-
-    /* V25.6 shortline radar: 短線外掛區，不污染S級/主要真AI */
-    .shortline-section {
-      border:2px solid #FACC15;
-      background:linear-gradient(135deg,#1F2937 0%,#111827 58%,#3B2E12 100%);
-      box-shadow:0 0 0 1px rgba(250,204,21,.18),0 10px 26px rgba(0,0,0,.24);
-    }
-    .shortline-section h2 { color:#FEF3C7; }
-    .shortline-section .note { color:#F8FAFC; }
-    .shortline-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:12px; }
-    .shortline-card { background:#0F172A; border:1px solid #FACC15; border-radius:14px; padding:13px; color:#FEF3C7; }
-    .shortline-card strong { display:block; color:#FFFFFF; font-size:17px; margin-bottom:6px; }
-    .shortline-card span { display:inline-flex; margin:3px 4px 3px 0; border-radius:999px; padding:4px 8px; background:#111827; border:1px solid #854D0E; color:#FEF3C7; font-size:13px; font-weight:800; }
-    @media (max-width:900px) { .shortline-grid { grid-template-columns:1fr; } }
-
-  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI投資觀察報告｜公開版自動更新</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="wrap">
-      <h1>🎯 AI 投資紀律｜06/26收盤＋06/29盤前準備版</h1>
-      <p class="discipline-line">主線優先｜成交量優先｜波段幅度優先｜主力資金優先｜甜區才出手</p>
-      <p class="top-line">公開共用看燈號｜僅顯示盤面支撐、壓力與策略｜低接看綠區｜高檔不追高｜過熱分批處理 <span class="update-inline">最後更新：2026/06/29 23:04:27</span></p>
-      <div class="grid">
-        <div class="metric"><strong>少做、多賺</strong><span>只挑主線甜區</span></div>
-        <div class="metric"><strong>風控優先</strong><span>紅燈停手</span></div>
-        <div class="metric"><strong>S/A主線</strong><span>主線優先</span></div>
-        <div class="metric"><strong>成交量優先</strong><span>主力資金優先</span></div>
-      </div>
-    </div>
-  </header>
-  <main class="wrap">
-
-    <section class="quick-section">
-      <h2>🚨 優先提醒＋今日下單決策｜06/29 盤前準備版</h2>
-      <p class="note">更新時間：2026/06/29 23:04:27｜資料基準：06/26 收盤 DDE＋06/29 盤前準備｜公開版只顯示盤面策略，不放個人資訊。</p>
-      <div class="summary-grid">
-        <div class='summary-card summary-green'><strong>🟢 可以低接</strong><span>只買強股回測，不買急拉</span><span class='names'>6442 光聖：2030～2060 有撐才看｜2449 京元電子：333～336 回測或 339～342 站穩｜1514 亞力：124.5～125.5 回測｜1815 富喬：103.5～105 回測｜5434 崇越：500～505 回測。</span></div>
-        <div class='summary-card summary-yellow'><strong>🟡 可以賣 / 可減碼</strong><span>漲停、出關、過熱先看賣壓</span><span class='names'>3711 日月光、3189 景碩、2449 京元電子、6217 中探針、6213 聯茂、2408 南亞科、2301 光寶科、3624 光頡、2492 華新科、4919 新唐：若開高爆量回落，先看壓力，不追第一根。</span></div>
-        <div class='summary-card summary-red'><strong>🔴 不追不補</strong><span>弱股不是甜區，避免接半山腰</span><span class='names'>4958 臻鼎-KY、8046 南電、2308 台達電、3665 貿聯-KY、4979 華星光、3163 波若威、3653 健策、2455 全新：未站回關鍵價前不攤平，弱勢反彈先觀察。</span></div>
-        <div class='summary-card summary-yellow'><strong>🆕 盤前焦點</strong><span>06/26 收盤偏空＋06/29 開盤修復觀察</span><span class='names'>06/26 台股全面殺盤後，06/29 先看 09:08 真方向；新增 009823/009824 觀察美股大型股與科技巨頭，持股先以反彈減壓為主。</span></div>
-      </div>
-      <div class="explain-note"><strong>06/29 節奏：</strong>08:40～09:00 只看試撮；09:08～09:30 看真方向；先處理持股減壓，新增資金優先 ETF / 台積電，弱股不攤平。</div>
-    </section>
-
-    <section>
-      <h2>🚦 出關 / 處置雷達｜2026/06/29 盤前準備版</h2>
-      <p class="note">本區只提醒交易機制與追高風險；出關不代表保證上漲，進處置也不代表一定下跌，仍以 09:10 後量價承接為準。</p>
-      <div class="summary-grid">
-        <div class="summary-card summary-purple"><strong>⭕ 今日出關重點</strong><span>先看承接，不追第一根</span><span class="names">6442 光聖：06/29 先看 1960～2000 承接；站回 2025～2050 才有止跌味，未站回前不追。</span></div>
-        <div class="summary-card summary-yellow"><strong>⏳ 出關觀察</strong><span>只做短打觀察</span><span class="names">1718 中纖、2491 吉祥全、3149 正達、4807 日成-KY、5701 劍湖山等出關股只看量價，不列主線核心。</span></div>
-        <div class="summary-card summary-red"><strong>👮 處置警戒</strong><span>流動性與撮合限制要注意</span><span class="names">2455 全新、2478 大毅、3532 台勝科等進處置；2383 台光電、3026 禾伸堂、3167 大量等仍列交易限制/警戒觀察，不追高。</span></div>
-        <div class="summary-card summary-gray"><strong>📌 操作規則</strong><span>出關股先看 09:10</span><span class="names">第一波開高若量價失控，先當賣壓測試；回測不破開盤價、站回關鍵價，才列短打觀察。</span></div>
-      </div>
-      <div class="explain-note"><strong>06/29 優先：</strong>先看台積電 2320～2330、0052 60.0～60.5、0050 102.0～102.8、台達電 1830～1850；弱勢個股反彈先減壓。</div>
-    </section>
-<!-- STRONG_REBOUND_SHORT_TRADE_START -->
-<section class="shorttrade-section">
-  <h2>🟣 強股回測短打雷達｜盤中自動版</h2>
-  <p class="note">
-    更新時間：2026/06/29 23:04:27｜本區改為讀取 DDE 即時資料，自動用現價、昨收、盤中高低、振幅與位置判斷；不再寫死光頡案例。
-    只做短打，不當波段；回測買區成交後，反彈到高點/壓力優先落袋。
-  </p>
-  <div class="summary-grid">
-    <div class="summary-card summary-green"><strong>🟢 可小量試：4 檔</strong><span>在回測買區附近</span><span class="names">符合才小量；跌破停損線不凹。</span></div>
-    <div class="summary-card summary-yellow"><strong>🟡 急拉等回測：5 檔</strong><span>現價不追，等回測</span><span class="names">5434 崇越：現 539，等 523.3～530.3｜1815 富喬：現 101，等 99.31～100.7｜3026 禾伸堂：現 766，等 751.1～759.5｜2301 光寶科：現 211.5，等 208.8～210.9｜6173 信昌電：現 282.5，等 277.5～281.3</span></div>
-    <div class="summary-card summary-red"><strong>🔴 失敗不碰：5 檔</strong><span>跌回弱勢，不接刀</span><span class="names">6451 訊芯-KY：現 563，跌破安全區｜6223 旺矽：現 6,060，跌破安全區｜4991 環宇-KY：現 482.5，跌破安全區｜6510 精測：現 3,035，跌破安全區｜5536 聖暉*：現 1,245，跌破安全區</span></div>
-    <div class="summary-card summary-purple"><strong>📌 短打規則</strong><span>買回測，不買急拉</span><span class="names">現價貼高點不追；站回買區才小量；跌破停損線或跌回昨收下方，直接從名單刪除。</span></div>
+<header class="hero">
+  <div>
+    <p class="eyebrow">PUBLIC AI REPORT</p>
+    <h1>AI 投資觀察報告｜公開版自動更新</h1>
+    <p class="subtitle">公開版只顯示市場觀察、甜區、壓力、風險與紀律；不顯示任何個人持股、成本、股數或損益。</p>
+    <p class="updated">最後更新：2026/06/29 23:16:46</p>
   </div>
-  <div class="shorttrade-grid">
-    <div class="shorttrade-card">
-      <h3>6669 緯穎｜可小量試</h3>
-      <div class="battle-row"><span class="battle-label">現 / 昨 / 高 / 低</span><span class="battle-value">4,580 / 4,280 / 4,705 / 4,335</span></div>
-      <div class="battle-row"><span class="battle-label">漲跌 / 振幅</span><span class="battle-value">+7.01% / 8.64%｜量比約 1.24</span></div>
-      <div class="battle-row"><span class="battle-label">回測買區</span><span class="battle-value">4,539～4,613</span></div>
-      <div class="battle-row"><span class="battle-label">低接觀察</span><span class="battle-value">4,465 附近有撐才看</span></div>
-      <div class="battle-row"><span class="battle-label">停損線</span><span class="battle-value">跌破 4,428 不凹</span></div>
-      <div class="battle-row"><span class="battle-label">賣壓/目標</span><span class="battle-value">4,705～4,799</span></div>
-      <div class="battle-note">📌 在回測買區附近，可小量短打；跌破停損線不凹。</div>
-    </div>    <div class="shorttrade-card">
-      <h3>3481 群創｜可小量試</h3>
-      <div class="battle-row"><span class="battle-label">現 / 昨 / 高 / 低</span><span class="battle-value">67 / 65 / 69.3 / 63.5</span></div>
-      <div class="battle-row"><span class="battle-label">漲跌 / 振幅</span><span class="battle-value">+3.08% / 8.92%｜量比約 0.82</span></div>
-      <div class="battle-row"><span class="battle-label">回測買區</span><span class="battle-value">66.69～67.85</span></div>
-      <div class="battle-row"><span class="battle-label">低接觀察</span><span class="battle-value">65.53 附近有撐才看</span></div>
-      <div class="battle-row"><span class="battle-label">停損線</span><span class="battle-value">跌破 64.95 不凹</span></div>
-      <div class="battle-row"><span class="battle-label">賣壓/目標</span><span class="battle-value">69.3～70.69</span></div>
-      <div class="battle-note">📌 在回測買區附近，可小量短打；跌破停損線不凹。</div>
-    </div>    <div class="shorttrade-card">
-      <h3>1560 中砂｜可小量試</h3>
-      <div class="battle-row"><span class="battle-label">現 / 昨 / 高 / 低</span><span class="battle-value">738 / 703 / 754 / 705</span></div>
-      <div class="battle-row"><span class="battle-label">漲跌 / 振幅</span><span class="battle-value">+4.98% / 6.97%｜量比約 1.27</span></div>
-      <div class="battle-row"><span class="battle-label">回測買區</span><span class="battle-value">732～741.8</span></div>
-      <div class="battle-row"><span class="battle-label">低接觀察</span><span class="battle-value">722.2 附近有撐才看</span></div>
-      <div class="battle-row"><span class="battle-label">停損線</span><span class="battle-value">跌破 717.3 不凹</span></div>
-      <div class="battle-row"><span class="battle-label">賣壓/目標</span><span class="battle-value">754～769.1</span></div>
-      <div class="battle-note">📌 在回測買區附近，可小量短打；跌破停損線不凹。</div>
-    </div>    <div class="shorttrade-card">
-      <h3>2327 國巨*｜可小量試</h3>
-      <div class="battle-row"><span class="battle-label">現 / 昨 / 高 / 低</span><span class="battle-value">1,040 / 1,015 / 1,065 / 979</span></div>
-      <div class="battle-row"><span class="battle-label">漲跌 / 振幅</span><span class="battle-value">+2.46% / 8.47%｜量比約 0.77</span></div>
-      <div class="battle-row"><span class="battle-label">回測買區</span><span class="battle-value">1,026～1,044</span></div>
-      <div class="battle-row"><span class="battle-label">低接觀察</span><span class="battle-value">1,009 附近有撐才看</span></div>
-      <div class="battle-row"><span class="battle-label">停損線</span><span class="battle-value">跌破 1,001 不凹</span></div>
-      <div class="battle-row"><span class="battle-label">賣壓/目標</span><span class="battle-value">1,065～1,086</span></div>
-      <div class="battle-note">📌 在回測買區附近，可小量短打；跌破停損線不凹。</div>
+  <div class="badge"><span>盤中紀律</span><strong>不追高</strong><small>先看支撐</small></div>
+</header>
+<main>
+  <section class="panel priority">
+    <div class="panel-title"><h2>優先提醒</h2><p>09:08 前先看試撮，09:30 後看真方向；ETF 優先，個股只做回測有守。</p></div>
+    <div class="decision-grid">
+      <article class="decision buy"><h3>低接條件</h3><ul><li>台積電與 0052 守住支撐。</li><li>個股回測有量縮承接。</li><li>急拉不追，等第一根止跌紅K。</li></ul></article>
+      <article class="decision avoid"><h3>縮手條件</h3><ul><li>台積電跌破盤前關鍵支撐。</li><li>AI 測試鏈/CPO 同步轉弱。</li><li>處置股開高爆量翻黑。</li></ul></article>
     </div>
-  </div>
-</section>
-<!-- STRONG_REBOUND_SHORT_TRADE_END -->
-    <section>
-      <h2>📊 今日決策總結｜06/26 收盤 / 06/29 盤前公開版</h2>
-      <p class="note"><strong>最後更新：</strong>2026/06/29 23:04:27｜資料基準：DDE目前報價</p>
-      <p class="note">公開共用決策版：只看盤面燈號、主線強弱與下單規則；不放個人資訊。</p>
-      <div class="summary-grid">
-        <div class="summary-card summary-red">
-          <strong>🔴 風險偏高｜暫停加碼</strong>
-          <span>風險分數：40 / 100</span>
-          <span class="names">不急買，等重新站回再看。</span>
-        </div>
-        <div class="summary-card summary-green">
-          <strong>🥇 盤中強勢前三</strong>
-          <span>強弱排行</span>
-          <span class="names">5434 崇越 539（+10%）｜2308 台達電 1,905（+5.25%）｜2301 光寶科 211.5（+4.96%）</span>
-        </div>
-        <div class="summary-card summary-red">
-          <strong>⚠️ 盤中避免前三</strong>
-          <span>弱勢先觀察</span>
-          <span class="names">6217 中探針 233（-7.17%）｜6223 旺矽 6,060（-6.77%）｜6451 訊芯-KY 563（-5.85%）</span>
-        </div>
-        <div class="summary-card summary-yellow">
-          <strong>📌 今日一句話</strong>
-          <span>國際半導體逆風，先防守再找修復股</span>
-          <span class="names">06/29 不追第一根；台積電守 2320～2330、0052 守 60.0～60.5、0050 守 102.0～102.8；持股站不回反彈區就先減壓。</span>
-        </div>
-      </div>
-    </section>
+  </section>
 
-    <section>
-      <h2>🚦 下單規則｜06/29 盤前規劃版</h2>
-      <div class="explain-note"><strong>🛡️ 風控規則：</strong>只做強勢主線回測，不做弱勢股攤平；買不到就空手，不為了成交追高。</div>
-      <div class="summary-grid">
-        <div class="summary-card summary-green"><strong>① 0052 富邦科技</strong><span>06/26 收 60.6</span><span class="names">下週一低接首選：60.0～60.5；站回 61.2～62.0 才轉穩。</span></div>
-        <div class="summary-card summary-green"><strong>② 0050 元大台灣50</strong><span>06/26 收 103.1</span><span class="names">比個股接刀穩；102.0～102.8 低接，104.0～105.0 轉穩。</span></div>
-        <div class="summary-card summary-green"><strong>③ 4958 臻鼎-KY</strong><span>06/26 收 580</span><span class="names">已有部位；週一反彈 590～600 先減壓，強才看 605～610。</span></div>
-        <div class="summary-card summary-green"><strong>④ 6217 中探針</strong><span>06/26 收 251</span><span class="names">已有部位；先求 255～260 減壓，不等 280/286。</span></div>
-        <div class="summary-card summary-yellow"><strong>⑤ 欣興 / 南電</strong><span>ABF分化，先看支撐</span><span class="names">欣興守 1000、站回 1030 才轉穩；南電守 862～860、站回 875～880 才觀察。未轉強前不加碼。</span></div>
-        <div class="summary-card summary-red"><strong>⑥ 弱股避開</strong><span>不把破線當甜區</span><span class="names">臻鼎、台達電、貿聯、華星光、波若威、全新未站回關鍵價前不補；弱股可能從 5 日線往 20 日線修正。</span></div>
-      </div>
-      <div class="explain-note"><strong>📌 規則：</strong>低接價到、且 09:10 後有承接才買；若開高直接衝，等下一次回測。</div>
-    </section>
-
-    <section>
-      <h2>🔥 AI主線健康度｜06/26 收盤版 / 06/29 盤前觀察</h2>
-      <div class="summary-grid">
-        <div class="summary-card summary-green"><strong>最強主線：封測 / 測試鏈</strong><span>日月光、京元、中探針、景碩強</span><span class="names">多檔漲停，代表資金仍在 AI 封測/測試與 ABF；隔日不追漲停，只看回測承接。</span></div>
-        <div class="summary-card summary-green"><strong>PCB / ABF / CCL</strong><span>景碩、聯茂、富喬、台燿、台光電；新增健鼎、尖點觀察</span><span class="names">族群人氣仍在，但分化很大；強股回測可看，弱股破底不接。</span></div>
-        <div class="summary-card summary-yellow"><strong>光通訊 / CPO</strong><span>光通訊/CPO＋訊芯-KY新觀察</span><span class="names">訊芯-KY列入SiP封裝/CPO觀察；06/29 訊芯先看 570～575 支撐、590～600 站回才轉強；華星光、光聖、波若威未轉強前先觀察。</span></div>
-        <div class="summary-card summary-red"><strong>弱勢避開</strong><span>台達電、臻鼎、南電、貿聯偏弱</span><span class="names">大盤強但未跟上，代表不是低接甜區；未站回關鍵價前先停手。</span></div>
-      </div>
-      <div class="explain-note"><strong>📌 結論：</strong>AI主線 06/26 收盤轉弱；06/29 只看開低後能站回的強股，弱股不攤平，持股反彈先減壓。</div>
-    </section>
-
-    <section>
-      <h2>🚨 風險警報｜06/29 盤前準備版</h2>
-      <div class="summary-grid">
-        <div class="summary-card summary-red"><strong>❌ 台積電跌破 2430 / 2420</strong><span>權值續弱，低接縮手</span></div>
-        <div class="summary-card summary-red"><strong>❌ 欣興跌破 924 / 920</strong><span>ABF開低續弱，不加碼</span></div>
-        <div class="summary-card summary-red"><strong>❌ 京元跌破 329</strong><span>失守平盤，短打停手</span></div>
-        <div class="summary-card summary-red"><strong>❌ 光聖跌破 1960 / 1935</strong><span>光通訊承接失敗，不追不補</span></div>
-      </div>
-      <div class="explain-note"><strong>📌 規則：</strong>出現 1 項＝降低買單；出現 2 項以上＝只看不做；尾盤弱化不留隔日短打。</div>
-    </section>
-    <section class="intel-card">
-      <div class="intel-head">
-        <h2>🔥 盤前/盤中 AI 作戰情報｜自動版</h2>
-        <span class="intel-badge">依 Excel 即時資料產生｜盤前/收盤需重新整理</span>
-      </div>
-      <p class="intel-auto-note">依目前 Excel 的漲幅、量比與族群同步率自動排序；不抓外部新聞，避免網頁壞掉。</p>
-      <div class="intel-grid">
-        <div class="intel-box">
-          <strong>📡 主線資金流向參考</strong>
-          <div class="intel-rank"><div class='intel-rank-item'><b>🥇 低位半導體材料</b>｜均漲 2.81%｜同步率 50%｜5434 崇越 +10%、1560 中砂 +4.98%、3532 台勝科 -1.49%</div>
-<div class='intel-rank-item'><b>🥈 AI電源/被動元件</b>｜均漲 2.04%｜同步率 80%｜2308 台達電 +5.25%、2301 光寶科 +4.96%、2327 國巨* +2.46%</div>
-<div class='intel-rank-item'><b>🥉 AI伺服器</b>｜均漲 2.25%｜同步率 60%｜6669 緯穎 +7.01%、2308 台達電 +5.25%、2356 英業達 +1.58%</div>
-</div>
-        </div>
-        <div class="intel-box">
-          <strong>🎯 今日優先觀察</strong>
-          <p class="intel-auto-note">※ 此區會依盤中資料自動變動，不一定等於本週主攻股。</p>
-          <div class="intel-watch"><span>2308 台達電 1,905（+5.25%）</span><span>3037 欣興 976（+0.1%）</span><span>4958 臻鼎-KY 573（-1.21%）</span><span>3044 健鼎 499.5（-1.67%）</span><span>2330 台積電 2,370（+1.28%）</span><span>6442 光聖 1,600（-4.76%）</span><span>3711 日月光投控 627（-0.79%）</span><span>2449 京元電子 308.5（+0.16%）</span><span>8021 尖點 522（-2.43%）</span><span>7769 鴻勁 6,395（-1.62%）</span><span>6223 旺矽 6,060（-6.77%）</span><span>6217 中探針 233（-7.17%）</span><span>3264 欣銓 215.5（+0.47%）</span><span>8064 東捷 133（-0.75%）</span><span>3167 大量 774（+1.18%）</span><span>2344 華邦電 203（-1.69%）</span><span>2408 南亞科 453（+0.89%）</span><span>3260 威剛 404（+1.64%）</span><span>6533 晶心科 191（-0.52%）</span><span>2492 華新科 514（-4.81%）</span><span>6173 信昌電 282.5（+2.36%）</span><span>2383 台光電 5,450（+3.71%）</span><span>6274 台燿 1,555（-1.58%）</span><span>8358 金居 546（-4.21%）</span><span>1815 富喬 101（+4.45%）</span><span>8021 尖點 522（-2.43%）</span><span>6213 聯茂 344（-0.72%）</span><span>3532 台勝科 331（-1.49%）</span><span>6488 環球晶 915（-2.24%）</span><span>1560 中砂 738（+4.98%）</span><span>5434 崇越 539（+10%）</span><span>6278 台表科 194（+1.84%）</span><span>6451 訊芯-KY 563（-5.85%）</span><span>4979 華星光 456.5（-0.54%）</span><span>6442 光聖 1,600（-4.76%）</span><span>3163 波若威 720（0%）</span><span>4991 環宇-KY 482.5（-4.83%）</span><span>3008 大立光 4,380（-7.2%）</span></div>
-        </div>
-        <div class="intel-box">
-          <strong>👥 共用作戰提醒</strong>
-          <ul>
-            <li>本區僅顯示盤面支撐、壓力與燈號，不放個人資訊。</li>
-            <li>依照自身資金與風險承受度分批操作。</li>
-            <li>強勢股不追價，回到支撐與甜區才出手。</li>
-          </ul>
-        </div>
-      </div>
-      <div class="intel-strategy">
-        今日策略：少做、多賺｜盤前計畫不等於一定下單｜主線優先｜甜區才掛單｜轉強才加碼｜弱勢股不攤平。
-      </div>
-    </section>
-    <section>
-      <h2>👥 共用作戰區｜支撐、壓力與修復區</h2>
-      <p class="note">本區只提供市場支撐、壓力與修復區參考；不放個人資訊。</p>
-      <div class="focus-list"><strong style="color:#F8FAFC;margin-right:6px;">🔥 06/29 盤前主線</strong><span>2330 台積電</span><span>6442 光聖</span><span>2449 京元電子</span><span>1514 亞力</span><span>1815 富喬</span><span>3044 健鼎</span><span>8021 尖點</span><span>3037 欣興</span><span>8046 南電</span></div>
-      <div class="explain-note">
-        <strong>📌 備註說明：</strong><br>
-        06/29 盤前：台積電 2430～2450 防守，半導體逆風；電力逆勢但不追，短打只看站回開盤價的修復股。<br>
-        支撐/壓力會依 DDE 現價呈現；下方價位是隔日短打規劃線。
-      </div>
-      <div class="shared-battle-grid">
-              <div class="shared-battle-card">
-        <h3>2330 台積電</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 2,370（+1.28%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">2485～2500</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">2510～2520</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">2520～2550</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">2550以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">守2500並站穩2510</span></div>
-        <div class="battle-note">📌 權值撐盤核心；若跌破2485，大盤低接縮手。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>6442 光聖</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 1,600（-4.76%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">2030～2060</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">2085～2100</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">2120～2135</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">2180以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站穩2085～2100</span></div>
-        <div class="battle-note">📌 出關焦點；開高不追，回測不破才列短打。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>2449 京元電子</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 308.5（+0.16%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">333～336</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">339～342</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">345～350</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">352～355</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">守330並站穩339</span></div>
-        <div class="battle-note">📌 測試鏈漲停後觀察回測承接，開高348以上不追。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>1514 亞力</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 119（+0.42%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">124.5～125.5</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">127～128</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">129～132</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">133.5以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">守123並站回127</span></div>
-        <div class="battle-note">📌 電力補漲較穩；只看回測，不追高。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>1815 富喬</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 101（+4.45%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">103.5～105</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">106.5～107.5</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">107.5～110</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">110以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">守102.5並站回106.5</span></div>
-        <div class="battle-note">📌 PCB材料強勢股，回測有撐才小量。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>3044 健鼎</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 499.5（-1.67%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">550～560</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">570～575</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">590～598</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">600以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回570～575</span></div>
-        <div class="battle-note">📌 新增 PCB/HDI/伺服器板觀察；550～560 有守觀察，站回570～575再轉強，弱勢不追。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>8021 尖點</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 522（-2.43%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">570～575</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">581～585</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">590～597</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">597以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站穩581～585</span></div>
-        <div class="battle-note">📌 新增 PCB鑽針/耗材觀察；處置/高波動股，先看承接再做，接近597不追。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>3037 欣興</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 976（+0.1%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">992～1000</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">1030～1055</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">1055～1060</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">1060以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">守1000並站回1030</span></div>
-        <div class="battle-note">📌 ABF分化，先看1000是否守住；未站回1030不急加碼。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>8046 南電</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 1,080（-4%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">860～862</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">875～880</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">892～910</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">910以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回875～880</span></div>
-        <div class="battle-note">📌 ABF弱勢修復觀察；未站回前不把下跌當甜區。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>3167 大量</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 774（+1.18%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">790～800</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">805～820</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">820～829</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">829以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站回820</span></div>
-        <div class="battle-note">📌 PCB設備觀察股；站回820才轉穩，不追弱反彈。</div>
-      </div>
-              <div class="shared-battle-card">
-        <h3>6197 佳必琪</h3>
-        <div class="battle-row"><span class="battle-label">目前位置</span><span class="battle-value">｜現價 344.5（-5.36%）</span></div>
-        <div class="battle-row"><span class="battle-label">支撐區</span><span class="battle-value">346～350</span></div>
-        <div class="battle-row"><span class="battle-label">壓力區</span><span class="battle-value">353～360</span></div>
-        <div class="battle-row"><span class="battle-label">🎯 第一獲利區</span><span class="battle-value">360～365</span></div>
-        <div class="battle-row"><span class="battle-label">🚀 第二獲利區</span><span class="battle-value">365以上</span></div>
-        <div class="battle-row"><span class="battle-label">⭐ 超強續抱條件</span><span class="battle-value">站穩360</span></div>
-        <div class="battle-note">📌 高速傳輸/連接器觀察；350有撐或站穩360才看。</div>
-      </div>
-      </div>
-    </section>
-    <section>
-      <h2>🌏 即時大盤風險燈號</h2>
-      <p class="note">本區依目前 DDE 即時資料估算，不是加權指數即時報價；重點看台積電是否撐盤、ABF是否續強、弱勢股是否止跌。</p>
-      <div class="summary-grid">
-        <div class="summary-card summary-red"><strong>🔴 風險偏高｜暫停加碼</strong><span>風險分數：40 / 100</span><span class="names">不急買，等重新站回再看。</span></div>
-        <div class="summary-card summary-yellow"><strong>2330 台積電</strong><span>2330 台積電 2,370（+1.28%）</span><span class="names">守 2485～2500 代表權值仍穩；站穩 2510～2520 才有續攻。</span></div>
-        <div class="summary-card summary-yellow"><strong>3037 欣興</strong><span>3037 欣興 976（+0.1%）</span><span class="names">ABF主線核心；守 992～1000，站回 1030 看 1055～1060。</span></div>
-        <div class="summary-card summary-yellow"><strong>操作規則</strong><span>強股回檔接，弱股不攤平</span><span class="names">公開共用版：綠燈可分批，黃燈只低掛，紅燈不買；紅燈不等於立刻賣。</span></div>
-      </div>
-      <div class="explain-note"><strong>📌 即時結論：</strong>台積電撐盤、ABF/PCB為主線；日月光與台達電未站回關鍵線前不補。</div>
-    </section>
-<!-- GLOBAL_MARKET_BLOCK_START -->
-<section class="global-radar-compact">
+  <!-- GLOBAL_MARKET_BLOCK_START -->
+<section class="panel global-radar-compact">
   <h2>🌙 國際盤前雷達｜自動更新</h2>
-  <p class="note global-radar-note">資料來源：Yahoo Finance；若即時抓取失敗，會自動沿用上一筆可用值；若無上一筆，今天先用 06/24 手機盤前備援值｜更新時間：2026-06-29 23:03:37｜只作為盤前條件加分/扣分，不代表台股一定上漲或下跌。</p>
+  <p class="note global-radar-note">資料來源：Yahoo Finance；只作為盤前條件加分/扣分，不代表台股一定上漲或下跌。</p>
   <div class="summary-grid">
-    <div class='summary-card summary-red'><strong>盤前判讀</strong><span>🔴 國際逆風｜開低不急接</span><span class='names'>分數：15 / 100｜NVDA、TSM ADR、半導體 ETF 偏弱，先縮手並等 09:08 真方向。</span></div>
-<div class='summary-card summary-red'><strong>NVIDIA</strong><span>-4.13%</span><span class='names'>NVDA｜08:40 手動備援</span></div>
-<div class='summary-card summary-red'><strong>台積電ADR</strong><span>-6.69%</span><span class='names'>TSM｜08:40 手動備援</span></div>
-<div class='summary-card summary-yellow'><strong>Nasdaq 100期貨</strong><span>+0.54%</span><span class='names'>NQ=F｜08:40 手動備援</span></div>
-<div class='summary-card summary-yellow'><strong>S&amp;P 500期貨</strong><span>+0.19%</span><span class='names'>ES=F｜08:40 手動備援</span></div>
-<div class='summary-card summary-red'><strong>QQQ</strong><span>-3.29%</span><span class='names'>QQQ｜08:40 手動備援</span></div>
-<div class='summary-card summary-red'><strong>Nasdaq</strong><span>-2.21%</span><span class='names'>^IXIC｜08:40 手動備援</span></div>
-<div class='summary-card summary-red'><strong>S&amp;P 500</strong><span>-1.44%</span><span class='names'>^GSPC｜08:40 手動備援</span></div>
-<div class='summary-card summary-red'><strong>VIX</strong><span>+12.79%</span><span class='names'>^VIX｜08:40 手動備援</span></div>
-<div class='summary-card summary-gray'><strong>美元指數</strong><span>+0.02%</span><span class='names'>DX-Y.NYB｜08:40 手動備援</span></div>
-<div class='summary-card summary-yellow'><strong>美元/台幣</strong><span>-0.15%</span><span class='names'>TWD=X｜08:40 手動備援</span></div>
-<div class='summary-card summary-red'><strong>SOXX</strong><span>-7.88%</span><span class='names'>SOXX｜08:40 手動備援</span></div>
-<div class='summary-card summary-red'><strong>SMH</strong><span>-7.01%</span><span class='names'>SMH｜08:40 手動備援</span></div>
-<div class='summary-card summary-gray'><strong>Dow 30</strong><span>-0.09%</span><span class='names'>^DJI｜08:40 手動備援</span></div>
-<div class='summary-card summary-yellow'><strong>Russell 2000</strong><span>-0.96%</span><span class='names'>^RUT｜08:40 手動備援</span></div>
+<div class='summary-card summary-green'><strong>盤前判讀</strong><span>中性 - 等 09:08 真方向</span><span class='names'>分數：50 / 100｜更新時間：2026-06-29 23:16:41</span></div>
+<div class='summary-card summary-gray'><strong>NVIDIA</strong><span>抓取失敗</span><span class='names'>NVDA｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>台積電ADR</strong><span>抓取失敗</span><span class='names'>TSM｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>Nasdaq 100期貨</strong><span>抓取失敗</span><span class='names'>NQ=F｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>S&P 500期貨</strong><span>抓取失敗</span><span class='names'>ES=F｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>QQQ</strong><span>抓取失敗</span><span class='names'>QQQ｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>Nasdaq</strong><span>抓取失敗</span><span class='names'>^IXIC｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>S&P 500</strong><span>抓取失敗</span><span class='names'>^GSPC｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>VIX</strong><span>抓取失敗</span><span class='names'>^VIX｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>美元指數</strong><span>抓取失敗</span><span class='names'>DX-Y.NYB｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>美元/台幣</strong><span>抓取失敗</span><span class='names'>TWD=X｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>SOXX</strong><span>抓取失敗</span><span class='names'>SOXX｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>SMH</strong><span>抓取失敗</span><span class='names'>SMH｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>Dow 30</strong><span>抓取失敗</span><span class='names'>^DJI｜fetch-failed</span></div>
+<div class='summary-card summary-gray'><strong>Russell 2000</strong><span>抓取失敗</span><span class='names'>^RUT｜fetch-failed</span></div>
+
   </div>
 </section>
 <!-- GLOBAL_MARKET_BLOCK_END -->
 
 
-    <section class="shortline-section">
-      <h2>⚡ 短線雷達｜06/29 盤前低接策略</h2>
-      <p class="note"><strong>定位：</strong>只做 1～3 天短線觀察。06/29 國際半導體逆風，先防守；只看強股開低後站回，不接弱股半山腰。</p>
-      <div class="shortline-grid">
-        <div class="shortline-card"><strong>S級觀察｜光通訊出關</strong><span>6442 光聖：2030～2060 回測有撐；站穩 2085～2100 才算強；跌破 2000 不做。</span></div>
-        <div class="shortline-card"><strong>A級短打｜測試鏈續強</strong><span>2449 京元電子：333～336 回測有撐，或 339～342 站穩；跌破 330 不做。</span></div>
-        <div class="shortline-card"><strong>穩健回測｜電力/PCB材料</strong><span>1514 亞力：124.5～125.5｜1815 富喬：103.5～105｜5434 崇越：500～505；只小量，不追高開。</span></div>
-        <div class="shortline-card"><strong>觀察不追｜設備/高速傳輸</strong><span>3044 健鼎：550～560 有守、570～575 轉強；8021 尖點：570～575 有守、581～585 續強；3167 大量：站回 820 才轉穩；6197 佳必琪：350 有撐或站穩 360 才看。</span></div>
-      </div>
-      <p class="note">盤前規則：08:40～09:00 只看試撮；09:10 後確認開盤價不破、買盤有接，才進入低接候選。</p>
-    </section>
-    <section>
-      <h2>📊 今日盤勢摘要</h2>
-      <p class="note">共用版只看燈號：🟢可小買、🟩好買區、🟡先觀察、🔴危險停手、🟣漲太多不追。盤中訊號會隨價格變動，請優先確認上方「最後更新」時間。</p>
-      <div class="summary-grid">
-        <div class="summary-card summary-green"><strong>🟢 小甜區：0檔</strong><span>綠燈可小買；深綠可分批，不一次打滿</span><span class="names">目前沒有</span></div>
-        <div class="summary-card summary-yellow"><strong>🟡 漲勢區：10檔</strong><span>漲勢區，續抱不追</span></div>
-        <div class="summary-card summary-purple"><strong>🟣 過熱區（漲多不追）：2檔</strong><span>強勢但過熱，不追價，等拉回</span><span class="names">5434 崇越、6669 緯穎</span></div>
-        <div class="summary-card summary-red"><strong>🔴 停手區：5檔</strong><span>紅燈停手，不弱勢攤平</span><span class="names">6223 旺矽、6510 精測、6217 中探針、3008 大立光、4973 廣穎</span></div>
-        <div class="summary-card summary-gray"><strong>⚪ 觀察區：81檔</strong><span>等待機會，不急著追</span></div>
-      </div>
-    </section>
-<section>
-      <h2>顏色 × 星級 × 訊號 投資燈號說明</h2>
-      <p class="note">先看顏色與星級判斷「甜不甜」，再看訊號判斷「能不能動」。深甜區不等於馬上買，必須搭配 🚀 止跌轉強才是較好的進場訊號。</p>
-      <table class="legend-table">
-        <thead><tr><th>顏色</th><th>名稱</th><th>星級</th><th>甜度動作</th></tr></thead>
-        <tbody>
-          <tr><td><span class="status-badge deepgreen">🟢🟢 深綠</span></td><td>深甜區</td><td><span class="star">★★★★★</span></td><td>價格夠甜，優先觀察是否止跌轉強</td></tr>
-          <tr><td><span class="status-badge softgreen">🟢 淺綠</span></td><td>小甜區</td><td><span class="star">★★★★</span></td><td>可小量觀察，逢低分批</td></tr>
-          <tr><td><span class="status-badge graywhite">⚪ 灰白</span></td><td>普通區</td><td><span class="star">★★★</span></td><td>觀察分批，等更好位置</td></tr>
-          <tr><td><span class="status-badge whitezone">⚪ 白色</span></td><td>觀察區</td><td><span class="star">★★</span></td><td>先等等，訊號不明</td></tr>
-          <tr><td><span class="status-badge softyellow">🟡 淺黃</span></td><td>漲勢區</td><td><span class="star">★★</span></td><td>續抱不追，等拉回</td></tr>
-          <tr><td><span class="status-badge deepyellow">🟡🟡 深黃</span></td><td>過熱區</td><td><span class="star">★</span></td><td>分批處理，等回檔再看</td></tr>
-          <tr><td><span class="status-badge purple">🟣 紫燈</span></td><td>漲多不追</td><td><span class="star">★</span></td><td>強勢續抱，但不追價</td></tr>
-          <tr><td><span class="status-badge softred">🔴 淺紅</span></td><td>危險區</td><td>⚠️</td><td>減碼觀察，避免攤平</td></tr>
-          <tr><td><span class="status-badge deepred">🔴🔴 深紅</span></td><td>高危險區</td><td>🚫</td><td>先停手，等止跌訊號</td></tr>
-        </tbody>
+  <section class="panel">
+    <div class="panel-title"><h2>DDE 即時觀察表</h2><p>來源：C:\DDE\yuanta_dde.xlsx</p></div>
+    <div class="table-wrap">
+      <table class="watch-table">
+        <thead><tr><th>代號</th><th>名稱</th><th>成交</th><th>漲跌%</th><th>最高</th><th>最低</th><th>量</th><th>訊號</th></tr></thead>
+        <tbody><tr><td class='symbol'>2330</td><td>台積電</td><td>2,370</td><td>1.28%</td><td>2,395</td><td>2,330</td><td>33,233</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>2404</td><td>漢唐</td><td>1,360</td><td>1.49%</td><td>1,450</td><td>1,350</td><td>4,486</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>5536</td><td>聖暉*</td><td>1,245</td><td>-4.6%</td><td>1,335</td><td>1,220</td><td>1,170</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>6196</td><td>帆宣</td><td>532</td><td>0.19%</td><td>555</td><td>528</td><td>2,068</td><td>中性</td></tr>
+<tr><td class='symbol'>6691</td><td>洋基工程</td><td>795</td><td>0.25%</td><td>834</td><td>795</td><td>2,293</td><td>中性</td></tr>
+<tr><td class='symbol'>4749</td><td>新應材</td><td>866</td><td>-1.25%</td><td>915</td><td>852</td><td>1,386</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>4772</td><td>台特化</td><td>267</td><td>2.5%</td><td>273.5</td><td>261.5</td><td>713</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>4755</td><td>三福化</td><td>135</td><td>1.5%</td><td>136.5</td><td>133</td><td>117</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>3532</td><td>台勝科</td><td>331</td><td>-1.49%</td><td>343.5</td><td>325</td><td>471</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>6488</td><td>環球晶</td><td>915</td><td>-2.24%</td><td>915</td><td>866</td><td>2,701</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>1560</td><td>中砂</td><td>738</td><td>4.98%</td><td>754</td><td>705</td><td>1,525</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>3661</td><td>世芯-KY</td><td>3,985</td><td>2.97%</td><td>4,015</td><td>3,890</td><td>1,056</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>3443</td><td>創意</td><td>4,420</td><td>0%</td><td>4,520</td><td>4,355</td><td>901</td><td>中性</td></tr>
+<tr><td class='symbol'>4958</td><td>臻鼎-KY</td><td>573</td><td>-1.21%</td><td>599</td><td>561</td><td>28,639</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>3044</td><td>健鼎</td><td>499.5</td><td>-1.67%</td><td>516</td><td>498</td><td>4,296</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>3711</td><td>日月光投控</td><td>627</td><td>-0.79%</td><td>632</td><td>611</td><td>17,299</td><td>中性</td></tr>
+<tr><td class='symbol'>5434</td><td>崇越</td><td>539</td><td>10%</td><td>539</td><td>504</td><td>3,454</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>8046</td><td>南電</td><td>1,080</td><td>-4%</td><td>1,140</td><td>1,035</td><td>22,373</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>3037</td><td>欣興</td><td>976</td><td>0.1%</td><td>1,010</td><td>950</td><td>27,520</td><td>中性</td></tr>
+<tr><td class='symbol'>3189</td><td>景碩</td><td>810</td><td>1.63%</td><td>833</td><td>782</td><td>30,597</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>2449</td><td>京元電子</td><td>308.5</td><td>0.16%</td><td>316</td><td>304</td><td>16,368</td><td>中性</td></tr>
+<tr><td class='symbol'>7769</td><td>鴻勁</td><td>6,395</td><td>-1.62%</td><td>6,580</td><td>6,230</td><td>591</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>6223</td><td>旺矽</td><td>6,060</td><td>-6.77%</td><td>6,680</td><td>5,980</td><td>958</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>6515</td><td>穎崴</td><td>8,015</td><td>-2.14%</td><td>8,190</td><td>7,505</td><td>375</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>6510</td><td>精測</td><td>3,035</td><td>-6.62%</td><td>3,300</td><td>2,990</td><td>490</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>6217</td><td>中探針</td><td>233</td><td>-7.17%</td><td>250.5</td><td>230</td><td>5,248</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>3264</td><td>欣銓</td><td>215.5</td><td>0.47%</td><td>223</td><td>213.5</td><td>4,798</td><td>中性</td></tr>
+<tr><td class='symbol'>6239</td><td>力成</td><td>311</td><td>-0.96%</td><td>315.5</td><td>303.5</td><td>21,061</td><td>中性</td></tr>
+<tr><td class='symbol'>2383</td><td>台光電</td><td>5,450</td><td>3.71%</td><td>5,450</td><td>5,255</td><td>894</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>6274</td><td>台燿</td><td>1,555</td><td>-1.58%</td><td>1,585</td><td>1,505</td><td>4,752</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>8358</td><td>金居</td><td>546</td><td>-4.21%</td><td>578</td><td>538</td><td>9,314</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>2368</td><td>金像電</td><td>1,155</td><td>-2.94%</td><td>1,205</td><td>1,145</td><td>4,931</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>3715</td><td>定穎投控</td><td>166</td><td>-1.48%</td><td>171.5</td><td>165</td><td>5,442</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>1815</td><td>富喬</td><td>101</td><td>4.45%</td><td>102.5</td><td>95.4</td><td>22,617</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>6213</td><td>聯茂</td><td>344</td><td>-0.72%</td><td>359.5</td><td>335</td><td>16,798</td><td>中性</td></tr>
+<tr><td class='symbol'>1303</td><td>南亞</td><td>151.5</td><td>2.36%</td><td>154.5</td><td>145</td><td>26,240</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>8021</td><td>尖點</td><td>522</td><td>-2.43%</td><td>545</td><td>515</td><td>1,572</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>8064</td><td>東捷</td><td>133</td><td>-0.75%</td><td>138.5</td><td>131.5</td><td>3,293</td><td>中性</td></tr>
+<tr><td class='symbol'>3167</td><td>大量</td><td>774</td><td>1.18%</td><td>785</td><td>774</td><td>341</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>2317</td><td>鴻海</td><td>246.5</td><td>-0.8%</td><td>252</td><td>246</td><td>47,141</td><td>中性</td></tr>
+<tr><td class='symbol'>2356</td><td>英業達</td><td>64.3</td><td>1.58%</td><td>67.1</td><td>63.8</td><td>24,158</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>6669</td><td>緯穎</td><td>4,580</td><td>7.01%</td><td>4,705</td><td>4,335</td><td>1,760</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>3693</td><td>營邦</td><td>474</td><td>-1.76%</td><td>487</td><td>471.5</td><td>310</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>2308</td><td>台達電</td><td>1,905</td><td>5.25%</td><td>1,970</td><td>1,850</td><td>15,514</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>3017</td><td>奇鋐</td><td>2,300</td><td>2%</td><td>2,315</td><td>2,220</td><td>2,886</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>6805</td><td>富世達</td><td>1,625</td><td>-0.91%</td><td>1,690</td><td>1,610</td><td>545</td><td>中性</td></tr>
+<tr><td class='symbol'>3653</td><td>健策</td><td>3,320</td><td>-2.5%</td><td>3,480</td><td>3,280</td><td>1,057</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>2059</td><td>川湖</td><td>7,110</td><td>1.72%</td><td>7,275</td><td>6,920</td><td>237</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>2345</td><td>智邦</td><td>2,340</td><td>-1.68%</td><td>2,430</td><td>2,290</td><td>2,924</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>3665</td><td>貿聯-KY</td><td>1,880</td><td>1.35%</td><td>1,915</td><td>1,820</td><td>1,463</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>6197</td><td>佳必琪</td><td>344.5</td><td>-5.36%</td><td>371.5</td><td>344</td><td>4,189</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>5289</td><td>宜鼎</td><td>1,595</td><td>-0.62%</td><td>1,615</td><td>1,550</td><td>2,961</td><td>中性</td></tr>
+<tr><td class='symbol'>2395</td><td>研華</td><td>472.5</td><td>3.73%</td><td>486</td><td>457.5</td><td>3,910</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>8234</td><td>新漢</td><td>66</td><td>0.46%</td><td>67.1</td><td>65.2</td><td>574</td><td>中性</td></tr>
+<tr><td class='symbol'>3048</td><td>益登</td><td>61.6</td><td>-2.22%</td><td>63.9</td><td>61.2</td><td>3,185</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>2359</td><td>所羅門</td><td>128.5</td><td>1.58%</td><td>131.5</td><td>126.5</td><td>1,249</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>6278</td><td>台表科</td><td>194</td><td>1.84%</td><td>201</td><td>189.5</td><td>5,197</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>6451</td><td>訊芯-KY</td><td>563</td><td>-5.85%</td><td>638</td><td>563</td><td>8,253</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>4979</td><td>華星光</td><td>456.5</td><td>-0.54%</td><td>472.5</td><td>445</td><td>6,061</td><td>中性</td></tr>
+<tr><td class='symbol'>6442</td><td>光聖</td><td>1,600</td><td>-4.76%</td><td>1,645</td><td>1,575</td><td>2,392</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>3008</td><td>大立光</td><td>4,380</td><td>-7.2%</td><td>4,730</td><td>4,315</td><td>3,416</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>3163</td><td>波若威</td><td>720</td><td>0%</td><td>724</td><td>690</td><td>1,199</td><td>中性</td></tr>
+<tr><td class='symbol'>4991</td><td>環宇-KY</td><td>482.5</td><td>-4.83%</td><td>520</td><td>465.5</td><td>783</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>2455</td><td>全新</td><td>336</td><td>-3.45%</td><td>348</td><td>333</td><td>1,806</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>1519</td><td>華城</td><td>783</td><td>0.38%</td><td>804</td><td>779</td><td>1,385</td><td>中性</td></tr>
+<tr><td class='symbol'>1513</td><td>中興電</td><td>175.5</td><td>0%</td><td>180.5</td><td>175</td><td>6,605</td><td>中性</td></tr>
+<tr><td class='symbol'>1503</td><td>士電</td><td>237.5</td><td>1.71%</td><td>247</td><td>234.5</td><td>4,724</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>1514</td><td>亞力</td><td>119</td><td>0.42%</td><td>122.5</td><td>118</td><td>2,650</td><td>中性</td></tr>
+<tr><td class='symbol'>1504</td><td>東元</td><td>69</td><td>1.62%</td><td>70.2</td><td>68.4</td><td>8,127</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>2412</td><td>中華電</td><td>142</td><td>-0.7%</td><td>144.5</td><td>142</td><td>23,814</td><td>中性</td></tr>
+<tr><td class='symbol'>8299</td><td>群聯</td><td>2,340</td><td>1.3%</td><td>2,400</td><td>2,300</td><td>2,554</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>4967</td><td>十銓</td><td>264</td><td>-0.38%</td><td>270</td><td>261</td><td>2,213</td><td>中性</td></tr>
+<tr><td class='symbol'>3260</td><td>威剛</td><td>404</td><td>1.64%</td><td>406.5</td><td>394.5</td><td>5,450</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>4973</td><td>廣穎</td><td>168.5</td><td>-6.39%</td><td>181</td><td>168.5</td><td>3,206</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>2344</td><td>華邦電</td><td>203</td><td>-1.69%</td><td>212.5</td><td>201</td><td>148,304</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>2408</td><td>南亞科</td><td>453</td><td>0.89%</td><td>465</td><td>440.5</td><td>75,793</td><td>中性</td></tr>
+<tr><td class='symbol'>3481</td><td>群創</td><td>67</td><td>3.08%</td><td>69.3</td><td>63.5</td><td>599,900</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>2301</td><td>光寶科</td><td>211.5</td><td>4.96%</td><td>213.5</td><td>203</td><td>21,472</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>2327</td><td>國巨*</td><td>1,040</td><td>2.46%</td><td>1,065</td><td>979</td><td>39,871</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>2375</td><td>凱美</td><td>192.5</td><td>-2.53%</td><td>200.5</td><td>188</td><td>11,127</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>3026</td><td>禾伸堂</td><td>766</td><td>5.08%</td><td>770</td><td>728</td><td>971</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>3624</td><td>光頡</td><td>139</td><td>0%</td><td>145</td><td>137.5</td><td>1,307</td><td>中性</td></tr>
+<tr><td class='symbol'>2492</td><td>華新科</td><td>514</td><td>-4.81%</td><td>540</td><td>487</td><td>4,077</td><td>轉弱 - 不攤平</td></tr>
+<tr><td class='symbol'>6173</td><td>信昌電</td><td>282.5</td><td>2.36%</td><td>286</td><td>267</td><td>859</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>5347</td><td>世界</td><td>208.5</td><td>3.22%</td><td>215.5</td><td>203.5</td><td>37,276</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>8086</td><td>宏捷科</td><td>142</td><td>0.71%</td><td>145.5</td><td>137.5</td><td>2,248</td><td>中性</td></tr>
+<tr><td class='symbol'>6831</td><td>邁科</td><td>794</td><td>-0.38%</td><td>850</td><td>790</td><td>994</td><td>中性</td></tr>
+<tr><td class='symbol'>7610</td><td>聯友金屬-創</td><td>2,100</td><td>3.7%</td><td>2,220</td><td>2,050</td><td>170</td><td>偏強 - 不追高</td></tr>
+<tr><td class='symbol'>2454</td><td>聯發科</td><td>3,910</td><td>0.77%</td><td>4,000</td><td>3,825</td><td>9,861</td><td>中性</td></tr>
+<tr><td class='symbol'>5274</td><td>信驊</td><td>15,210</td><td>-2.59%</td><td>15,665</td><td>14,765</td><td>374</td><td>偏弱觀察</td></tr>
+<tr><td class='symbol'>6533</td><td>晶心科</td><td>191</td><td>-0.52%</td><td>195.5</td><td>189</td><td>313</td><td>中性</td></tr>
+<tr><td class='symbol'>4919</td><td>新唐</td><td>170.5</td><td>1.19%</td><td>174</td><td>164</td><td>8,903</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>52</td><td>富邦科技</td><td>61.35</td><td>1.24%</td><td>61.9</td><td>60.75</td><td>23,434</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>50</td><td>元大台灣50</td><td>104.45</td><td>1.31%</td><td>105.35</td><td>103.3</td><td>101,455</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>935</td><td>野村臺灣新科技50</td><td>58.95</td><td>0.26%</td><td>59.8</td><td>58.35</td><td>12,332</td><td>中性</td></tr>
+<tr><td class='symbol'>00403A</td><td>主動統一升級50</td><td>10.62</td><td>0.57%</td><td>10.75</td><td>10.5</td><td>189,637</td><td>中性</td></tr>
+<tr><td class='symbol'>009823</td><td>群益S&P500</td><td>10.11</td><td>1.2%</td><td>10.12</td><td>10.05</td><td>16,663</td><td>轉強觀察</td></tr>
+<tr><td class='symbol'>009824</td><td>群益美國科技巨頭</td><td>9.88</td><td>0.1%</td><td>9.97</td><td>9.86</td><td>47,345</td><td>中性</td></tr>
+</tbody>
       </table>
+    </div>
+  </section>
 
-      <h2 style="margin-top:18px;">🚀⚡🔥💰❌ 訊號快速對照</h2>
-      <p class="note">這是 V13.1 新增重點：星星代表價格甜度，訊號代表現在該不該動作。</p>
-      <table class="legend-table signal-table">
-        <thead><tr><th>訊號</th><th>意思</th><th>判斷條件</th><th>操作方式</th></tr></thead>
-        <tbody>
-          <tr><td><span class="status-badge signal-rocket">🚀 止跌轉強</span></td><td>甜區後開始轉強</td><td>站回支撐/5日線、紅K、買盤或量能轉好</td><td>🟢 可分批進場或續抱</td></tr>
-          <tr><td><span class="status-badge signal-wait">⚡ 等待止跌</span></td><td>價格很甜但還在震盪</td><td>進入甜區，但尚未站回關鍵價</td><td>🟡 先觀察，不急著買滿</td></tr>
-          <tr><td><span class="status-badge signal-fire">🔥 強勢續抱</span></td><td>趨勢仍強</td><td>站穩高檔、主線資金仍在</td><td>🟢 趨勢續抱，不追高</td></tr>
-          <tr><td><span class="status-badge signal-profit">💰 分批處理</span></td><td>接近壓力或漲多</td><td>靠近反彈壓力、過熱區或短線漲幅大</td><td>🟡 分批賣，不一次猜最高</td></tr>
-          <tr><td><span class="status-badge signal-stop">❌ 破線整理</span></td><td>跌破重要支撐</td><td>跌破防守線、弱勢放量、族群退潮</td><td>🔴 暫停加碼，等重新站回</td></tr>
-        </tbody>
-      </table>
-
-      <h2 style="margin-top:18px;">三合一快速判讀</h2>
-      <table class="legend-table">
-        <thead><tr><th>組合</th><th>代表意思</th><th>動作</th></tr></thead>
-        <tbody>
-          <tr><td><span class="star">★★★★★</span> + 🚀</td><td>深甜區且止跌轉強</td><td>🟢 最佳分批進場訊號</td></tr>
-          <tr><td><span class="star">★★★★★</span> + ⚡</td><td>很甜但還沒站穩</td><td>🟡 等止跌，不急買滿</td></tr>
-          <tr><td><span class="star">★★★★★</span> + ❌</td><td>便宜但破線弱勢</td><td>🔴 不攤平，等修復</td></tr>
-          <tr><td><span class="star">★★★★</span> + 🚀</td><td>小甜區轉強</td><td>🟢 可小量布局</td></tr>
-          <tr><td><span class="star">★★</span> + 🔥</td><td>強勢但不便宜</td><td>🟡 續抱不追</td></tr>
-          <tr><td><span class="star">★</span> + 💰</td><td>接近過熱或壓力</td><td>🟡 分批處理</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section>
-      <h2>S級核心主線</h2>
-      <table>
-        <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>AI類別</th><th>可低接區</th><th>跌破先停手</th><th>反彈壓力</th><th>訊號</th></tr></thead>
-        <tbody>
-<tr class='neutral-row'><td>2330</td><td>台積電 <span class='cat-badge'>【AI晶片】</span></td><td class='num'>2,370</td><td class='num'>2,330</td><td class='num'>2,395</td><td class='num'>2,330</td><td class='num'>33,233</td><td>AI晶片</td><td>2,318 - 2,342</td><td>2,318</td><td>2,395 / 2,443</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>3661</td><td>世芯-KY <span class='cat-badge'>【ASIC】</span></td><td class='num'>3,985</td><td class='num'>3,900</td><td class='num'>4,015</td><td class='num'>3,890</td><td class='num'>1,056</td><td>ASIC</td><td>3,871 - 3,909</td><td>3,871</td><td>4,015 / 4,095</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='warn-row'><td>2383</td><td>台光電 <span class='cat-badge'>【AI高速材料】</span></td><td class='num'>5,450</td><td class='num'>5,255</td><td class='num'>5,450</td><td class='num'>5,255</td><td class='num'>894</td><td>AI高速材料</td><td>5,229 - 5,281</td><td>5,229</td><td>5,450 / 5,559</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='watch-row'><td>2317</td><td>鴻海 <span class='cat-badge'>【AI伺服器】</span></td><td class='num'>246.5</td><td class='num'>250</td><td class='num'>252</td><td class='num'>246</td><td class='num'>47,141</td><td>AI伺服器</td><td>244.8 - 247.2</td><td>244.8</td><td>252 / 257</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='purple-row'><td>6669</td><td>緯穎 <span class='cat-badge'>【AI伺服器】</span></td><td class='num'>4,580</td><td class='num'>4,350</td><td class='num'>4,705</td><td class='num'>4,335</td><td class='num'>1,760</td><td>AI伺服器</td><td>4,313 - 4,357</td><td>4,313</td><td>4,705 / 4,799</td><td><span class='tag purple'>★ 💰 分批處理｜🟡 漲多不追</span></td></tr>
-<tr class='warn-row'><td>2308</td><td>台達電 <span class='cat-badge'>【AI伺服器/電源】</span></td><td class='num'>1,905</td><td class='num'>1,860</td><td class='num'>1,970</td><td class='num'>1,850</td><td class='num'>15,514</td><td>AI伺服器/電源</td><td>1,841 - 1,859</td><td>1,841</td><td>1,970 / 2,009</td><td><span class='tag warn'>★★★★★ 🔥 強勢續抱｜🟢 主線續抱不追</span></td></tr>
-<tr class='warn-row'><td>3017</td><td>奇鋐 <span class='cat-badge'>【散熱】</span></td><td class='num'>2,300</td><td class='num'>2,220</td><td class='num'>2,315</td><td class='num'>2,220</td><td class='num'>2,886</td><td>散熱</td><td>2,209 - 2,231</td><td>2,209</td><td>2,315 / 2,361</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>6805</td><td>富世達 <span class='cat-badge'>【AI散熱/水冷】</span></td><td class='num'>1,625</td><td class='num'>1,660</td><td class='num'>1,690</td><td class='num'>1,610</td><td class='num'>545</td><td>AI散熱/水冷</td><td>1,602 - 1,618</td><td>1,602</td><td>1,690 / 1,724</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>3653</td><td>健策 <span class='cat-badge'>【AI散熱/水冷】</span></td><td class='num'>3,320</td><td class='num'>3,470</td><td class='num'>3,480</td><td class='num'>3,280</td><td class='num'>1,057</td><td>AI散熱/水冷</td><td>3,264 - 3,296</td><td>3,264</td><td>3,480 / 3,550</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>2059</td><td>川湖 <span class='cat-badge'>【AI機構件】</span></td><td class='num'>7,110</td><td class='num'>7,080</td><td class='num'>7,275</td><td class='num'>6,920</td><td class='num'>237</td><td>AI機構件</td><td>6,885 - 6,955</td><td>6,885</td><td>7,275 / 7,421</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>2345</td><td>智邦 <span class='cat-badge'>【AI高速互連】</span></td><td class='num'>2,340</td><td class='num'>2,395</td><td class='num'>2,430</td><td class='num'>2,290</td><td class='num'>2,924</td><td>AI高速互連</td><td>2,279 - 2,301</td><td>2,279</td><td>2,430 / 2,479</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>2454</td><td>聯發科 <span class='cat-badge'>【AI晶片】</span></td><td class='num'>3,910</td><td class='num'>3,870</td><td class='num'>4,000</td><td class='num'>3,825</td><td class='num'>9,861</td><td>AI晶片</td><td>3,806 - 3,844</td><td>3,806</td><td>4,000 / 4,080</td><td><span class='tag stale'>★★★ ⚡ 接近甜區｜🟡 觀察不追</span></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section>
-      <h2>A級攻擊主線</h2>
-      <p class="note">波段觀察池，只等甜區或轉強，不追高。</p>
-      <table>
-        <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>AI類別</th><th>可低接區</th><th>跌破先停手</th><th>反彈壓力</th><th>訊號</th></tr></thead>
-        <tbody>
-<tr class='neutral-row'><td>4749</td><td>新應材 <span class='cat-badge'>【半導體特化材料】</span></td><td class='num'>866</td><td class='num'>888</td><td class='num'>915</td><td class='num'>852</td><td class='num'>1,386</td><td>半導體特化材料</td><td>847.7 - 856.3</td><td>847.7</td><td>915 / 933.3</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>4772</td><td>台特化 <span class='cat-badge'>【半導體特化材料】</span></td><td class='num'>267</td><td class='num'>261.5</td><td class='num'>273.5</td><td class='num'>261.5</td><td class='num'>713</td><td>半導體特化材料</td><td>260.2 - 262.8</td><td>260.2</td><td>273.5 / 279</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>4755</td><td>三福化 <span class='cat-badge'>【半導體特化材料】</span></td><td class='num'>135</td><td class='num'>135.5</td><td class='num'>136.5</td><td class='num'>133</td><td class='num'>117</td><td>半導體特化材料</td><td>132.3 - 133.7</td><td>132.3</td><td>136.5 / 139.2</td><td><span class='tag stale'>★★★ ⚡ 反彈觀察｜🟡 等站穩</span></td></tr>
-<tr class='neutral-row'><td>4958</td><td>臻鼎-KY <span class='cat-badge'>【AI PCB】</span></td><td class='num'>573</td><td class='num'>590</td><td class='num'>599</td><td class='num'>561</td><td class='num'>28,639</td><td>AI PCB</td><td>558.2 - 563.8</td><td>558.2</td><td>599 / 611</td><td><span class='tag stale'>★★★ ⚡ 等待轉強｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>3711</td><td>日月光投控 <span class='cat-badge'>【AI封裝】</span></td><td class='num'>627</td><td class='num'>628</td><td class='num'>632</td><td class='num'>611</td><td class='num'>17,299</td><td>AI封裝</td><td>607.9 - 614.1</td><td>607.9</td><td>632 / 644.6</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>8046</td><td>南電 <span class='cat-badge'>【ABF載板】</span></td><td class='num'>1,080</td><td class='num'>1,105</td><td class='num'>1,140</td><td class='num'>1,035</td><td class='num'>22,373</td><td>ABF載板</td><td>1,030 - 1,040</td><td>1,030</td><td>1,140 / 1,163</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='neutral-row'><td>3037</td><td>欣興 <span class='cat-badge'>【ABF載板】</span></td><td class='num'>976</td><td class='num'>999</td><td class='num'>1,010</td><td class='num'>950</td><td class='num'>27,520</td><td>ABF載板</td><td>945.3 - 954.8</td><td>945.3</td><td>1,010 / 1,030</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>3189</td><td>景碩 <span class='cat-badge'>【ABF載板】</span></td><td class='num'>810</td><td class='num'>825</td><td class='num'>833</td><td class='num'>782</td><td class='num'>30,597</td><td>ABF載板</td><td>778.1 - 785.9</td><td>778.1</td><td>833 / 849.7</td><td><span class='tag stale'>★★★ ⚡ 反彈觀察｜🟡 等站穩</span></td></tr>
-<tr class='neutral-row'><td>2449</td><td>京元電子 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>308.5</td><td class='num'>311</td><td class='num'>316</td><td class='num'>304</td><td class='num'>16,368</td><td>AI測試鏈</td><td>302.5 - 305.5</td><td>302.5</td><td>316 / 322.3</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>7769</td><td>鴻勁 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>6,395</td><td class='num'>6,400</td><td class='num'>6,580</td><td class='num'>6,230</td><td class='num'>591</td><td>AI測試鏈</td><td>6,199 - 6,261</td><td>6,199</td><td>6,580 / 6,712</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='risk-row'><td>6223</td><td>旺矽 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>6,060</td><td class='num'>6,580</td><td class='num'>6,680</td><td class='num'>5,980</td><td class='num'>958</td><td>AI測試鏈</td><td>5,950 - 6,010</td><td>5,950</td><td>6,680 / 6,814</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='neutral-row'><td>6515</td><td>穎崴 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>8,015</td><td class='num'>8,190</td><td class='num'>8,190</td><td class='num'>7,505</td><td class='num'>375</td><td>AI測試鏈</td><td>7,467 - 7,543</td><td>7,467</td><td>8,190 / 8,354</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='risk-row'><td>6510</td><td>精測 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>3,035</td><td class='num'>3,300</td><td class='num'>3,300</td><td class='num'>2,990</td><td class='num'>490</td><td>AI測試鏈</td><td>2,975 - 3,005</td><td>2,975</td><td>3,300 / 3,366</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='risk-row'><td>6217</td><td>中探針 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>233</td><td class='num'>243.5</td><td class='num'>250.5</td><td class='num'>230</td><td class='num'>5,248</td><td>AI測試鏈</td><td>228.9 - 231.2</td><td>228.9</td><td>250.5 / 255.5</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='neutral-row'><td>3264</td><td>欣銓 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>215.5</td><td class='num'>214.5</td><td class='num'>223</td><td class='num'>213.5</td><td class='num'>4,798</td><td>AI測試鏈</td><td>212.4 - 214.6</td><td>212.4</td><td>223 / 227.5</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>6239</td><td>力成 <span class='cat-badge'>【AI封測】</span></td><td class='num'>311</td><td class='num'>315</td><td class='num'>315.5</td><td class='num'>303.5</td><td class='num'>21,061</td><td>AI封測</td><td>302 - 305</td><td>302</td><td>315.5 / 321.8</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='watch-row'><td>2368</td><td>金像電 <span class='cat-badge'>【AI PCB】</span></td><td class='num'>1,155</td><td class='num'>1,190</td><td class='num'>1,205</td><td class='num'>1,145</td><td class='num'>4,931</td><td>AI PCB</td><td>1,139 - 1,151</td><td>1,139</td><td>1,205 / 1,229</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='watch-row'><td>3715</td><td>定穎投控 <span class='cat-badge'>【AI PCB】</span></td><td class='num'>166</td><td class='num'>170</td><td class='num'>171.5</td><td class='num'>165</td><td class='num'>5,442</td><td>AI PCB</td><td>164.2 - 165.8</td><td>164.2</td><td>171.5 / 174.9</td><td><span class='tag stale'>★★★ ⚡ 等待轉強｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>8064</td><td>東捷 <span class='cat-badge'>【AI設備/自動化】</span></td><td class='num'>133</td><td class='num'>135</td><td class='num'>138.5</td><td class='num'>131.5</td><td class='num'>3,293</td><td>AI設備/自動化</td><td>130.8 - 132.2</td><td>130.8</td><td>138.5 / 141.3</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>3665</td><td>貿聯-KY <span class='cat-badge'>【AI高速互連】</span></td><td class='num'>1,880</td><td class='num'>1,855</td><td class='num'>1,915</td><td class='num'>1,820</td><td class='num'>1,463</td><td>AI高速互連</td><td>1,811 - 1,829</td><td>1,811</td><td>1,915 / 1,953</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>2455</td><td>全新 <span class='cat-badge'>【CPO/矽光子】</span></td><td class='num'>336</td><td class='num'>339</td><td class='num'>348</td><td class='num'>333</td><td class='num'>1,806</td><td>CPO/矽光子</td><td>331.3 - 334.7</td><td>331.3</td><td>348 / 355</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='watch-row'><td>6831</td><td>邁科 <span class='cat-badge'>【AI散熱/機構件】</span></td><td class='num'>794</td><td class='num'>806</td><td class='num'>850</td><td class='num'>790</td><td class='num'>994</td><td>AI散熱/機構件</td><td>786.1 - 794</td><td>786.1</td><td>850 / 867</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-
-
-    <section>
-      <h2>短線雷達外掛｜06/29 ETF＋AI測試鏈＋持股修復觀察</h2>
-      <p class="note">這區只做 1～3 天短線觀察，不升級核心；沒有站穩5日線、沒有量能、開高走低就不碰。</p>
-      <table>
-        <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>AI類別</th><th>可低接區</th><th>跌破先停手</th><th>反彈壓力</th><th>訊號</th></tr></thead>
-        <tbody>
-<tr class='neutral-row'><td>3532</td><td>台勝科 <span class='cat-badge'>【矽晶圓/半導體材料】</span></td><td class='num'>331</td><td class='num'>341</td><td class='num'>343.5</td><td class='num'>325</td><td class='num'>471</td><td>矽晶圓/半導體材料</td><td>323.4 - 326.6</td><td>323.4</td><td>343.5 / 350.4</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='warn-row'><td>6488</td><td>環球晶 <span class='cat-badge'>【矽晶圓/半導體材料】</span></td><td class='num'>915</td><td class='num'>915</td><td class='num'>915</td><td class='num'>866</td><td class='num'>2,701</td><td>矽晶圓/半導體材料</td><td>861.7 - 870.3</td><td>861.7</td><td>915 / 933.3</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='warn-row'><td>1560</td><td>中砂 <span class='cat-badge'>【半導體材料/再生晶圓】</span></td><td class='num'>738</td><td class='num'>708</td><td class='num'>754</td><td class='num'>705</td><td class='num'>1,525</td><td>半導體材料/再生晶圓</td><td>701.5 - 708.5</td><td>701.5</td><td>754 / 769.1</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='purple-row'><td>5434</td><td>崇越 <span class='cat-badge'>【半導體材料通路】</span></td><td class='num'>539</td><td class='num'>507</td><td class='num'>539</td><td class='num'>504</td><td class='num'>3,454</td><td>半導體材料通路</td><td>501.5 - 506.5</td><td>501.5</td><td>539 / 549.8</td><td><span class='tag purple'>★ 💰 分批處理｜🟡 漲多不追</span></td></tr>
-<tr class='warn-row'><td>2383</td><td>台光電 <span class='cat-badge'>【AI高速材料】</span></td><td class='num'>5,450</td><td class='num'>5,255</td><td class='num'>5,450</td><td class='num'>5,255</td><td class='num'>894</td><td>AI高速材料</td><td>5,229 - 5,281</td><td>5,229</td><td>5,450 / 5,559</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>6274</td><td>台燿 <span class='cat-badge'>【CCL高速材料】</span></td><td class='num'>1,555</td><td class='num'>1,575</td><td class='num'>1,585</td><td class='num'>1,505</td><td class='num'>4,752</td><td>CCL高速材料</td><td>1,497 - 1,513</td><td>1,497</td><td>1,585 / 1,617</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>8358</td><td>金居 <span class='cat-badge'>【PCB材料/銅箔】</span></td><td class='num'>546</td><td class='num'>574</td><td class='num'>578</td><td class='num'>538</td><td class='num'>9,314</td><td>PCB材料/銅箔</td><td>535.3 - 540.7</td><td>535.3</td><td>578 / 589.6</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='warn-row'><td>1815</td><td>富喬 <span class='cat-badge'>【PCB材料/玻纖布】</span></td><td class='num'>101</td><td class='num'>96.7</td><td class='num'>102.5</td><td class='num'>95.4</td><td class='num'>22,617</td><td>PCB材料/玻纖布</td><td>94.92 - 95.88</td><td>94.92</td><td>102.5 / 104.6</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>6213</td><td>聯茂 <span class='cat-badge'>【CCL補漲】</span></td><td class='num'>344</td><td class='num'>359.5</td><td class='num'>359.5</td><td class='num'>335</td><td class='num'>16,798</td><td>CCL補漲</td><td>333.3 - 336.7</td><td>333.3</td><td>359.5 / 366.7</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>8021</td><td>尖點 <span class='cat-badge'>【AI PCB耗材/鑽針】</span></td><td class='num'>522</td><td class='num'>545</td><td class='num'>545</td><td class='num'>515</td><td class='num'>1,572</td><td>AI PCB耗材/鑽針</td><td>512.4 - 517.6</td><td>512.4</td><td>545 / 555.9</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section>
-      <h2>全部追蹤清單｜S/A與ETF觀察</h2>
-      <table>
-        <thead><tr><th>代碼</th><th>名稱</th><th>現價</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>AI類別</th><th>可低接區</th><th>跌破先停手</th><th>反彈壓力</th><th>訊號</th></tr></thead>
-        <tbody>
-<tr class='neutral-row'><td>2330</td><td>台積電 <span class='cat-badge'>【AI晶片】</span></td><td class='num'>2,370</td><td class='num'>2,330</td><td class='num'>2,395</td><td class='num'>2,330</td><td class='num'>33,233</td><td>AI晶片</td><td>2,318 - 2,342</td><td>2,318</td><td>2,395 / 2,443</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='watch-row'><td>2404</td><td>漢唐 <span class='cat-badge'>【AI廠務工程】</span></td><td class='num'>1,360</td><td class='num'>1,380</td><td class='num'>1,450</td><td class='num'>1,350</td><td class='num'>4,486</td><td>AI廠務工程</td><td>1,343 - 1,357</td><td>1,343</td><td>1,450 / 1,479</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>5536</td><td>聖暉* <span class='cat-badge'>【AI廠務工程】</span></td><td class='num'>1,245</td><td class='num'>1,310</td><td class='num'>1,335</td><td class='num'>1,220</td><td class='num'>1,170</td><td>AI廠務工程</td><td>1,214 - 1,226</td><td>1,214</td><td>1,335 / 1,362</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='watch-row'><td>6196</td><td>帆宣 <span class='cat-badge'>【AI廠務工程】</span></td><td class='num'>532</td><td class='num'>538</td><td class='num'>555</td><td class='num'>528</td><td class='num'>2,068</td><td>AI廠務工程</td><td>525.4 - 530.6</td><td>525.4</td><td>555 / 566.1</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='watch-row'><td>6691</td><td>洋基工程 <span class='cat-badge'>【AI廠務工程】</span></td><td class='num'>795</td><td class='num'>811</td><td class='num'>834</td><td class='num'>795</td><td class='num'>2,293</td><td>AI廠務工程</td><td>791 - 799</td><td>791</td><td>834 / 850.7</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>4749</td><td>新應材 <span class='cat-badge'>【半導體特化材料】</span></td><td class='num'>866</td><td class='num'>888</td><td class='num'>915</td><td class='num'>852</td><td class='num'>1,386</td><td>半導體特化材料</td><td>847.7 - 856.3</td><td>847.7</td><td>915 / 933.3</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>4772</td><td>台特化 <span class='cat-badge'>【半導體特化材料】</span></td><td class='num'>267</td><td class='num'>261.5</td><td class='num'>273.5</td><td class='num'>261.5</td><td class='num'>713</td><td>半導體特化材料</td><td>260.2 - 262.8</td><td>260.2</td><td>273.5 / 279</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>4755</td><td>三福化 <span class='cat-badge'>【半導體特化材料】</span></td><td class='num'>135</td><td class='num'>135.5</td><td class='num'>136.5</td><td class='num'>133</td><td class='num'>117</td><td>半導體特化材料</td><td>132.3 - 133.7</td><td>132.3</td><td>136.5 / 139.2</td><td><span class='tag stale'>★★★ ⚡ 反彈觀察｜🟡 等站穩</span></td></tr>
-<tr class='neutral-row'><td>3532</td><td>台勝科 <span class='cat-badge'>【矽晶圓/半導體材料】</span></td><td class='num'>331</td><td class='num'>341</td><td class='num'>343.5</td><td class='num'>325</td><td class='num'>471</td><td>矽晶圓/半導體材料</td><td>323.4 - 326.6</td><td>323.4</td><td>343.5 / 350.4</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='warn-row'><td>6488</td><td>環球晶 <span class='cat-badge'>【矽晶圓/半導體材料】</span></td><td class='num'>915</td><td class='num'>915</td><td class='num'>915</td><td class='num'>866</td><td class='num'>2,701</td><td>矽晶圓/半導體材料</td><td>861.7 - 870.3</td><td>861.7</td><td>915 / 933.3</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='warn-row'><td>1560</td><td>中砂 <span class='cat-badge'>【半導體材料/再生晶圓】</span></td><td class='num'>738</td><td class='num'>708</td><td class='num'>754</td><td class='num'>705</td><td class='num'>1,525</td><td>半導體材料/再生晶圓</td><td>701.5 - 708.5</td><td>701.5</td><td>754 / 769.1</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='purple-row'><td>5434</td><td>崇越 <span class='cat-badge'>【半導體材料通路】</span></td><td class='num'>539</td><td class='num'>507</td><td class='num'>539</td><td class='num'>504</td><td class='num'>3,454</td><td>半導體材料通路</td><td>501.5 - 506.5</td><td>501.5</td><td>539 / 549.8</td><td><span class='tag purple'>★ 💰 分批處理｜🟡 漲多不追</span></td></tr>
-<tr class='neutral-row'><td>3661</td><td>世芯-KY <span class='cat-badge'>【ASIC】</span></td><td class='num'>3,985</td><td class='num'>3,900</td><td class='num'>4,015</td><td class='num'>3,890</td><td class='num'>1,056</td><td>ASIC</td><td>3,871 - 3,909</td><td>3,871</td><td>4,015 / 4,095</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>3443</td><td>創意 <span class='cat-badge'>【ASIC】</span></td><td class='num'>4,420</td><td class='num'>4,425</td><td class='num'>4,520</td><td class='num'>4,355</td><td class='num'>901</td><td>ASIC</td><td>4,333 - 4,377</td><td>4,333</td><td>4,520 / 4,610</td><td><span class='tag stale'>★★★ ⚡ 接近甜區｜🟡 觀察不追</span></td></tr>
-<tr class='neutral-row'><td>4958</td><td>臻鼎-KY <span class='cat-badge'>【AI PCB】</span></td><td class='num'>573</td><td class='num'>590</td><td class='num'>599</td><td class='num'>561</td><td class='num'>28,639</td><td>AI PCB</td><td>558.2 - 563.8</td><td>558.2</td><td>599 / 611</td><td><span class='tag stale'>★★★ ⚡ 等待轉強｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>3711</td><td>日月光投控 <span class='cat-badge'>【AI封裝】</span></td><td class='num'>627</td><td class='num'>628</td><td class='num'>632</td><td class='num'>611</td><td class='num'>17,299</td><td>AI封裝</td><td>607.9 - 614.1</td><td>607.9</td><td>632 / 644.6</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>8046</td><td>南電 <span class='cat-badge'>【ABF載板】</span></td><td class='num'>1,080</td><td class='num'>1,105</td><td class='num'>1,140</td><td class='num'>1,035</td><td class='num'>22,373</td><td>ABF載板</td><td>1,030 - 1,040</td><td>1,030</td><td>1,140 / 1,163</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='neutral-row'><td>3037</td><td>欣興 <span class='cat-badge'>【ABF載板】</span></td><td class='num'>976</td><td class='num'>999</td><td class='num'>1,010</td><td class='num'>950</td><td class='num'>27,520</td><td>ABF載板</td><td>945.3 - 954.8</td><td>945.3</td><td>1,010 / 1,030</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>3189</td><td>景碩 <span class='cat-badge'>【ABF載板】</span></td><td class='num'>810</td><td class='num'>825</td><td class='num'>833</td><td class='num'>782</td><td class='num'>30,597</td><td>ABF載板</td><td>778.1 - 785.9</td><td>778.1</td><td>833 / 849.7</td><td><span class='tag stale'>★★★ ⚡ 反彈觀察｜🟡 等站穩</span></td></tr>
-<tr class='neutral-row'><td>2449</td><td>京元電子 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>308.5</td><td class='num'>311</td><td class='num'>316</td><td class='num'>304</td><td class='num'>16,368</td><td>AI測試鏈</td><td>302.5 - 305.5</td><td>302.5</td><td>316 / 322.3</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>7769</td><td>鴻勁 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>6,395</td><td class='num'>6,400</td><td class='num'>6,580</td><td class='num'>6,230</td><td class='num'>591</td><td>AI測試鏈</td><td>6,199 - 6,261</td><td>6,199</td><td>6,580 / 6,712</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='risk-row'><td>6223</td><td>旺矽 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>6,060</td><td class='num'>6,580</td><td class='num'>6,680</td><td class='num'>5,980</td><td class='num'>958</td><td>AI測試鏈</td><td>5,950 - 6,010</td><td>5,950</td><td>6,680 / 6,814</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='neutral-row'><td>6515</td><td>穎崴 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>8,015</td><td class='num'>8,190</td><td class='num'>8,190</td><td class='num'>7,505</td><td class='num'>375</td><td>AI測試鏈</td><td>7,467 - 7,543</td><td>7,467</td><td>8,190 / 8,354</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='risk-row'><td>6510</td><td>精測 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>3,035</td><td class='num'>3,300</td><td class='num'>3,300</td><td class='num'>2,990</td><td class='num'>490</td><td>AI測試鏈</td><td>2,975 - 3,005</td><td>2,975</td><td>3,300 / 3,366</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='risk-row'><td>6217</td><td>中探針 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>233</td><td class='num'>243.5</td><td class='num'>250.5</td><td class='num'>230</td><td class='num'>5,248</td><td>AI測試鏈</td><td>228.9 - 231.2</td><td>228.9</td><td>250.5 / 255.5</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='neutral-row'><td>3264</td><td>欣銓 <span class='cat-badge'>【AI測試鏈】</span></td><td class='num'>215.5</td><td class='num'>214.5</td><td class='num'>223</td><td class='num'>213.5</td><td class='num'>4,798</td><td>AI測試鏈</td><td>212.4 - 214.6</td><td>212.4</td><td>223 / 227.5</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>6239</td><td>力成 <span class='cat-badge'>【AI封測】</span></td><td class='num'>311</td><td class='num'>315</td><td class='num'>315.5</td><td class='num'>303.5</td><td class='num'>21,061</td><td>AI封測</td><td>302 - 305</td><td>302</td><td>315.5 / 321.8</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='warn-row'><td>2383</td><td>台光電 <span class='cat-badge'>【AI高速材料】</span></td><td class='num'>5,450</td><td class='num'>5,255</td><td class='num'>5,450</td><td class='num'>5,255</td><td class='num'>894</td><td>AI高速材料</td><td>5,229 - 5,281</td><td>5,229</td><td>5,450 / 5,559</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>6274</td><td>台燿 <span class='cat-badge'>【CCL高速材料】</span></td><td class='num'>1,555</td><td class='num'>1,575</td><td class='num'>1,585</td><td class='num'>1,505</td><td class='num'>4,752</td><td>CCL高速材料</td><td>1,497 - 1,513</td><td>1,497</td><td>1,585 / 1,617</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>8358</td><td>金居 <span class='cat-badge'>【PCB材料/銅箔】</span></td><td class='num'>546</td><td class='num'>574</td><td class='num'>578</td><td class='num'>538</td><td class='num'>9,314</td><td>PCB材料/銅箔</td><td>535.3 - 540.7</td><td>535.3</td><td>578 / 589.6</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='watch-row'><td>2368</td><td>金像電 <span class='cat-badge'>【AI PCB】</span></td><td class='num'>1,155</td><td class='num'>1,190</td><td class='num'>1,205</td><td class='num'>1,145</td><td class='num'>4,931</td><td>AI PCB</td><td>1,139 - 1,151</td><td>1,139</td><td>1,205 / 1,229</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='watch-row'><td>3715</td><td>定穎投控 <span class='cat-badge'>【AI PCB】</span></td><td class='num'>166</td><td class='num'>170</td><td class='num'>171.5</td><td class='num'>165</td><td class='num'>5,442</td><td>AI PCB</td><td>164.2 - 165.8</td><td>164.2</td><td>171.5 / 174.9</td><td><span class='tag stale'>★★★ ⚡ 等待轉強｜🟡 先觀察</span></td></tr>
-<tr class='warn-row'><td>1815</td><td>富喬 <span class='cat-badge'>【PCB材料/玻纖布】</span></td><td class='num'>101</td><td class='num'>96.7</td><td class='num'>102.5</td><td class='num'>95.4</td><td class='num'>22,617</td><td>PCB材料/玻纖布</td><td>94.92 - 95.88</td><td>94.92</td><td>102.5 / 104.6</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>6213</td><td>聯茂 <span class='cat-badge'>【CCL補漲】</span></td><td class='num'>344</td><td class='num'>359.5</td><td class='num'>359.5</td><td class='num'>335</td><td class='num'>16,798</td><td>CCL補漲</td><td>333.3 - 336.7</td><td>333.3</td><td>359.5 / 366.7</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>8064</td><td>東捷 <span class='cat-badge'>【AI設備/自動化】</span></td><td class='num'>133</td><td class='num'>135</td><td class='num'>138.5</td><td class='num'>131.5</td><td class='num'>3,293</td><td>AI設備/自動化</td><td>130.8 - 132.2</td><td>130.8</td><td>138.5 / 141.3</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='watch-row'><td>2317</td><td>鴻海 <span class='cat-badge'>【AI伺服器】</span></td><td class='num'>246.5</td><td class='num'>250</td><td class='num'>252</td><td class='num'>246</td><td class='num'>47,141</td><td>AI伺服器</td><td>244.8 - 247.2</td><td>244.8</td><td>252 / 257</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='watch-row'><td>2356</td><td>英業達 <span class='cat-badge'>【AI伺服器】</span></td><td class='num'>64.3</td><td class='num'>64</td><td class='num'>67.1</td><td class='num'>63.8</td><td class='num'>24,158</td><td>AI伺服器</td><td>63.48 - 64.12</td><td>63.48</td><td>67.1 / 68.44</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='purple-row'><td>6669</td><td>緯穎 <span class='cat-badge'>【AI伺服器】</span></td><td class='num'>4,580</td><td class='num'>4,350</td><td class='num'>4,705</td><td class='num'>4,335</td><td class='num'>1,760</td><td>AI伺服器</td><td>4,313 - 4,357</td><td>4,313</td><td>4,705 / 4,799</td><td><span class='tag purple'>★ 💰 分批處理｜🟡 漲多不追</span></td></tr>
-<tr class='watch-row'><td>3693</td><td>營邦 <span class='cat-badge'>【AI伺服器】</span></td><td class='num'>474</td><td class='num'>479</td><td class='num'>487</td><td class='num'>471.5</td><td class='num'>310</td><td>AI伺服器</td><td>469.1 - 473.9</td><td>469.1</td><td>487 / 496.7</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='warn-row'><td>2308</td><td>台達電 <span class='cat-badge'>【AI伺服器/電源】</span></td><td class='num'>1,905</td><td class='num'>1,860</td><td class='num'>1,970</td><td class='num'>1,850</td><td class='num'>15,514</td><td>AI伺服器/電源</td><td>1,841 - 1,859</td><td>1,841</td><td>1,970 / 2,009</td><td><span class='tag warn'>★★★★★ 🔥 強勢續抱｜🟢 主線續抱不追</span></td></tr>
-<tr class='warn-row'><td>3017</td><td>奇鋐 <span class='cat-badge'>【散熱】</span></td><td class='num'>2,300</td><td class='num'>2,220</td><td class='num'>2,315</td><td class='num'>2,220</td><td class='num'>2,886</td><td>散熱</td><td>2,209 - 2,231</td><td>2,209</td><td>2,315 / 2,361</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>6805</td><td>富世達 <span class='cat-badge'>【AI散熱/水冷】</span></td><td class='num'>1,625</td><td class='num'>1,660</td><td class='num'>1,690</td><td class='num'>1,610</td><td class='num'>545</td><td>AI散熱/水冷</td><td>1,602 - 1,618</td><td>1,602</td><td>1,690 / 1,724</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>3653</td><td>健策 <span class='cat-badge'>【AI散熱/水冷】</span></td><td class='num'>3,320</td><td class='num'>3,470</td><td class='num'>3,480</td><td class='num'>3,280</td><td class='num'>1,057</td><td>AI散熱/水冷</td><td>3,264 - 3,296</td><td>3,264</td><td>3,480 / 3,550</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>2059</td><td>川湖 <span class='cat-badge'>【AI機構件】</span></td><td class='num'>7,110</td><td class='num'>7,080</td><td class='num'>7,275</td><td class='num'>6,920</td><td class='num'>237</td><td>AI機構件</td><td>6,885 - 6,955</td><td>6,885</td><td>7,275 / 7,421</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>2345</td><td>智邦 <span class='cat-badge'>【AI高速互連】</span></td><td class='num'>2,340</td><td class='num'>2,395</td><td class='num'>2,430</td><td class='num'>2,290</td><td class='num'>2,924</td><td>AI高速互連</td><td>2,279 - 2,301</td><td>2,279</td><td>2,430 / 2,479</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>3665</td><td>貿聯-KY <span class='cat-badge'>【AI高速互連】</span></td><td class='num'>1,880</td><td class='num'>1,855</td><td class='num'>1,915</td><td class='num'>1,820</td><td class='num'>1,463</td><td>AI高速互連</td><td>1,811 - 1,829</td><td>1,811</td><td>1,915 / 1,953</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>6278</td><td>台表科 <span class='cat-badge'>【CPO/光通訊/光學觀察池】</span></td><td class='num'>194</td><td class='num'>191</td><td class='num'>201</td><td class='num'>189.5</td><td class='num'>5,197</td><td>CPO/光通訊/光學觀察池</td><td>188.6 - 190.4</td><td>188.6</td><td>201 / 205</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>4979</td><td>華星光 <span class='cat-badge'>【CPO/光通訊/光學觀察池】</span></td><td class='num'>456.5</td><td class='num'>460.5</td><td class='num'>472.5</td><td class='num'>445</td><td class='num'>6,061</td><td>CPO/光通訊/光學觀察池</td><td>442.8 - 447.2</td><td>442.8</td><td>472.5 / 482</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>6442</td><td>光聖 <span class='cat-badge'>【CPO/光通訊/光元件】</span></td><td class='num'>1,600</td><td class='num'>1,630</td><td class='num'>1,645</td><td class='num'>1,575</td><td class='num'>2,392</td><td>CPO/光通訊/光元件</td><td>1,567 - 1,583</td><td>1,567</td><td>1,645 / 1,678</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='warn-row'><td>3163</td><td>波若威 <span class='cat-badge'>【CPO/光通訊/光學觀察池】</span></td><td class='num'>720</td><td class='num'>706</td><td class='num'>724</td><td class='num'>690</td><td class='num'>1,199</td><td>CPO/光通訊/光學觀察池</td><td>686.6 - 693.5</td><td>686.6</td><td>724 / 738.5</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>4991</td><td>環宇-KY <span class='cat-badge'>【CPO/光通訊/光學觀察池】</span></td><td class='num'>482.5</td><td class='num'>503</td><td class='num'>520</td><td class='num'>465.5</td><td class='num'>783</td><td>CPO/光通訊/光學觀察池</td><td>463.2 - 467.8</td><td>463.2</td><td>520 / 530.4</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='risk-row'><td>3008</td><td>大立光 <span class='cat-badge'>【CPO/光通訊/光學觀察池】</span></td><td class='num'>4,380</td><td class='num'>4,640</td><td class='num'>4,730</td><td class='num'>4,315</td><td class='num'>3,416</td><td>CPO/光通訊/光學觀察池</td><td>4,293 - 4,337</td><td>4,293</td><td>4,730 / 4,825</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='neutral-row'><td>2455</td><td>全新 <span class='cat-badge'>【CPO/矽光子】</span></td><td class='num'>336</td><td class='num'>339</td><td class='num'>348</td><td class='num'>333</td><td class='num'>1,806</td><td>CPO/矽光子</td><td>331.3 - 334.7</td><td>331.3</td><td>348 / 355</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='watch-row'><td>1519</td><td>華城 <span class='cat-badge'>【AI電力】</span></td><td class='num'>783</td><td class='num'>781</td><td class='num'>804</td><td class='num'>779</td><td class='num'>1,385</td><td>AI電力</td><td>775.1 - 782.9</td><td>775.1</td><td>804 / 820.1</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='watch-row'><td>1513</td><td>中興電 <span class='cat-badge'>【AI電力】</span></td><td class='num'>175.5</td><td class='num'>176.5</td><td class='num'>180.5</td><td class='num'>175</td><td class='num'>6,605</td><td>AI電力</td><td>174.1 - 175.9</td><td>174.1</td><td>180.5 / 184.1</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>1503</td><td>士電 <span class='cat-badge'>【AI電力】</span></td><td class='num'>237.5</td><td class='num'>235</td><td class='num'>247</td><td class='num'>234.5</td><td class='num'>4,724</td><td>AI電力</td><td>233.3 - 235.7</td><td>233.3</td><td>247 / 251.9</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>1514</td><td>亞力 <span class='cat-badge'>【AI電力】</span></td><td class='num'>119</td><td class='num'>119</td><td class='num'>122.5</td><td class='num'>118</td><td class='num'>2,650</td><td>AI電力</td><td>117.4 - 118.6</td><td>117.4</td><td>122.5 / 125</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>1504</td><td>東元 <span class='cat-badge'>【AI電力】</span></td><td class='num'>69</td><td class='num'>68.4</td><td class='num'>70.2</td><td class='num'>68.4</td><td class='num'>8,127</td><td>AI電力</td><td>68.06 - 68.74</td><td>68.06</td><td>70.2 / 71.6</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='watch-row'><td>2412</td><td>中華電 <span class='cat-badge'>【AI基礎建設】</span></td><td class='num'>142</td><td class='num'>144</td><td class='num'>144.5</td><td class='num'>142</td><td class='num'>23,814</td><td>AI基礎建設</td><td>141.3 - 142.7</td><td>141.3</td><td>144.5 / 147.4</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>8299</td><td>群聯 <span class='cat-badge'>【AI記憶體/儲存鏈】</span></td><td class='num'>2,340</td><td class='num'>2,320</td><td class='num'>2,400</td><td class='num'>2,300</td><td class='num'>2,554</td><td>AI記憶體/儲存鏈</td><td>2,289 - 2,312</td><td>2,289</td><td>2,400 / 2,448</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>4967</td><td>十銓 <span class='cat-badge'>【AI記憶體/儲存鏈】</span></td><td class='num'>264</td><td class='num'>268</td><td class='num'>270</td><td class='num'>261</td><td class='num'>2,213</td><td>AI記憶體/儲存鏈</td><td>259.7 - 262.3</td><td>259.7</td><td>270 / 275.4</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>3260</td><td>威剛 <span class='cat-badge'>【AI記憶體/儲存鏈】</span></td><td class='num'>404</td><td class='num'>399</td><td class='num'>406.5</td><td class='num'>394.5</td><td class='num'>5,450</td><td>AI記憶體/儲存鏈</td><td>392.5 - 396.5</td><td>392.5</td><td>406.5 / 414.6</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='risk-row'><td>4973</td><td>廣穎 <span class='cat-badge'>【AI記憶體/儲存鏈】</span></td><td class='num'>168.5</td><td class='num'>180.5</td><td class='num'>181</td><td class='num'>168.5</td><td class='num'>3,206</td><td>AI記憶體/儲存鏈</td><td>167.7 - 169.3</td><td>167.7</td><td>181 / 184.6</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='watch-row'><td>2344</td><td>華邦電 <span class='cat-badge'>【AI記憶體/儲存鏈】</span></td><td class='num'>203</td><td class='num'>209</td><td class='num'>212.5</td><td class='num'>201</td><td class='num'>148,304</td><td>AI記憶體/儲存鏈</td><td>200 - 202</td><td>200</td><td>212.5 / 216.8</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>2408</td><td>南亞科 <span class='cat-badge'>【AI記憶體/儲存鏈】</span></td><td class='num'>453</td><td class='num'>456</td><td class='num'>465</td><td class='num'>440.5</td><td class='num'>75,793</td><td>AI記憶體/儲存鏈</td><td>438.3 - 442.7</td><td>438.3</td><td>465 / 474.3</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>3481</td><td>群創 <span class='cat-badge'>【AI終端設備】</span></td><td class='num'>67</td><td class='num'>65.2</td><td class='num'>69.3</td><td class='num'>63.5</td><td class='num'>599,900</td><td>AI終端設備</td><td>63.18 - 63.82</td><td>63.18</td><td>69.3 / 70.69</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='warn-row'><td>2301</td><td>光寶科 <span class='cat-badge'>【AI電源/光電】</span></td><td class='num'>211.5</td><td class='num'>203</td><td class='num'>213.5</td><td class='num'>203</td><td class='num'>21,472</td><td>AI電源/光電</td><td>202 - 204</td><td>202</td><td>213.5 / 217.8</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>2327</td><td>國巨* <span class='cat-badge'>【AI電源/被動元件】</span></td><td class='num'>1,040</td><td class='num'>985</td><td class='num'>1,065</td><td class='num'>979</td><td class='num'>39,871</td><td>AI電源/被動元件</td><td>974.1 - 983.9</td><td>974.1</td><td>1,065 / 1,086</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>2375</td><td>凱美 <span class='cat-badge'>【AI被動元件】</span></td><td class='num'>192.5</td><td class='num'>197.5</td><td class='num'>200.5</td><td class='num'>188</td><td class='num'>11,127</td><td>AI被動元件</td><td>187.1 - 188.9</td><td>187.1</td><td>200.5 / 204.5</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='warn-row'><td>3026</td><td>禾伸堂 <span class='cat-badge'>【AI被動元件】</span></td><td class='num'>766</td><td class='num'>728</td><td class='num'>770</td><td class='num'>728</td><td class='num'>971</td><td>AI被動元件</td><td>724.4 - 731.6</td><td>724.4</td><td>770 / 785.4</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>3624</td><td>光頡 <span class='cat-badge'>【AI被動元件/高波動】</span></td><td class='num'>139</td><td class='num'>143</td><td class='num'>145</td><td class='num'>137.5</td><td class='num'>1,307</td><td>AI被動元件/高波動</td><td>136.8 - 138.2</td><td>136.8</td><td>145 / 147.9</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>2492</td><td>華新科 <span class='cat-badge'>【AI被動元件】</span></td><td class='num'>514</td><td class='num'>534</td><td class='num'>540</td><td class='num'>487</td><td class='num'>4,077</td><td>AI被動元件</td><td>484.6 - 489.4</td><td>484.6</td><td>540 / 550.8</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='neutral-row'><td>6173</td><td>信昌電 <span class='cat-badge'>【AI被動元件/處置警戒】</span></td><td class='num'>282.5</td><td class='num'>276</td><td class='num'>286</td><td class='num'>267</td><td class='num'>859</td><td>AI被動元件/處置警戒</td><td>265.7 - 268.3</td><td>265.7</td><td>286 / 291.7</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>5347</td><td>世界 <span class='cat-badge'>【成熟晶圓代工】</span></td><td class='num'>208.5</td><td class='num'>206.5</td><td class='num'>215.5</td><td class='num'>203.5</td><td class='num'>37,276</td><td>成熟晶圓代工</td><td>202.5 - 204.5</td><td>202.5</td><td>215.5 / 219.8</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>8086</td><td>宏捷科 <span class='cat-badge'>【砷化鎵/光通訊】</span></td><td class='num'>142</td><td class='num'>142.5</td><td class='num'>145.5</td><td class='num'>137.5</td><td class='num'>2,248</td><td>砷化鎵/光通訊</td><td>136.8 - 138.2</td><td>136.8</td><td>145.5 / 148.4</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='watch-row'><td>6831</td><td>邁科 <span class='cat-badge'>【AI散熱/機構件】</span></td><td class='num'>794</td><td class='num'>806</td><td class='num'>850</td><td class='num'>790</td><td class='num'>994</td><td>AI散熱/機構件</td><td>786.1 - 794</td><td>786.1</td><td>850 / 867</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>7610</td><td>聯友金屬-創 <span class='cat-badge'>【金屬機構件】</span></td><td class='num'>2,100</td><td class='num'>2,220</td><td class='num'>2,220</td><td class='num'>2,050</td><td class='num'>170</td><td>金屬機構件</td><td>2,040 - 2,060</td><td>2,040</td><td>2,220 / 2,264</td><td><span class='tag stale'>★★★ ⚡ 反彈觀察｜🟡 等站穩</span></td></tr>
-<tr class='neutral-row'><td>2454</td><td>聯發科 <span class='cat-badge'>【AI晶片】</span></td><td class='num'>3,910</td><td class='num'>3,870</td><td class='num'>4,000</td><td class='num'>3,825</td><td class='num'>9,861</td><td>AI晶片</td><td>3,806 - 3,844</td><td>3,806</td><td>4,000 / 4,080</td><td><span class='tag stale'>★★★ ⚡ 接近甜區｜🟡 觀察不追</span></td></tr>
-<tr class='neutral-row'><td>5274</td><td>信驊 <span class='cat-badge'>【BMC晶片】</span></td><td class='num'>15,210</td><td class='num'>14,765</td><td class='num'>15,665</td><td class='num'>14,765</td><td class='num'>374</td><td>BMC晶片</td><td>14,691 - 14,839</td><td>14,691</td><td>15,665 / 15,978</td><td><span class='tag stale'>★★★ ⚡ 接近甜區｜🟡 觀察不追</span></td></tr>
-<tr class='neutral-row'><td>6533</td><td>晶心科 <span class='cat-badge'>【RISC-V/AI晶片】</span></td><td class='num'>191</td><td class='num'>193</td><td class='num'>195.5</td><td class='num'>189</td><td class='num'>313</td><td>RISC-V/AI晶片</td><td>188.1 - 189.9</td><td>188.1</td><td>195.5 / 199.4</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>4919</td><td>新唐 <span class='cat-badge'>【MCU/Edge AI】</span></td><td class='num'>170.5</td><td class='num'>167</td><td class='num'>174</td><td class='num'>164</td><td class='num'>8,903</td><td>MCU/Edge AI</td><td>163.2 - 164.8</td><td>163.2</td><td>174 / 177.5</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>0052</td><td>富邦科技 <span class='cat-badge'>【AI ETF】</span></td><td class='num'>61.35</td><td class='num'>60.85</td><td class='num'>61.9</td><td class='num'>60.75</td><td class='num'>23,434</td><td>AI ETF</td><td>60.45 - 61.05</td><td>60.45</td><td>61.9 / 63.14</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>0050</td><td>元大台灣50 <span class='cat-badge'>【台股核心ETF】</span></td><td class='num'>104.5</td><td class='num'>103.4</td><td class='num'>105.4</td><td class='num'>103.3</td><td class='num'>101,455</td><td>台股核心ETF</td><td>102.8 - 103.8</td><td>102.8</td><td>105.4 / 107.5</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>00403A</td><td>主動統一升級50 <span class='cat-badge'>【主動ETF】</span></td><td class='num'>10.62</td><td class='num'>10.58</td><td class='num'>10.75</td><td class='num'>10.5</td><td class='num'>189,637</td><td>主動ETF</td><td>10.45 - 10.55</td><td>10.45</td><td>10.75 / 10.97</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>1303</td><td>南亞 <span class='cat-badge'>【其他觀察】</span></td><td class='num'>151.5</td><td class='num'>145</td><td class='num'>154.5</td><td class='num'>145</td><td class='num'>26,240</td><td>其他觀察</td><td>144.3 - 145.7</td><td>144.3</td><td>154.5 / 157.6</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>2359</td><td>所羅門 <span class='cat-badge'>【其他觀察】</span></td><td class='num'>128.5</td><td class='num'>127.5</td><td class='num'>131.5</td><td class='num'>126.5</td><td class='num'>1,249</td><td>其他觀察</td><td>125.9 - 127.1</td><td>125.9</td><td>131.5 / 134.1</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='neutral-row'><td>2395</td><td>研華 <span class='cat-badge'>【其他觀察】</span></td><td class='num'>472.5</td><td class='num'>463</td><td class='num'>486</td><td class='num'>457.5</td><td class='num'>3,910</td><td>其他觀察</td><td>455.2 - 459.8</td><td>455.2</td><td>486 / 495.7</td><td><span class='tag stale'>★★★ 🚀 轉強觀察｜🟡 不是主攻</span></td></tr>
-<tr class='watch-row'><td>3044</td><td>健鼎 <span class='cat-badge'>【AI PCB/HDI/伺服器板】</span></td><td class='num'>499.5</td><td class='num'>509</td><td class='num'>516</td><td class='num'>498</td><td class='num'>4,296</td><td>AI PCB/HDI/伺服器板</td><td>495.5 - 500.5</td><td>495.5</td><td>516 / 526.3</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='watch-row'><td>3048</td><td>益登 <span class='cat-badge'>【其他觀察】</span></td><td class='num'>61.6</td><td class='num'>63</td><td class='num'>63.9</td><td class='num'>61.2</td><td class='num'>3,185</td><td>其他觀察</td><td>60.89 - 61.51</td><td>60.89</td><td>63.9 / 65.18</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='watch-row'><td>3167</td><td>大量 <span class='cat-badge'>【AI PCB設備/自動化】</span></td><td class='num'>774</td><td class='num'>774</td><td class='num'>785</td><td class='num'>774</td><td class='num'>341</td><td>AI PCB設備/自動化</td><td>770.1 - 777.9</td><td>770.1</td><td>785 / 800.7</td><td><span class='tag stale'>★★★ ⚡ 等待止跌｜🟡 先觀察</span></td></tr>
-<tr class='neutral-row'><td>5289</td><td>宜鼎 <span class='cat-badge'>【其他觀察】</span></td><td class='num'>1,595</td><td class='num'>1,605</td><td class='num'>1,615</td><td class='num'>1,550</td><td class='num'>2,961</td><td>其他觀察</td><td>1,542 - 1,558</td><td>1,542</td><td>1,615 / 1,647</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='watch-row'><td>6197</td><td>佳必琪 <span class='cat-badge'>【AI高速傳輸/連接器】</span></td><td class='num'>344.5</td><td class='num'>368.5</td><td class='num'>371.5</td><td class='num'>344</td><td class='num'>4,189</td><td>AI高速傳輸/連接器</td><td>342.3 - 345.7</td><td>342.3</td><td>371.5 / 378.9</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='watch-row'><td>6451</td><td>訊芯-KY <span class='cat-badge'>【CPO/光通訊/光學觀察池】</span></td><td class='num'>563</td><td class='num'>597</td><td class='num'>638</td><td class='num'>563</td><td class='num'>8,253</td><td>CPO/光通訊/光學觀察池</td><td>560.2 - 565.8</td><td>560.2</td><td>638 / 650.8</td><td><span class='tag risk'>🚫 ❌ 破線整理｜🔴 暫停加碼</span></td></tr>
-<tr class='neutral-row'><td>8021</td><td>尖點 <span class='cat-badge'>【AI PCB耗材/鑽針】</span></td><td class='num'>522</td><td class='num'>545</td><td class='num'>545</td><td class='num'>515</td><td class='num'>1,572</td><td>AI PCB耗材/鑽針</td><td>512.4 - 517.6</td><td>512.4</td><td>545 / 555.9</td><td><span class='tag stale'>★★ ⚡ 弱勢觀察｜🟡 不急買</span></td></tr>
-<tr class='neutral-row'><td>8234</td><td>新漢 <span class='cat-badge'>【其他觀察】</span></td><td class='num'>66</td><td class='num'>65.7</td><td class='num'>67.1</td><td class='num'>65.2</td><td class='num'>574</td><td>其他觀察</td><td>64.87 - 65.53</td><td>64.87</td><td>67.1 / 68.44</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='neutral-row'><td>935</td><td>野村臺灣新科技50 <span class='cat-badge'>【其他觀察】</span></td><td class='num'>58.95</td><td class='num'>58.55</td><td class='num'>59.8</td><td class='num'>58.35</td><td class='num'>12,332</td><td>其他觀察</td><td>58.06 - 58.64</td><td>58.06</td><td>59.8 / 61</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-<tr class='warn-row'><td>9823</td><td>群益S&amp;P500 <span class='cat-badge'>【其他觀察】</span></td><td class='num'>10.11</td><td class='num'>10.05</td><td class='num'>10.12</td><td class='num'>10.05</td><td class='num'>16,663</td><td>其他觀察</td><td>10 - 10.1</td><td>10</td><td>10.12 / 10.32</td><td><span class='tag warn'>★★ 🔥 強勢續抱｜🟡 不追高</span></td></tr>
-<tr class='neutral-row'><td>9824</td><td>群益美國科技巨頭 <span class='cat-badge'>【其他觀察】</span></td><td class='num'>9.88</td><td class='num'>9.97</td><td class='num'>9.97</td><td class='num'>9.86</td><td class='num'>47,345</td><td>其他觀察</td><td>9.81 - 9.91</td><td>9.81</td><td>9.97 / 10.17</td><td><span class='tag neutral'>★★★ ⚡ 一般觀察｜🟡 等訊號</span></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-<section>
-      <h2>AI主線雷達</h2>
-      <p class="note">先看資金在哪條 AI 主線，不急著從全部股票裡找；已加入 ABF載板與 AI測試鏈。</p>
-      <div class="radar-list">
-        <span class='radar-pill radar-neutral'><strong>AI晶片：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>ASIC：</strong> ⚪ 觀察</span><span class='radar-pill radar-watch'><strong>AI伺服器：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI封裝/封測：</strong> ⚪ 觀察</span><span class='radar-pill radar-risk'><strong>AI測試鏈：</strong> 🔴 降溫</span><span class='radar-pill radar-watch'><strong>AI PCB：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI高速材料/CCL：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>PCB材料/銅箔/玻纖布：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>ABF載板：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI設備/自動化：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>散熱/機構件：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>CPO/光通訊/光學：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI高速互連：</strong> ⚪ 觀察</span><span class='radar-pill radar-watch'><strong>AI電力：</strong> ⚪ 觀察</span><span class='radar-pill radar-warn'><strong>AI電源/被動元件：</strong> 🟡 轉強</span><span class='radar-pill radar-neutral'><strong>AI記憶體/儲存鏈：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI終端設備：</strong> ⚪ 觀察</span><span class='radar-pill radar-neutral'><strong>AI基礎建設：</strong> ⚪ 觀察</span><span class='radar-pill radar-warn'><strong>低位半導體材料：</strong> 🟡 轉強</span>
-      </div>
-
-      <p class="note">主線範例：4958 臻鼎＝AI PCB、3711 日月光＝AI封裝、8046 南電＝ABF載板、3661 世芯＝ASIC、2449 京元電子/7769 鴻勁/6223 旺矽＝AI測試鏈、6239 力成＝AI封測、2344 華邦電/2408 南亞科＝AI記憶體、8299 群聯＝AI儲存鏈、3481 群創＝AI終端設備、8064 東捷＝AI設備/自動化、2383 台光電/6274 台燿/6213 聯茂＝AI高速材料/CCL、8358 金居/1815 富喬＝PCB材料/銅箔/玻纖布、3532 台勝科/6488 環球晶/1560 中砂/5434 崇越＝低位半導體材料短線雷達、2492 華新科/6173 信昌電＝被動元件觀察、6278 台表科/6451 訊芯-KY/4979 華星光/3163 波若威/4991 環宇-KY/3008 大立光＝CPO/光通訊/光學觀察。</p>
-
-
-      <div class="radar-legend" style="margin-top:10px;font-size:14px;">
-        <strong>燈號說明：</strong>
-        🟢 主流｜目前市場資金聚焦，可優先關注　
-        🟡 轉強｜資金開始流入，值得持續觀察　
-        ⚪ 觀察｜暫無明顯方向，等待訊號　
-        🔴 降溫｜資金熱度下降，不急著進場
-      </div>
-
-    </section>
-
-    <section>
-      <h2>AI主線強度排行</h2>
-      <p class="note">依照目前 Excel 內的漲幅、成交量/昨量、收盤位置與族群同步率計算。這不是騰落指標，而是專門給 AI 題材輪動用的強度排行。</p>
-      <table>
-        <thead><tr><th>排名</th><th>主線</th><th>燈號</th><th>強度分數</th><th>判斷依據</th><th>代表股</th></tr></thead>
-        <tbody>
-<tr><td class='num'>1</td><td><strong>AI終端設備</strong></td><td><span class='strength-badge strength-up'>🟡 轉強</span></td><td class='num'><strong>71</strong></td><td>平均漲幅 3.08%｜量比 0.82｜同步率 100%</td><td>3481 群創 67</td></tr>
-<tr><td class='num'>2</td><td><strong>低位半導體材料</strong></td><td><span class='strength-badge strength-up'>🟡 轉強</span></td><td class='num'><strong>68</strong></td><td>平均漲幅 2.81%｜量比 1.26｜同步率 50%</td><td>3532 台勝科 331、6488 環球晶 915、1560 中砂 738、5434 崇越 539</td></tr>
-<tr><td class='num'>3</td><td><strong>AI電源/被動元件</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>63</strong></td><td>平均漲幅 2.04%｜量比 0.81｜同步率 80%</td><td>2308 台達電 1,905、2301 光寶科 211.5、2327 國巨* 1,040、2492 華新科 514、6173 信昌電 282.5</td></tr>
-<tr><td class='num'>4</td><td><strong>散熱/機構件</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>62</strong></td><td>平均漲幅 1.86%｜量比 0.49｜同步率 100%</td><td>3017 奇鋐 2,300、2059 川湖 7,110</td></tr>
-<tr><td class='num'>5</td><td><strong>AI電力</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>57</strong></td><td>平均漲幅 1.56%｜量比 0.75｜同步率 83%</td><td>2308 台達電 1,905、1519 華城 783、1513 中興電 175.5、1503 士電 237.5、1514 亞力 119、1504 東元 69</td></tr>
-<tr><td class='num'>6</td><td><strong>AI伺服器</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>54</strong></td><td>平均漲幅 2.25%｜量比 0.69｜同步率 60%</td><td>2317 鴻海 246.5、2356 英業達 64.3、6669 緯穎 4,580、3693 營邦 474、2308 台達電 1,905</td></tr>
-<tr><td class='num'>7</td><td><strong>ASIC</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>49</strong></td><td>平均漲幅 1.49%｜量比 0.47｜同步率 50%</td><td>3661 世芯-KY 3,985、3443 創意 4,420</td></tr>
-<tr><td class='num'>8</td><td><strong>AI晶片</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>47</strong></td><td>平均漲幅 0.03%｜量比 0.68｜同步率 60%</td><td>2330 台積電 2,370、2454 聯發科 3,910、5274 信驊 15,210、6533 晶心科 191、4919 新唐 170.5</td></tr>
-<tr><td class='num'>9</td><td><strong>AI高速材料/CCL</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>46</strong></td><td>平均漲幅 0.47%｜量比 0.7｜同步率 33%</td><td>2383 台光電 5,450、6274 台燿 1,555、6213 聯茂 344</td></tr>
-<tr><td class='num'>10</td><td><strong>PCB材料/銅箔/玻纖布</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>44</strong></td><td>平均漲幅 0.12%｜量比 0.59｜同步率 50%</td><td>8358 金居 546、1815 富喬 101</td></tr>
-<tr><td class='num'>11</td><td><strong>AI設備/自動化</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>44</strong></td><td>平均漲幅 0.22%｜量比 0.8｜同步率 50%</td><td>8064 東捷 133、3167 大量 774</td></tr>
-<tr><td class='num'>12</td><td><strong>ABF載板</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>43</strong></td><td>平均漲幅 -0.76%｜量比 0.51｜同步率 67%</td><td>8046 南電 1,080、3037 欣興 976、3189 景碩 810</td></tr>
-<tr><td class='num'>13</td><td><strong>AI基礎建設</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>40</strong></td><td>平均漲幅 -0.7%｜量比 1.52｜同步率 0%</td><td>2412 中華電 142</td></tr>
-<tr><td class='num'>14</td><td><strong>AI記憶體/儲存鏈</strong></td><td><span class='strength-badge strength-watch'>⚪ 觀察</span></td><td class='num'><strong>40</strong></td><td>平均漲幅 -0.77%｜量比 0.63｜同步率 50%</td><td>8299 群聯 2,340、4967 十銓 264、3260 威剛 404、4973 廣穎 168.5、2344 華邦電 203、2408 南亞科 453</td></tr>
-<tr><td class='num'>15</td><td><strong>AI封裝/封測</strong></td><td><span class='strength-badge strength-cool'>🔴 降溫</span></td><td class='num'><strong>31</strong></td><td>平均漲幅 -0.87%｜量比 0.51｜同步率 0%</td><td>3711 日月光投控 627、6239 力成 311</td></tr>
-<tr><td class='num'>16</td><td><strong>AI高速互連</strong></td><td><span class='strength-badge strength-cool'>🔴 降溫</span></td><td class='num'><strong>29</strong></td><td>平均漲幅 -2.28%｜量比 0.68｜同步率 25%</td><td>2345 智邦 2,340、3665 貿聯-KY 1,880、2455 全新 336、6197 佳必琪 344.5</td></tr>
-<tr><td class='num'>17</td><td><strong>CPO/光通訊/光學</strong></td><td><span class='strength-badge strength-cool'>🔴 降溫</span></td><td class='num'><strong>29</strong></td><td>平均漲幅 -2.58%｜量比 0.8｜同步率 17%</td><td>6278 台表科 194、4979 華星光 456.5、6442 光聖 1,600、3163 波若威 720、4991 環宇-KY 482.5、3008 大立光 4,380</td></tr>
-<tr><td class='num'>18</td><td><strong>AI測試鏈</strong></td><td><span class='strength-badge strength-cool'>🔴 降溫</span></td><td class='num'><strong>28</strong></td><td>平均漲幅 -3.38%｜量比 0.87｜同步率 29%</td><td>2449 京元電子 308.5、7769 鴻勁 6,395、6223 旺矽 6,060、6515 穎崴 8,015、6510 精測 3,035、6217 中探針 233、3264 欣銓 215.5</td></tr>
-<tr><td class='num'>19</td><td><strong>AI PCB</strong></td><td><span class='strength-badge strength-cool'>🔴 降溫</span></td><td class='num'><strong>24</strong></td><td>平均漲幅 -1.88%｜量比 0.66｜同步率 0%</td><td>4958 臻鼎-KY 573、2368 金像電 1,155、3715 定穎投控 166</td></tr>
-
-        </tbody>
-      </table>
-    </section>
-
-    <section>
-      <h2>AI題材分類對照表</h2>
-      <p class="note">快速對照：先看股票是哪一條 AI 主線，再看顏色與星級決定動作。</p>
-      <div class="theme-grid">
-        <div class="theme-card"><strong>S級核心</strong><span>2330 台積電</span><span>3661 世芯-KY</span><span>3443 創意</span><span>4958 臻鼎-KY</span><span>3711 日月光投控</span></div>
-        <div class="theme-card"><strong>AI晶片/邊緣AI</strong><span>2454 聯發科</span><span>5274 信驊</span><span>6533 晶心科</span><span>4919 新唐</span></div>
-        <div class="theme-card"><strong>ASIC</strong><span>3661 世芯-KY</span><span>3443 創意</span></div>
-        <div class="theme-card"><strong>AI伺服器</strong><span>6669 緯穎</span><span>2317 鴻海</span><span>2356 英業達</span><span>3693 營邦</span><span>2308 台達電</span></div>
-        <div class="theme-card"><strong>AI封裝/封測</strong><span>3711 日月光</span><span>6239 力成</span></div>
-        <div class="theme-card"><strong>AI測試鏈</strong><span>7769 鴻勁</span><span>6223 旺矽</span><span>6515 穎崴</span><span>6510 精測</span><span>6217 中探針</span><span>3264 欣銓</span><span>2449 京元電子</span><span>6239 力成</span></div>
-        <div class="theme-card"><strong>AI PCB</strong><span>4958 臻鼎-KY</span><span>2368 金像電</span><span>3715 定穎投控</span></div>
-        <div class="theme-card"><strong>AI高速材料 / CCL</strong><span>2383 台光電</span><span>6274 台燿</span><span>6213 聯茂</span></div>
-        <div class="theme-card"><strong>PCB材料 / 銅箔 / 玻纖布</strong><span>8358 金居</span><span>1815 富喬</span></div>
-        <div class="theme-card"><strong>AI設備/自動化</strong><span>8064 東捷</span><span>3167 大量</span></div>
-        <div class="theme-card"><strong>ABF載板</strong><span>3037 欣興</span><span>8046 南電</span><span>3189 景碩</span></div>
-        <div class="theme-card"><strong>AI散熱 / 水冷</strong><span>3017 奇鋐</span><span>6805 富世達</span><span>3653 健策</span><span>3324 雙鴻</span><span>2059 川湖</span></div>
-        <div class="theme-card"><strong>半導體特化材料</strong><span>4749 新應材</span><span>4772 台特化</span><span>4755 三福化</span></div>
-        <div class="theme-card"><strong>低位半導體材料短線雷達</strong><span>3532 台勝科</span><span>6488 環球晶</span><span>1560 中砂</span><span>5434 崇越</span></div>
-        <div class="theme-card"><strong>AI高速互連</strong><span>3665 貿聯-KY</span><span>2345 智邦</span><span>6197 佳必琪</span><span>2455 全新</span></div>
-        <div class="theme-card"><strong>CPO / 光通訊 / 光學觀察池</strong><span>6278 台表科</span><span>6451 訊芯-KY</span><span>4979 華星光</span><span>6442 光聖</span><span>3163 波若威</span><span>4991 環宇-KY</span><span>3008 大立光</span></div>
-        <div class="theme-card"><strong>AI電力</strong><span>1519 華城</span><span>1513 中興電</span><span>1503 士電</span><span>1514 亞力</span><span>1504 東元</span></div>
-        <div class="theme-card"><strong>AI電源/被動元件</strong><span>2327 國巨</span><span>2308 台達電</span><span>2301 光寶科</span><span>2492 華新科</span><span>6173 信昌電</span></div>
-        <div class="theme-card"><strong>AI記憶體 / 儲存鏈</strong><span>8299 群聯</span><span>4967 十銓</span><span>3260 威剛</span><span>4973 廣穎</span><span>2344 華邦電</span><span>2408 南亞科</span></div>
-        <div class="theme-card"><strong>AI終端設備</strong><span>3481 群創</span></div>
-        <div class="theme-card"><strong>AI基礎建設</strong><span>2412 中華電</span></div>
-        <div class="theme-card"><strong>ETF</strong><span>0052 富邦科技</span><span>0050 元大台灣50</span><span>00403A 主動統一升級50</span><span>009823 群益S&P500</span><span>009824 群益美國科技巨頭</span></div>
-      </div>
-    </section>
-
-  
-
-    <section>
-      <h2>AI電力主線</h2>
-      <p class="note">這區只放重電/電網/資料中心供電股，不放中華電。</p>
-      <div class="power-list">
-        <span class='power-pill power-watch'>1519 華城｜783</span><span class='power-pill power-watch'>1513 中興電｜175.5</span><span class='power-pill'>1503 士電｜237.5</span><span class='power-pill'>1514 亞力｜119</span>
-      </div>
-    </section>
-
-    <section>
-      <h2>AI基礎建設</h2>
-      <p class="note">這區放資料中心、IDC、雲端、網路骨幹。2412 中華電屬於基建，不是重電。</p>
-      <div class="power-list">
-        <span class='power-pill power-watch'>2412 中華電｜142</span>
-      </div>
-    </section>
+  <section class="panel risk">
+    <div class="panel-title"><h2>風險警報</h2><p>跌破關鍵支撐，不硬接、不攤平。</p></div>
+    <ul class="risk-list">
+      <li>權值股轉弱時，個股短打降級。</li>
+      <li>處置股只觀察承接，不追第一根急拉。</li>
+      <li>公開版不顯示任何個人交易資料。</li>
+    </ul>
+  </section>
 </main>
-<script src="mom-ai-report-hotfix-20260629-datefix-v3.js?v=20260629v3"></script>
+<footer>公開版：僅供投資紀律與觀察，不含個人持股/成本/股數/損益。</footer>
+<script src="dde-watchlist.js"></script>
 </body>
 </html>
