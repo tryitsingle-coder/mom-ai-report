@@ -1,8 +1,8 @@
 ﻿{
-    "updated_at":  "2026-06-29 23:33:25",
-    "source":  "Yahoo Finance chart API",
+    "updated_at":  "2026-06-29 23:34:10",
+    "source":  "Yahoo Finance chart API + previous fallback",
     "score":  50,
-    "status":  "中性 - 等 09:08 真方向",
+    "status":  "等待國際盤資料 - 先看 09:08 真方向",
     "items":  [
                   {
                       "label":  "NVIDIA",
@@ -12,7 +12,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "台積電ADR",
@@ -22,7 +22,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "Nasdaq 100期貨",
@@ -32,7 +32,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "S\u0026P 500期貨",
@@ -42,7 +42,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "QQQ",
@@ -52,7 +52,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "Nasdaq",
@@ -62,7 +62,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "S\u0026P 500",
@@ -72,7 +72,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "VIX",
@@ -82,7 +82,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  true,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "美元指數",
@@ -92,7 +92,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  true,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "美元/台幣",
@@ -102,7 +102,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  true,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "SOXX",
@@ -112,7 +112,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "SMH",
@@ -122,7 +122,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "Dow 30",
@@ -132,7 +132,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   },
                   {
                       "label":  "Russell 2000",
@@ -142,7 +142,7 @@
                       "pct":  null,
                       "ok":  false,
                       "inverse":  false,
-                      "source":  "fetch-failed"
+                      "source":  "等待更新"
                   }
               ]
 }
