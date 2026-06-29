@@ -1,9 +1,9 @@
 @echo off
 chcp 65001 >nul
-title AI Report Auto Update - Clean Public Mode
+title AI Report Auto Update - Dark Theme and Lights
 cd /d "%~dp0"
 echo ==========================================
-echo AI Report Auto Update - Clean Public Mode
+echo AI Report Auto Update - Dark Theme + DDE Lights
 echo Repo: %cd%
 echo ==========================================
 :loop
