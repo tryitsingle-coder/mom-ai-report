@@ -1,5 +1,5 @@
-﻿# update_ai_report_public_v24.ps1
-# V27.0 2026-07-01 Close Full Overwrite - FIX
+# update_ai_report_public_v24.ps1
+# V27.2 2026-07-01 Close Full Overwrite - FIX5 Auto Page Updated Time
 # No hard-coded Windows user path. Run from the folder where this script is located.
 $ErrorActionPreference = "Stop"
 
@@ -8,9 +8,22 @@ if (-not $repo) { $repo = (Get-Location).Path }
 Set-Location -LiteralPath $repo
 
 Write-Host "=========================================="
-Write-Host "AI Report Public Update - V27.0 2026-07-01 Close FIX"
+Write-Host "AI Report Public Update - V27.2 FIX5 Auto Page Updated Time"
 Write-Host "Repo: $repo"
 Write-Host "=========================================="
+
+
+# Update the visible webpage update time every time this script runs.
+# Data node stays as 2026/07/01 close, but this field tells viewers when the page was last pushed.
+$buildTime = Get-Date -Format "yyyy/MM/dd HH:mm:ss"
+$indexPath = Join-Path $repo "index.html"
+if (Test-Path -LiteralPath $indexPath) {
+  $html = Get-Content -LiteralPath $indexPath -Raw -Encoding UTF8
+  $html = [regex]::Replace($html, 'data-generated-at="[^"]*"', ('data-generated-at="' + $buildTime + '"'))
+  $html = [regex]::Replace($html, '<span class="pageUpdatedText">.*?</span>', ('<span class="pageUpdatedText">' + $buildTime + '</span>'))
+  Set-Content -LiteralPath $indexPath -Value $html -Encoding UTF8
+  Write-Host "Page update time written: $buildTime"
+}
 
 if (-not (Test-Path -LiteralPath ".git")) {
   Write-Host "WARNING: This folder is not a Git repo. Files are overwritten locally, but git add/commit/push will be skipped."
@@ -27,6 +40,6 @@ if ([string]::IsNullOrWhiteSpace($status)) {
 }
 
 $stamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-git commit -m "V27.0 2026-07-01 close public dashboard update FIX $stamp"
+git commit -m "V27.2 FIX5 page update time $stamp"
 git push
 Write-Host "Done. Open GitHub Pages after a short delay."

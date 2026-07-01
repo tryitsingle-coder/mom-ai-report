@@ -1,10 +1,10 @@
 @echo off
 setlocal
-title AI Report Auto Update - Public Mode V27.0 0701 Close FIX
+title AI Report Auto Update - Public Mode V27.2 FIX5 0701 Close
 pushd "%~dp0"
 echo ==========================================
 echo AI Report Auto Update - Every 1 minute
-echo V27.0 FIX: 2026-07-01 close package
+echo V27.2 FIX5: auto page update time + 2026-07-01 close data
 echo Working folder: %CD%
 echo ==========================================
 :loop
