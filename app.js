@@ -16,16 +16,48 @@ function renderCards(){
   document.querySelector('#strongList').innerHTML=strong.map(r=>`<div class="item"><b>${r.code} ${r.name}</b> <span class="red">+${fmt(r.pct)}%</span><br><span class="muted">${r.note}</span></div>`).join('');
   document.querySelector('#weakList').innerHTML=weak.map(r=>`<div class="item"><b>${r.code} ${r.name}</b> <span class="green">${fmt(r.pct)}%</span><br><span class="muted">${r.note}</span></div>`).join('');
 }
+function groupMatch(rowGroup, selected){
+  if(!selected) return true;
+  if(rowGroup === selected) return true;
+
+  // 分類下拉選單用「大分類」邏輯，不再只做完全相等。
+  // 這樣選 PCB 會包含 PCB/ABF、CCL/PCB材料、銅箔/PCB材料、設備/PCB 等，不會只剩一兩檔。
+  const aliases = {
+    'ABF載板': ['ABF載板','PCB/ABF'],
+    'PCB': ['PCB','PCB/ABF','ABF載板','PCB/伺服器板','PCB鑽針/材料','設備/PCB','CCL/PCB材料','銅箔/PCB材料','玻纖/PCB材料'],
+    '封測/半導體': ['封測/半導體','封測/記憶體','權值半導體'],
+    'AI測試鏈': ['AI測試鏈'],
+    'AI伺服器': ['AI伺服器','散熱/AI伺服器','線束/AI伺服器','滑軌/AI伺服器','機構件/AI伺服器','AI伺服器/組裝','伺服器代工','伺服器機殼','交換器/AI網通'],
+    '記憶體': ['記憶體','記憶體模組','封測/記憶體'],
+    '電力設備': ['電力設備','電力/馬達'],
+    '被動元件': ['被動元件'],
+    'ETF': ['ETF']
+  };
+  const list = aliases[selected] || [selected];
+  return list.some(g => rowGroup === g || rowGroup.includes(g) || g.includes(rowGroup));
+}
+
 function renderTable(){
- const q=document.querySelector('#q').value.trim(); const g=document.querySelector('#group').value;
- let rows=MARKET_DATA.filter(r=>(!q||`${r.code}${r.name}${r.group}`.includes(q))&&(!g||r.group===g));
- document.querySelector('#rows').innerHTML=rows.map(r=>`<tr>
+ const q=document.querySelector('#q').value.trim();
+ const g=document.querySelector('#group').value;
+ const rows=MARKET_DATA.filter(r=>(!q||`${r.code}${r.name}${r.group}`.includes(q))&&groupMatch(r.group,g));
+ const tbody=document.querySelector('#rows');
+ if(!rows.length){
+   tbody.innerHTML=`<tr><td colspan="12" class="empty">這個分類目前沒有符合資料，可改選「全部族群」或用搜尋找代號。</td></tr>`;
+   return;
+ }
+ tbody.innerHTML=rows.map(r=>`<tr>
    <td>${r.code}</td><td>${r.name}</td><td>${r.group}</td><td>${fmt(r.close)}</td><td class="${pctClass(r.change)}">${r.change>0?'+':''}${fmt(r.change)}</td><td class="${pctClass(r.pct)}">${r.pct>0?'+':''}${fmt(r.pct)}%</td><td>${fmt(r.open)}</td><td>${fmt(r.high)}</td><td>${fmt(r.low)}</td><td>${fmt(r.volume)}</td><td><span class="tag ${r.rank}">${r.rank}</span></td><td class="note">${r.note}</td>
  </tr>`).join('');
 }
+
 function initFilters(){
- const groups=[...new Set(MARKET_DATA.map(r=>r.group))].sort();
- document.querySelector('#group').innerHTML='<option value="">全部族群</option>'+groups.map(g=>`<option>${g}</option>`).join('');
- document.querySelector('#q').addEventListener('input',renderTable); document.querySelector('#group').addEventListener('change',renderTable);
+ const rawGroups=[...new Set(MARKET_DATA.map(r=>r.group))].sort();
+ const priority=['ABF載板','PCB','AI測試鏈','AI伺服器','封測/半導體','記憶體','電力設備','被動元件','ETF'];
+ const groups=[...priority, ...rawGroups.filter(g=>!priority.includes(g))];
+ document.querySelector('#group').innerHTML='<option value="">全部族群</option>'+groups.map(g=>`<option value="${g}">${g}</option>`).join('');
+ const tableWrap=document.querySelector('.table-wrap');
+ document.querySelector('#q').addEventListener('input',()=>{ if(tableWrap) tableWrap.scrollLeft=0; renderTable(); });
+ document.querySelector('#group').addEventListener('change',()=>{ if(tableWrap){ tableWrap.scrollLeft=0; tableWrap.scrollTop=0; } renderTable(); });
 }
 window.addEventListener('DOMContentLoaded',()=>{renderSummary();renderCards();initFilters();renderTable();});
