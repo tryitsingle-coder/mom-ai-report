@@ -1,0 +1,11 @@
+﻿這版修正：
+1. 移除 BAT/PS1 裡的硬編碼中文使用者路徑。
+2. 改用腳本所在資料夾 %~dp0 / $MyInvocation.MyCommand.Path。
+3. BAT 內容改成純 ASCII，避免 chcp 65001 或中文路徑亂碼。
+4. PowerShell 改用 git add -- .，避免中文檔名在 git add 時亂碼。
+
+使用：
+把本壓縮包內容覆蓋到 C:\Users\何小駿\Documents\GitHub\mom-ai-report\
+再雙擊 auto_update_1min_public_v24.bat。
+如果只是要推一次，也可以在資料夾空白處 Shift+右鍵開 PowerShell，執行：
+powershell -NoProfile -ExecutionPolicy Bypass -File .\update_ai_report_public_v24.ps1

@@ -1,0 +1,21 @@
+可清理但非必要：
+- index.html.bak-*
+- mom-ai-report-hotfix-舊日期*.js
+- update_mom_report(舊編號).ps1
+- update_mom_report_no_bom.ps1
+- 舊版 safe-overwrite zip 解壓資料夾
+
+請保留：
+- index.html
+- style.css
+- app.js
+- dde-watchlist.js
+- global_market.json
+- global_market_block.html
+- update_ai_report_public_v24.ps1
+- auto_update_1min_public_v24.bat
+- fetch_global_market_now_v24.ps1
+- fetch_global_market_now_v24.bat
+- .git
+- yuanta_dde.xlsx
+- api_key / api_key.txt（若你的原本 fetch 程式需要）

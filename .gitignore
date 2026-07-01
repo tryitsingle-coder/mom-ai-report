@@ -1,1 +1,15 @@
+# local secrets
+api_key
 api_key.txt
+*api_key*
+
+# logs / backups / old folders
+*.log
+*.bak*
+_old*
+old*
+*.zip
+
+# Windows temp
+Thumbs.db
+Desktop.ini
