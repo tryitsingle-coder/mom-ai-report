@@ -1,5 +1,4 @@
 {
-  "updated_at": "2026-07-01 13:35:00",
-  "global_signal": "BULLISH_BUT_INTRADAY_DIVERGENCE",
-  "note": "NVDA/TSM ADR/semiconductor tone was supportive, but Taiwan ABF/PCB intraday showed sell pressure. Public package contains no personal holdings."
+  "updated": "2026/07/02 close",
+  "note": "國際盤前資料由 fetch_global_market_now_v24 腳本更新；本包更新台股07/02精選100檔收盤資料。"
 }

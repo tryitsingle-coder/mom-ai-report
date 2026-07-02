@@ -2,214 +2,36 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI 盤中雷達｜公開覆蓋版</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>小駿台股AI儀表板｜2026/07/02 精選100檔收盤版</title>
+  <link rel="stylesheet" href="./style.css?v=20260702-close-select100-fix7" />
 </head>
-<body>
-  <header class="header">
-    <div class="eyebrow">AI Intraday Radar · Public Mode</div>
-    <h1 class="title">AI 盤中雷達｜目前覆蓋版</h1>
-    <p class="subtitle"><span class="pill" id="asof">載入中</span>　<span id="view"></span></p>
-    <div class="badgeRow">
-      <span class="badge">公開版：不顯示私人持股成本</span>
-      <span class="badge">主軸：急殺後反彈，不追高</span>
-      <span class="badge">短打：訊芯-KY / 健鼎 / 尖點優先</span>
-      <span class="badge">ABF：回測才接，不追現價</span>
+<body data-generated-at="2026/07/02 13:54:55">
+<header><div class="wrap title">
+  <div><h1>小駿台股 AI 收盤儀表板</h1><div class="muted">2026/07/02 收盤精選100檔版｜V27.4 FIX7｜公開版不顯示個人/家人持股</div></div>
+  <div class="header-tools"><div class="pill live-badge">網頁更新：<span class="pageUpdatedText">2026/07/02 13:54:55</span></div><div class="pill">資料節點：07/02 收盤｜精選100檔｜非即時盤中</div></div>
+</div></header>
+<main class="wrap">
+  <section class="grid">
+    <div class="card span12 update-card">
+      <div><b>🧾 資料版本</b><br><span id="lastUpdatedText">2026/07/02 收盤資料｜精選100檔</span></div>
+      <div><b>🔄 網頁更新</b><br><span class="pageUpdatedText">2026/07/02 13:54:55</span></div>
+      <div class="muted small">先看資料版本確認內容；若隔日開盤後仍顯示 07/02 收盤，代表還不是最新盤中資料。</div>
     </div>
-  </header>
-  <main class="layout">
-    <section class="grid" id="alerts"></section>
-    <div id="groups"></div>
-    <section class="section">
-      <h2>盤中規則</h2>
-      <div class="rules" id="rules"></div>
-    </section>
-    <footer class="footer">
-      <div id="sourceNote"></div>
-      <div>本頁為盤中快速判讀工具，僅作觀察與交易紀律提醒；實際下單請以券商即時成交與個人風險控管為準。</div>
-    </footer>
-  </main>
-  <script src="./app.js"></script>
+    <div class="card span12"><h2>📌 收盤判讀</h2><div id="bias" class="big"></div></div>
+    <div class="card span6"><h2>🔥 今日強勢主線</h2><div id="strongList" class="list"></div></div>
+    <div class="card span6"><h2>⚠️ 今日弱勢/開高走低</h2><div id="weakList" class="list"></div></div>
+    <div class="card span12"><h2>🧭 隔日關鍵觀察</h2><div id="tomorrowRules" class="list"></div></div>
+    <div class="card span12"><h2>📝 重點摘要</h2><div id="topMessages" class="list"></div></div>
+    <div class="card span12"><h2>📊 追蹤清單</h2>
+      <div class="toolbar"><input id="q" placeholder="搜尋代號 / 名稱 / 族群"><select id="group"></select></div>
+      <div class="table-wrap"><table><thead><tr><th>代號</th><th>名稱</th><th>族群</th><th>收盤</th><th>漲跌</th><th>幅度</th><th>開盤</th><th>最高</th><th>最低</th><th>量</th><th>燈號</th><th>盤後註記</th></tr></thead><tbody id="rows"></tbody></table></div>
+    </div>
+  </section>
+  <div class="footer">Public Mode｜不含任何小駿、媽媽、朋友持股成本與損益。覆蓋檔：index.html / style.css / app.js / dde-watchlist.js / 07/02 100檔精選資料 / v24 scripts。</div>
+</main>
+<script src="./dde-watchlist.js?v=20260702-close-select100-fix7"></script>
+<script src="./app.js?v=20260702-close-select100-fix7"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

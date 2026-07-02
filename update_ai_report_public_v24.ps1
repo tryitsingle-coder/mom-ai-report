@@ -1,5 +1,5 @@
 # update_ai_report_public_v24.ps1
-# V27.3 2026-07-01 Close Select100 - FIX6 Auto Page Updated Time
+# V27.4 2026-07-02 Close Select100 - FIX7 Auto Page Updated Time
 # No hard-coded Windows user path. Run from the folder where this script is located.
 $ErrorActionPreference = "Stop"
 
@@ -8,13 +8,13 @@ if (-not $repo) { $repo = (Get-Location).Path }
 Set-Location -LiteralPath $repo
 
 Write-Host "=========================================="
-Write-Host "AI Report Public Update - V27.3 FIX6 Select100 Auto Page Updated Time"
+Write-Host "AI Report Public Update - V27.4 FIX7 Select100 Auto Page Updated Time"
 Write-Host "Repo: $repo"
 Write-Host "=========================================="
 
 
 # Update the visible webpage update time every time this script runs.
-# Data node stays as 2026/07/01 close, but this field tells viewers when the page was last pushed.
+# Data node stays as 2026/07/02 close, but this field tells viewers when the page was last pushed.
 $buildTime = Get-Date -Format "yyyy/MM/dd HH:mm:ss"
 $indexPath = Join-Path $repo "index.html"
 if (Test-Path -LiteralPath $indexPath) {
@@ -40,6 +40,6 @@ if ([string]::IsNullOrWhiteSpace($status)) {
 }
 
 $stamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-git commit -m "V27.3 FIX6 select100 page update time $stamp"
+git commit -m "V27.4 FIX7 select100 page update time $stamp"
 git push
 Write-Host "Done. Open GitHub Pages after a short delay."

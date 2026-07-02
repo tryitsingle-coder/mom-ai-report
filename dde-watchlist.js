@@ -1,3 +1,5 @@
+// dde-watchlist.js
+// V27.4 FIX7 2026-07-02 Select100 watchlist
 window.DDE_WATCHLIST = [
   {
     "code": "2330",
