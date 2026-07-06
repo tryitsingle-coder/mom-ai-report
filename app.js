@@ -1,22 +1,54 @@
+const data = window.REPORT_DATA;
+const fmt = (v) => {
+  if (v === null || v === undefined || Number.isNaN(v)) return "-";
+  const n = Number(v);
+  return n.toLocaleString("zh-TW", { maximumFractionDigits: 2 });
+};
+const toneClass = (tone) => tone === "good" ? "good" : tone === "bad" ? "bad" : "warn";
 
-const data = window.MOM_AI_REPORT_DATA;
-const fmt = (n)=> (n===null || n===undefined || n==='') ? '-' : Number(n).toLocaleString('zh-TW');
-const cls = (n)=> Number(n)>0 ? 'up' : Number(n)<0 ? 'down' : 'flat';
-document.getElementById('versionStamp').innerHTML = `<b>${data.version}</b><br>${data.updateLabel}<br>${data.source}`;
+function render() {
+  document.getElementById("pageTitle").textContent = data.title;
+  document.getElementById("pageSubtitle").textContent = data.subtitle;
+  document.getElementById("versionStamp").innerHTML = `<b>${data.version}</b><small>${data.updated}</small>`;
 
-document.getElementById('summaryCards').innerHTML = data.summaryCards.map(c=>`
-  <article class="card"><h3>${c.title}</h3><p>${c.text}</p></article>`).join('');
+  document.getElementById("summaryCards").innerHTML = data.summaryCards.map(card => `
+    <article class="card ${toneClass(card.tone)}">
+      <span>${card.title}</span>
+      <strong>${card.value}</strong>
+      <p>${card.desc}</p>
+    </article>
+  `).join("");
 
-document.getElementById('levelsTable').innerHTML = `
-<thead><tr><th>順位</th><th>代號</th><th>名稱</th><th>收盤</th><th>明日定位</th><th>低接區</th><th>反彈賣區</th><th>風險線</th></tr></thead>
-<tbody>${data.levels.map(r=>`<tr><td class="rank">${r.rank}</td><td>${r.code}</td><td>${r.name}</td><td>${fmt(r.close)}</td><td>${r.stance}</td><td><span class="tag">${r.buy}</span></td><td>${r.sell}</td><td>${r.risk}</td></tr>`).join('')}</tbody>`;
+  document.getElementById("nightGrid").innerHTML = data.nightMarkets.map(m => `
+    <div class="market-item">
+      <div><b>${m.symbol}</b><small>${m.name}</small></div>
+      <div class="market-num"><strong>${m.value}</strong><em class="up">${m.change}</em></div>
+      <span>${m.signal}</span>
+    </div>
+  `).join("");
 
-document.getElementById('warningGrid').innerHTML = data.warnings.map(w=>`
-  <article class="warning"><h3>${w.name}<span class="code">${w.code}</span></h3><p>收盤 ${fmt(w.close)}｜${w.note}</p></article>`).join('');
+  document.getElementById("levelsTable").innerHTML = `
+    <thead><tr><th>順位</th><th>股票</th><th>低接/支撐</th><th>反彈/壓力</th><th>策略</th></tr></thead>
+    <tbody>${data.levels.map(r => `
+      <tr><td>${r.rank}</td><td><b>${r.name}</b><small>${r.code}</small></td><td>${r.buy}</td><td>${r.sell}</td><td>${r.note}</td></tr>
+    `).join("")}</tbody>`;
 
-document.getElementById('sectorGrid').innerHTML = data.sectors.map(s=>`
-  <article class="sector"><h3>${s.name} <span class="tag">${s.signal}</span></h3><p>${s.summary}</p><p class="code">${s.codes}</p></article>`).join('');
+  document.getElementById("warningGrid").innerHTML = data.warnings.map(w => `
+    <article class="warning"><b>${w.name} <small>${w.code}</small></b><p>${w.reason}</p></article>
+  `).join("");
 
-document.getElementById('focusTable').innerHTML = `
-<thead><tr><th>代號</th><th>名稱</th><th>收盤</th><th>漲跌</th><th>幅度%</th><th>最高</th><th>最低</th><th>量</th><th>買進</th><th>賣出</th></tr></thead>
-<tbody>${data.focusRows.map(r=>`<tr><td>${r.code}</td><td>${r.name}</td><td>${fmt(r.close)}</td><td class="${cls(r.change)}">${fmt(r.change)}</td><td class="${cls(r.change)}">${fmt(r.pct)}%</td><td>${fmt(r.high)}</td><td>${fmt(r.low)}</td><td>${fmt(r.volume)}</td><td>${fmt(r.bid)}</td><td>${fmt(r.ask)}</td></tr>`).join('')}</tbody>`;
+  document.getElementById("sectorGrid").innerHTML = data.sectors.map(s => `
+    <article class="sector"><div><b>${s.name}</b><span>${s.signal}</span></div><strong>${s.stars}</strong><p>${s.desc}</p></article>
+  `).join("");
+
+  document.getElementById("focusTable").innerHTML = `
+    <thead><tr><th>代號</th><th>名稱</th><th>收盤</th><th>漲跌</th><th>高/低</th><th>燈號</th><th>支撐</th><th>壓力</th><th>公開策略</th></tr></thead>
+    <tbody>${data.focus.map(r => `
+      <tr>
+        <td>${r.code}</td><td><b>${r.name}</b><small>${r.category}</small></td><td>${fmt(r.close)}</td><td class="${r.change >= 0 ? 'red' : 'green'}">${fmt(r.change)}</td><td>${fmt(r.high)} / ${fmt(r.low)}</td><td><span class="pill">${r.bias}</span></td><td>${r.support}</td><td>${r.pressure}</td><td>${r.action}</td>
+      </tr>
+    `).join("")}</tbody>`;
+
+  document.getElementById("ruleList").innerHTML = data.rules.map(r => `<li>${r}</li>`).join("");
+}
+render();

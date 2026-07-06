@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Report｜0706 收盤更新</title>
+  <title>AI Report｜0707 盤前夜盤偏多版</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,18 +11,26 @@
     <header class="hero">
       <div>
         <p class="eyebrow">MOM AI REPORT · PUBLIC MODE</p>
-        <h1>0706 收盤更新</h1>
-        <p class="sub">防守優先：強股回測才低接，弱股反彈先減壓。</p>
+        <h1 id="pageTitle">0707 盤前夜盤偏多版</h1>
+        <p class="sub" id="pageSubtitle">美股半導體偏多，台積電/聯發科有開高機會；PCB/ABF 仍以反彈減壓為主。</p>
       </div>
       <div class="stamp" id="versionStamp"></div>
     </header>
 
     <section class="cards" id="summaryCards"></section>
 
+    <section class="panel night">
+      <div class="panel-title">
+        <h2>夜盤與美股訊號</h2>
+        <span>依盤前截圖整理</span>
+      </div>
+      <div class="market-grid" id="nightGrid"></div>
+    </section>
+
     <section class="panel">
       <div class="panel-title">
-        <h2>明日低接前五順位</h2>
-        <span>小量分批，不追開高</span>
+        <h2>0707 明日低接/賣壓觀察前五</h2>
+        <span>偏多開盤仍不追高</span>
       </div>
       <div class="table-wrap">
         <table id="levelsTable"></table>
@@ -32,7 +40,7 @@
     <section class="panel danger">
       <div class="panel-title">
         <h2>警戒與反彈減壓名單</h2>
-        <span>不列積極低接</span>
+        <span>PCB/ABF 與處置股不列積極低接</span>
       </div>
       <div class="warning-grid" id="warningGrid"></div>
     </section>
@@ -40,7 +48,7 @@
     <section class="panel">
       <div class="panel-title">
         <h2>類股燈號</h2>
-        <span>0706 收盤分類</span>
+        <span>0707 盤前策略分類</span>
       </div>
       <div class="sector-grid" id="sectorGrid"></div>
     </section>
@@ -48,7 +56,7 @@
     <section class="panel">
       <div class="panel-title">
         <h2>焦點報價表</h2>
-        <span>依 0706 收盤 DDE</span>
+        <span>0706 收盤 DDE + 0707 盤前策略</span>
       </div>
       <div class="table-wrap">
         <table id="focusTable"></table>
@@ -56,54 +64,14 @@
     </section>
 
     <section class="panel note">
-      <h2>明日操作規則</h2>
-      <ol>
-        <li>開高先不要追，等 09:05～09:15 是否站穩。</li>
-        <li>PCB/ABF 與高價 AI 鏈若只是弱反彈，先減壓，不攤平。</li>
-        <li>低接只做相對強股回測：台積電、聯發科、京元、力成、亞力。</li>
-        <li>若台積電跌破 2435 且站不回，所有短打買單降級保守。</li>
-      </ol>
+      <h2>盤前操作規則</h2>
+      <ol id="ruleList"></ol>
     </section>
+
+    <footer class="footer">公開版不顯示任何個人持股、成本、股數或姓名。資料為盤前輔助判斷，實際仍以開盤成交量與 09:05 後方向為準。</footer>
   </main>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
