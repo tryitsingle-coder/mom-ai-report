@@ -3,76 +3,97 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Report｜0707 盤前夜盤偏多版</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>AI Report｜0708 收盤防守版</title>
+  <style>
+    :root{--bg:#0b1020;--card:#121a31;--card2:#16213d;--line:#283657;--txt:#eef3ff;--muted:#9fb0d1;--green:#40d98a;--yellow:#ffd166;--red:#ff6b6b;--blue:#64b5ff;--purple:#c59cff;}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(145deg,#080b16,#0e1730 45%,#09111f);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.55}.page{max-width:1180px;margin:0 auto;padding:24px}.hero{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;background:linear-gradient(135deg,#172142,#0f1830);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.28)}.eyebrow{margin:0 0 8px;color:var(--blue);font-weight:800;letter-spacing:.08em;font-size:12px}.hero h1{margin:0;font-size:34px;letter-spacing:-.02em}.sub{margin:10px 0 0;color:var(--muted);font-size:16px}.stamp{text-align:right;color:var(--muted);font-size:13px;min-width:190px}.stamp b{display:block;color:var(--txt);font-size:18px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}.card h3{margin:0 0 8px;font-size:14px;color:var(--muted)}.card .big{font-size:24px;font-weight:900}.tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800;border:1px solid var(--line);color:var(--muted)}.tag.green{color:var(--green);border-color:rgba(64,217,138,.35);background:rgba(64,217,138,.08)}.tag.yellow{color:var(--yellow);border-color:rgba(255,209,102,.35);background:rgba(255,209,102,.08)}.tag.red{color:var(--red);border-color:rgba(255,107,107,.35);background:rgba(255,107,107,.08)}.tag.blue{color:var(--blue);border-color:rgba(100,181,255,.35);background:rgba(100,181,255,.08)}.panel{background:rgba(18,26,49,.82);border:1px solid var(--line);border-radius:22px;padding:20px;margin:18px 0}.panel-title{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:14px}.panel h2{margin:0;font-size:22px}.panel-title span{color:var(--muted);font-size:13px}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.list{display:grid;gap:10px}.item{padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03)}.item strong{display:block;margin-bottom:4px}.muted{color:var(--muted)}.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.level{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:14px}.level h3{margin:0 0 8px;font-size:17px}.level p{margin:4px 0;color:var(--muted)}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px}table{width:100%;border-collapse:collapse;min-width:900px;background:rgba(255,255,255,.02)}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#192441;color:#cfe0ff;font-size:13px}td{font-size:14px}.pos{color:var(--green);font-weight:800}.neg{color:var(--red);font-weight:800}.flat{color:var(--muted);font-weight:800}.footer{color:var(--muted);text-align:center;font-size:13px;padding:18px 0 8px}.notice{border-left:4px solid var(--yellow);padding:12px 14px;background:rgba(255,209,102,.08);border-radius:12px;color:#ffe6a3}.danger{border-left:4px solid var(--red);padding:12px 14px;background:rgba(255,107,107,.08);border-radius:12px;color:#ffc9c9}@media(max-width:900px){.hero{display:block}.stamp{text-align:left;margin-top:16px}.cards{grid-template-columns:1fr 1fr}.grid-2,.levels{grid-template-columns:1fr}.page{padding:14px}.hero h1{font-size:28px}}
+  </style>
 </head>
 <body>
-  <main class="page">
-    <header class="hero">
-      <div>
-        <p class="eyebrow">MOM AI REPORT · PUBLIC MODE</p>
-        <h1 id="pageTitle">0707 盤前夜盤偏多版</h1>
-        <p class="sub" id="pageSubtitle">美股半導體偏多，台積電/聯發科有開高機會；PCB/ABF 仍以反彈減壓為主。</p>
-      </div>
-      <div class="stamp" id="versionStamp"></div>
-    </header>
+<main class="page">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">MOM AI REPORT · PUBLIC MODE</p>
+      <h1>0708 收盤防守版</h1>
+      <p class="sub">台積電尾盤撐住指數，但盤面強弱分化；PCB/材料少數強，AI高價、封測、被動元件仍需防守。明日盤前以美股、TSM ADR、NVIDIA、台指夜盤決定掛價上修或保守減壓。</p>
+    </div>
+    <div class="stamp"><b>更新：07/08 收盤</b>公開版｜不含個人持股與成本</div>
+  </header>
 
-    <section class="cards" id="summaryCards"></section>
+  <section class="cards">
+    <div class="card"><h3>盤勢定位</h3><div class="big">反彈分化</div><span class="tag yellow">非全面轉強</span></div>
+    <div class="card"><h3>核心支撐</h3><div class="big">台積電 2440</div><span class="tag blue">守住偏穩</span></div>
+    <div class="card"><h3>最強主線</h3><div class="big">南亞 / 南電 / 景碩</div><span class="tag green">強但不追</span></div>
+    <div class="card"><h3>明日原則</h3><div class="big">有彈先減壓</div><span class="tag red">新買降到最低</span></div>
+  </section>
 
-    <section class="panel night">
-      <div class="panel-title">
-        <h2>夜盤與美股訊號</h2>
-        <span>依盤前截圖整理</span>
-      </div>
-      <div class="market-grid" id="nightGrid"></div>
-    </section>
+  <section class="panel">
+    <div class="panel-title"><h2>收盤一句話</h2><span>07/08</span></div>
+    <div class="notice">今天不是全面反攻盤，而是「台積電撐指數 + PCB/材料局部反彈 + 高波動題材續洗」。明天若盤前外部訊號偏紅，可以把反彈掛價上修一階；若美股/夜盤續弱，第一波假漲以減壓為主，不急著新買。</div>
+  </section>
 
-    <section class="panel">
-      <div class="panel-title">
-        <h2>0707 明日低接/賣壓觀察前五</h2>
-        <span>偏多開盤仍不追高</span>
-      </div>
-      <div class="table-wrap">
-        <table id="levelsTable"></table>
-      </div>
-    </section>
+  <section class="panel">
+    <div class="panel-title"><h2>明日盤前決策樹</h2><span>先看外部訊號再調掛價</span></div>
+    <div class="grid-2">
+      <div class="item"><strong><span class="tag green">情境 A：美股 / NVIDIA / TSM ADR / 台指夜盤偏紅</span></strong><p class="muted">可看開盤反彈，但仍不追高。強股以續強不追為原則，弱股有彈先分批減壓。台積電若站穩 2465，再看 2480 / 2500 壓力。</p></div>
+      <div class="item"><strong><span class="tag red">情境 B：美股 / 夜盤續弱</span></strong><p class="muted">不要開盤追買。09:05～09:30 若只有假彈，優先減壓；跌破開盤價且量增轉弱，暫停新短打。</p></div>
+    </div>
+  </section>
 
-    <section class="panel danger">
-      <div class="panel-title">
-        <h2>警戒與反彈減壓名單</h2>
-        <span>PCB/ABF 與處置股不列積極低接</span>
-      </div>
-      <div class="warning-grid" id="warningGrid"></div>
-    </section>
+  <section class="panel">
+    <div class="panel-title"><h2>公開版關鍵價位</h2><span>不含私人掛單與成本</span></div>
+    <div class="levels">
+      <div class="level"><h3>2330 台積電</h3><p>支撐：2440 / 2420</p><p>壓力：2465 / 2480 / 2500</p><p>判斷：撐指數指標，不追高。</p></div>
+      <div class="level"><h3>PCB/ABF</h3><p>南電：1100 / 1130</p><p>欣興：863 / 880 / 900</p><p>景碩：755 漲停，不追。</p></div>
+      <div class="level"><h3>臻鼎-KY</h3><p>支撐：560 / 546</p><p>壓力：580 / 600</p><p>判斷：有修復但 585 被壓回。</p></div>
+      <div class="level"><h3>封測/測試鏈</h3><p>力成：318 / 323 / 330</p><p>欣銓：232 / 236 / 240</p><p>中探針：254 / 260 / 268</p></div>
+      <div class="level"><h3>權值 AI</h3><p>台達電：1885 / 1900 / 1930</p><p>聯發科：3995 / 4030 / 4080</p><p>判斷：反彈還沒連續。</p></div>
+      <div class="level"><h3>被動元件</h3><p>國巨：891 / 900 / 915 / 930</p><p>禾伸堂強彈；華新科、信昌電仍弱。</p><p>判斷：波動大，不追。</p></div>
+    </div>
+  </section>
 
-    <section class="panel">
-      <div class="panel-title">
-        <h2>類股燈號</h2>
-        <span>0707 盤前策略分類</span>
+  <section class="panel">
+    <div class="panel-title"><h2>族群燈號</h2><span>收盤後公開判斷</span></div>
+    <div class="grid-2">
+      <div class="list">
+        <div class="item"><strong><span class="tag green">偏強：南亞、南電、景碩、台燿、台光電、聯茂</span></strong><p class="muted">強勢多集中在材料 / PCB 局部，明日不建議追高，除非開低後站回開盤價且量能持續。</p></div>
+        <div class="item"><strong><span class="tag blue">中性偏穩：台積電、0050、0052、00403A</span></strong><p class="muted">指數沒有崩，但 ETF 和多數個股尚未全面轉強。</p></div>
       </div>
-      <div class="sector-grid" id="sectorGrid"></div>
-    </section>
-
-    <section class="panel">
-      <div class="panel-title">
-        <h2>焦點報價表</h2>
-        <span>0706 收盤 DDE + 0707 盤前策略</span>
+      <div class="list">
+        <div class="item"><strong><span class="tag red">偏弱：台達電、力成、欣銓、京元電、日月光、奇鋐</span></strong><p class="muted">反彈不連續，明日若開高先看能不能站穩 09:05 後成交價。</p></div>
+        <div class="item"><strong><span class="tag yellow">高波動：國巨、禾伸堂、華新科、信昌電、光頡</span></strong><p class="muted">被動元件振幅大，適合觀察不適合追價。跌破關鍵價要降低短打期待。</p></div>
       </div>
-      <div class="table-wrap">
-        <table id="focusTable"></table>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="panel note">
-      <h2>盤前操作規則</h2>
-      <ol id="ruleList"></ol>
-    </section>
+  <section class="panel">
+    <div class="panel-title"><h2>焦點報價表</h2><span>07/08 收盤 DDE 摘要</span></div>
+    <div class="table-wrap"><table id="quoteTable"><thead><tr><th>代號</th><th>名稱</th><th>收盤</th><th>漲跌</th><th>幅度</th><th>最高</th><th>最低</th><th>成交量</th><th>族群</th><th>公開觀察</th></tr></thead><tbody></tbody></table></div>
+  </section>
 
-    <footer class="footer">公開版不顯示任何個人持股、成本、股數或姓名。資料為盤前輔助判斷，實際仍以開盤成交量與 09:05 後方向為準。</footer>
-  </main>
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <section class="panel">
+    <div class="panel-title"><h2>明日操作規則</h2><span>給盤前用</span></div>
+    <ol>
+      <li>盤前先看美股、NVIDIA、TSM ADR、費半、台指夜盤與美元/台幣，不用在收盤後先猜方向。</li>
+      <li>若開盤急彈但量不連續，視為第一波假漲，弱股以減壓為主。</li>
+      <li>南亞、南電、景碩等強股隔日不追；只有開低後站回開盤價、買盤有量，才考慮短線觀察。</li>
+      <li>被動元件今日振幅過大，國巨站回 900 才算比較穩；930 仍是明顯壓力。</li>
+      <li>公開版不放任何私人部位、成本、股數或姓名。</li>
+    </ol>
+  </section>
+
+  <footer class="footer">公開資訊整理用途；實際操作請以隔日盤前資料、開盤量價、個人風險承受度為準。</footer>
+</main>
+<script>
+const data = [('2330', '台積電', '2465', '+25', '+1.02%', '2465', '2420', '23307', '權值/指標', '尾盤拉高，撐住大盤方向；明日先看 2440/2465。'), ('0050', '元大台灣50', '106.05', '-0.15', '-0.14%', '106.6', '105.05', '86827', 'ETF', '大盤 ETF 小跌，代表個股分化仍大。'), ('0052', '富邦科技', '62.15', '-0.05', '-0.08%', '62.55', '61.45', '21775', 'ETF', '科技 ETF 小跌，尚未全面轉強。'), ('00403A', '主動統一升級50', '10.41', '-0.04', '-0.38%', '10.51', '10.26', '240343', 'ETF', '盤中破低後收回，仍偏防守。'), ('4958', '臻鼎-KY', '565', '+17', '+3.10%', '585', '546', '30706', 'PCB/ABF', '有修復但 585 壓回，明日看 580 是否站回。'), ('8046', '南電', '1105', '+75', '+7.28%', '1130', '1020', '19359', 'PCB/ABF', '今日最強之一，但高檔不追；有持股偏賣點。'), ('3037', '欣興', '863', '+23', '+2.74%', '882', '843', '31607', 'PCB/ABF', '有反彈但未突破 880/900 壓力。'), ('3189', '景碩', '755', '+68', '+9.90%', '755', '714', '4189', 'PCB/ABF', '跌停後強彈至漲停，明日不追、只看續強減壓。'), ('2383', '台光電', '5315', '+95', '+1.82%', '5555', '5250', '2524', 'PCB材料', '盤中高檔震盪，明日看 5300/5400。'), ('6274', '台燿', '1645', '+70', '+4.44%', '1665', '1550', '5815', 'PCB材料', '材料端相對強，明日不追高。'), ('6213', '聯茂', '393.5', '+14.5', '+3.83%', '405.5', '370', '35650', 'PCB材料', '強彈後留意 400 壓力。'), ('1303', '南亞', '182', '+16.5', '+9.97%', '182', '164.5', '97659', '材料', '漲停鎖住，資金聚焦材料題材。'), ('2308', '台達電', '1885', '-5', '-0.26%', '1950', '1840', '9951', 'AI電源', '早盤反彈到 1950 後壓回，仍偏弱。'), ('2454', '聯發科', '3995', '-35', '-0.87%', '4040', '3955', '6005', '權值/IC', '守在 4000 附近，明日看 4030/4080 壓力。'), ('6239', '力成', '318', '-5.5', '-1.70%', '323', '309', '16928', '封測', '沒站回 323，仍弱勢整理。'), ('3264', '欣銓', '232', '+0.5', '+0.22%', '235.5', '222.5', '5115', '測試鏈', '低檔震盪，未站回 236 前偏弱。'), ('6217', '中探針', '254', '+10', '+4.10%', '254', '239.5', '797', '測試鏈', '低檔反彈，量能仍不足。'), ('6223', '旺矽', '6460', '+150', '+2.38%', '6540', '6250', '724', '測試鏈', '高價測試鏈較強，但量不大。'), ('6515', '穎崴', '7705', '-320', '-3.99%', '8035', '7445', '434', '測試鏈', '仍弱，高價股波動大。'), ('3711', '日月光投控', '625', '-26', '-3.99%', '649', '623', '25308', '封測/權值', '收近低點，短線偏弱。'), ('2327', '國巨*', '891', '-14', '-1.55%', '930', '856', '67663', '被動元件', '從 930 壓回，明日不追，先看 900 站回。'), ('3026', '禾伸堂', '953', '+86', '+9.92%', '953', '827', '20352', '被動元件', '強彈至漲停附近，但波動極大。'), ('2492', '華新科', '474', '-28', '-5.58%', '511', '452.5', '23373', '被動元件', '反彈失敗，仍弱。'), ('6173', '信昌電', '273', '-11', '-3.87%', '291.5', '264', '11369', '被動元件', '高波動後收弱。'), ('3017', '奇鋐', '2325', '-125', '-5.10%', '2440', '2290', '4014', 'AI散熱', '高價 AI 弱勢，勿追。'), ('3665', '貿聯-KY', '1900', '-80', '-4.04%', '1995', '1830', '3366', 'AI供應鏈', '早強後回落，短線壓力仍大。'), ('6451', '訊芯-KY', '525', '+28.5', '+5.74%', '540', '481', '5506', '半導體', '相對強，但勿追高。'), ('2408', '南亞科', '396', '-7', '-1.74%', '422', '391', '61481', '記憶體', '早盤拉高後壓回，短線偏震盪。'), ('2344', '華邦電', '168.5', '-5.5', '-3.16%', '181.5', '165', '144124', '記憶體', '量大但收弱，勿追。')];
+const tbody = document.querySelector('#quoteTable tbody');
+for (const r of data) {
+  const tr = document.createElement('tr');
+  const cls = r[3].startsWith('+') ? 'pos' : (r[3].startsWith('-') ? 'neg' : 'flat');
+  tr.innerHTML = `<td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="${cls}">${r[3]}</td><td class="${cls}">${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td>${r[8]}</td><td>${r[9]}</td>`;
+  tbody.appendChild(tr);
+}
+</script>
 </body>
 </html>
-
 
