@@ -1,4 +1,5 @@
 {
-  "updated": "2026/07/02 close",
-  "note": "國際盤前資料由 fetch_global_market_now_v24 腳本更新；本包更新台股07/02精選100檔收盤資料。"
+  "updated": "2026/07/13 close",
+  "version": "V27.0",
+  "note": "國際盤前資料由既有 fetch_global_market_now_v24 更新；本包更新07/13收盤100檔資料。"
 }
