@@ -44,3 +44,4 @@ const cols=["代號","名稱","漲跌","昨收","開盤","幅度%","成交價","
 function render(){let q=document.getElementById("q").value.toLowerCase(),f=document.getElementById("f").value,V=R.filter(r=>!q||String(r["代號"]).includes(q)||String(r["名稱"]).toLowerCase().includes(q));V=V.filter(r=>f==="all"||(f==="up"&&r["漲跌"]>0)||(f==="down"&&r["漲跌"]<0)||(f==="hot"&&r["漲跌"]>0&&r["幅度%"]>=5)||(f==="weak"&&r["漲跌"]<0&&r["幅度%"]>=3));tbl.innerHTML=`<thead><tr>${cols.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${V.map(r=>`<tr>${cols.map(x=>`<td class="${x==="漲跌"||x==="幅度%"?C(r["漲跌"]):""}">${F(r[x])}</td>`).join("")}</tr>`).join("")}</tbody>`}render();
 </script></body></html>
 
+
