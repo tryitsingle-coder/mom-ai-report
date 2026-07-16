@@ -108,7 +108,19 @@
     return `<article class="v30-card ${x.cls}"><div class="v30-row"><b>${rank?rank+' ':''}${esc(x.name)}</b><strong><small>現價</small>${fmt(x.current)}</strong></div><div class="v30-change ${chClass}">漲跌 ${ch}（${pct}）</div><div class="v30-stars">${stars(x.stars)} <span>${x.score}分</span></div><div class="v30-action">${esc(x.action)}</div><div class="v30-grid"><span>甜甜價 <b>${x.sweet[0]}～${x.sweet[1]}</b></span><span>距甜區 <b>${dist}</b></span><span>第一賣 <b>${x.sell1[0]}～${x.sell1[1]}</b></span><span>第二賣 <b>${x.sell2[0]}～${x.sell2[1]}</b></span><span>防守 <b>${x.stop}</b></span><span>${x.zero?'適合零股':'整張優先'}</span></div></article>`;
   }
 
+  function updatePageHeading(){
+    const pageTitle = "Mom AI Report｜07/16 盤中版";
+    document.title = pageTitle;
+    const h1 = document.querySelector("body > header h1, header h1");
+    if(h1) h1.textContent = pageTitle;
+    const sub = document.querySelector("body > header .sub, header .sub");
+    if(sub){
+      sub.innerHTML = '版本：<b>V30.2</b>｜盤中資料：<b>DDE 每分鐘更新</b>｜首頁雷達：<b>每15秒重新排序</b><br>公開版不顯示任何分析師姓名、個人持股、成本或股數。';
+    }
+  }
+
   function render(){
+    updatePageHeading();
     scanAt=new Date(); const rows={...readFromGlobals(),...readFromTables()};
     const sig=JSON.stringify(Object.keys(rows).sort().map(k=>[k,rows[k].current,rows[k].volume]));
     if(sig&&sig!=='[]'&&sig!==lastSignature){lastSignature=sig;changedAt=new Date();}
