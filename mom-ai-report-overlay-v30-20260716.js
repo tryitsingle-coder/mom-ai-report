@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "V30.0-20260716-0930";
+  const VERSION = "V30.1-20260716-DISPLAY-FIX";
   const TARGETS = {
     "4958": {name:"臻鼎-KY", theme:"ABF/PCB", sweet:[578,586], deep:[568,572], sell1:[598,603], sell2:[610,615], stop:575, priority:100, zero:true},
     "3037": {name:"欣興", theme:"ABF", sweet:[887,894], deep:[870,875], sell1:[912,920], sell2:[928,938], stop:880, priority:99, zero:true},
@@ -35,16 +35,37 @@
 
   function readFromTables(){
     const out={};
-    $$('table tr').forEach(tr=>{
-      const c=$$('th,td',tr).map(x=>x.textContent.trim());
-      const i=c.findIndex(x=>/^\d{2,6}[A-Z]?$/.test(x.replace(/\s/g,'')));
-      if(i<0)return; const code=canonical(c[i]); if(!TARGETS[code])return;
-      const n=c.slice(i+2).map(num);
-      let row={code,name:c[i+1]||TARGETS[code].name};
-      if(n.length>=19){Object.assign(row,{change:n[0],prev:n[1],open:n[2],pct:n[3],current:n[4],high:n[5],low:n[6],volume:n[7],bid:n[17],ask:n[18]});}
-      else if(n.length>=5){Object.assign(row,{current:n[0],open:n[1],high:n[2],low:n[3],volume:n[4]});}
-      if(Number.isFinite(row.current))out[code]=row;
-    }); return out;
+    const aliases={
+      code:['代號','股票代號','code'], name:['名稱','股票名稱','name'], change:['漲跌','漲跌價差','change'],
+      prev:['昨收','昨日收盤','prev'], open:['開盤','open'], pct:['幅度%','漲跌幅','漲幅%','pct'],
+      current:['成交價','現價','成交','current','price'], high:['最高','high'], low:['最低','low'],
+      volume:['成交量','volume'], bid:['買進','買價','bid'], ask:['賣出','賣價','ask']
+    };
+    const norm=v=>String(v||'').replace(/\s+/g,'').toLowerCase();
+    $$('table').forEach(table=>{
+      const trs=$$('tr',table); if(!trs.length)return;
+      let headerIndex=-1, map={};
+      for(let r=0;r<Math.min(4,trs.length);r++){
+        const cells=$$('th,td',trs[r]).map(x=>norm(x.textContent));
+        const temp={};
+        for(const [key,names] of Object.entries(aliases)){
+          const idx=cells.findIndex(c=>names.some(n=>c===norm(n)));
+          if(idx>=0)temp[key]=idx;
+        }
+        if(temp.code!==undefined && (temp.current!==undefined || temp.change!==undefined)){headerIndex=r;map=temp;break;}
+      }
+      if(headerIndex<0)return;
+      trs.slice(headerIndex+1).forEach(tr=>{
+        const c=$$('th,td',tr).map(x=>x.textContent.trim());
+        const code=canonical(c[map.code]); if(!TARGETS[code])return;
+        const row={code,name:map.name!==undefined?(c[map.name]||TARGETS[code].name):TARGETS[code].name};
+        for(const key of ['change','prev','open','pct','current','high','low','volume','bid','ask']){
+          if(map[key]!==undefined)row[key]=num(c[map[key]]);
+        }
+        if(Number.isFinite(row.current))out[code]=row;
+      });
+    });
+    return out;
   }
 
   function readFromGlobals(){
@@ -81,7 +102,10 @@
   function stars(n){return '★'.repeat(n)+'☆'.repeat(5-n)}
   function card(x,rank){
     const dist=Number.isFinite(x.distance)?`${x.distance>0?'+':''}${x.distance.toFixed(1)}%`:'--';
-    return `<article class="v30-card ${x.cls}"><div class="v30-row"><b>${rank?rank+' ':''}${esc(x.name)}</b><strong>${fmt(x.current)}</strong></div><div class="v30-stars">${stars(x.stars)} <span>${x.score}分</span></div><div class="v30-action">${esc(x.action)}</div><div class="v30-grid"><span>甜甜價 <b>${x.sweet[0]}～${x.sweet[1]}</b></span><span>距甜區 <b>${dist}</b></span><span>第一賣 <b>${x.sell1[0]}～${x.sell1[1]}</b></span><span>第二賣 <b>${x.sell2[0]}～${x.sell2[1]}</b></span><span>防守 <b>${x.stop}</b></span><span>${x.zero?'適合零股':'整張優先'}</span></div></article>`;
+    const ch=Number.isFinite(x.change)?`${x.change>0?'▲ +':x.change<0?'▼ ':''}${fmt(x.change)}`:'--';
+    const pct=Number.isFinite(x.pct)?`${x.pct>0?'+':''}${x.pct.toFixed(2)}%`:'--';
+    const chClass=Number.isFinite(x.change)?(x.change>0?'up':x.change<0?'down':'flat'):'flat';
+    return `<article class="v30-card ${x.cls}"><div class="v30-row"><b>${rank?rank+' ':''}${esc(x.name)}</b><strong><small>現價</small>${fmt(x.current)}</strong></div><div class="v30-change ${chClass}">漲跌 ${ch}（${pct}）</div><div class="v30-stars">${stars(x.stars)} <span>${x.score}分</span></div><div class="v30-action">${esc(x.action)}</div><div class="v30-grid"><span>甜甜價 <b>${x.sweet[0]}～${x.sweet[1]}</b></span><span>距甜區 <b>${dist}</b></span><span>第一賣 <b>${x.sell1[0]}～${x.sell1[1]}</b></span><span>第二賣 <b>${x.sell2[0]}～${x.sell2[1]}</b></span><span>防守 <b>${x.stop}</b></span><span>${x.zero?'適合零股':'整張優先'}</span></div></article>`;
   }
 
   function render(){
@@ -94,7 +118,7 @@
     const holdings=['6239','2308','2327','2454','52'].map(k=>list.find(x=>x.code===k));
     let root=$('#mom-v30-root'); if(!root){root=document.createElement('section');root.id='mom-v30-root';document.body.prepend(root);}
     root.innerHTML=`<style>
-#mom-v30-root{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;background:#07111f;color:#eef6ff;padding:14px;border-bottom:4px solid #19d3c5;position:relative;z-index:99999}#mom-v30-root *{box-sizing:border-box}.v30-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.v30-head h2{margin:0;font-size:24px}.v30-badge{padding:5px 10px;border:1px solid #27b8ae;border-radius:999px;background:#0d3437;font-size:12px}.v30-time{display:flex;gap:8px 16px;flex-wrap:wrap;margin:9px 0;padding:8px 10px;background:#0d1a2b;border:1px solid #29425f;border-radius:9px;font-size:12px}.v30-live{color:#50e3a4;font-weight:800}.v30-title{margin:13px 0 7px;font-size:16px;font-weight:900}.v30-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:9px}.v30-card{padding:11px;border-radius:12px;border:1px solid #31445e;background:#101d30}.v30-card.buy{background:#0b382b;border-color:#39c28a}.v30-card.deep{background:#123f31;border-color:#59d69e}.v30-card.watch{background:#24351e;border-color:#90be5e}.v30-card.sell{background:#3c3217;border-color:#d6ac35}.v30-card.hot{background:#412719;border-color:#e07a42}.v30-card.risk{background:#431b26;border-color:#e05b76}.v30-row{display:flex;justify-content:space-between;gap:10px;font-size:17px}.v30-row strong{font-size:20px}.v30-stars{color:#ffd84d;font-weight:900;margin:4px 0}.v30-stars span{color:#fff;font-size:12px}.v30-action{font-weight:900;margin:5px 0}.v30-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:12px;color:#d7e2ef}.v30-note{font-size:12px;color:#aebed2;margin-top:10px}.v30-collapse{cursor:pointer;border:1px solid #47617e;background:#10243d;color:#fff;border-radius:8px;padding:6px 10px}#mom-v30-root.collapsed .v30-body{display:none}@media(max-width:600px){#mom-v30-root{padding:10px}.v30-head h2{font-size:20px}.v30-grid{grid-template-columns:1fr}}
+#mom-v30-root{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;background:#07111f;color:#eef6ff;padding:14px;border-bottom:4px solid #19d3c5;position:relative;z-index:99999}#mom-v30-root *{box-sizing:border-box}.v30-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.v30-head h2{margin:0;font-size:24px}.v30-badge{padding:5px 10px;border:1px solid #27b8ae;border-radius:999px;background:#0d3437;font-size:12px}.v30-time{display:flex;gap:8px 16px;flex-wrap:wrap;margin:9px 0;padding:8px 10px;background:#0d1a2b;border:1px solid #29425f;border-radius:9px;font-size:12px}.v30-live{color:#50e3a4;font-weight:800}.v30-title{margin:13px 0 7px;font-size:16px;font-weight:900}.v30-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:9px}.v30-card{padding:11px;border-radius:12px;border:1px solid #31445e;background:#101d30}.v30-card.buy{background:#0b382b;border-color:#39c28a}.v30-card.deep{background:#123f31;border-color:#59d69e}.v30-card.watch{background:#24351e;border-color:#90be5e}.v30-card.sell{background:#3c3217;border-color:#d6ac35}.v30-card.hot{background:#412719;border-color:#e07a42}.v30-card.risk{background:#431b26;border-color:#e05b76}.v30-row{display:flex;justify-content:space-between;gap:10px;font-size:17px}.v30-row strong{font-size:20px;display:flex;gap:6px;align-items:baseline}.v30-row strong small{font-size:11px;color:#9fb1c7;font-weight:700}.v30-change{font-size:12px;font-weight:800;margin:3px 0}.v30-change.up{color:#ff6b7a}.v30-change.down{color:#55d9a2}.v30-change.flat{color:#b9c7d8}.v30-stars{color:#ffd84d;font-weight:900;margin:4px 0}.v30-stars span{color:#fff;font-size:12px}.v30-action{font-weight:900;margin:5px 0}.v30-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:12px;color:#d7e2ef}.v30-note{font-size:12px;color:#aebed2;margin-top:10px}.v30-collapse{cursor:pointer;border:1px solid #47617e;background:#10243d;color:#fff;border-radius:8px;padding:6px 10px}#mom-v30-root.collapsed .v30-body{display:none}@media(max-width:600px){#mom-v30-root{padding:10px}.v30-head h2{font-size:20px}.v30-grid{grid-template-columns:1fr}}
 </style><div class="v30-head"><h2>★★★★★ 即時低接雷達</h2><div><span class="v30-badge">${VERSION}</span> <button class="v30-collapse">收合</button></div></div><div class="v30-time"><span>覆蓋載入：<b>${time(loadedAt)}</b></span><span>最後掃描：<b>${time(scanAt)}</b></span><span>最後更新：<b>${time(changedAt)}</b></span><span class="v30-live">${changedAt?'● 已讀到盤面':'○ 等待盤面資料'}</span></div><div class="v30-body"><div class="v30-title">今天最值得低接 TOP 3</div><div class="v30-wrap">${top.length?top.map((x,i)=>card(x,['①','②','③'][i])).join(''):'<article class="v30-card">啟動每分鐘更新後，這裡會自動排序。</article>'}</div><div class="v30-title">ABF 第一主線</div><div class="v30-wrap">${abf.map(x=>card(x,'')).join('')}</div><div class="v30-title">第一波掛賣雷達（公開策略，不顯示持股）</div><div class="v30-wrap">${holdings.map(x=>card(x,'')).join('')}</div><div class="v30-note">AI整理：到甜甜價仍須等止跌、不破低或站回開盤；跌破防守先停手。全站不顯示任何分析師姓名、個人持股、成本或股數。</div></div>`;
     $('.v30-collapse',root)?.addEventListener('click',e=>{root.classList.toggle('collapsed');e.currentTarget.textContent=root.classList.contains('collapsed')?'展開':'收合';});
   }
