@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "V30.1-20260716-DISPLAY-FIX";
+  const VERSION = "V31.0-20260716-DDE-SUPPORT";
   const TARGETS = {
     "4958": {name:"臻鼎-KY", theme:"ABF/PCB", sweet:[578,586], deep:[568,572], sell1:[598,603], sell2:[610,615], stop:575, priority:100, zero:true},
     "3037": {name:"欣興", theme:"ABF", sweet:[887,894], deep:[870,875], sell1:[912,920], sell2:[928,938], stop:880, priority:99, zero:true},
@@ -39,7 +39,7 @@
       code:['代號','股票代號','code'], name:['名稱','股票名稱','name'], change:['漲跌','漲跌價差','change'],
       prev:['昨收','昨日收盤','prev'], open:['開盤','open'], pct:['幅度%','漲跌幅','漲幅%','pct'],
       current:['成交價','現價','成交','current','price'], high:['最高','high'], low:['最低','low'],
-      volume:['成交量','volume'], bid:['買進','買價','bid'], ask:['賣出','賣價','ask']
+      volume:['成交量','volume'], prevVolume:['昨量','昨日量','prevvolume'], lastQty:['單量','最新單量','lastqty'], amount:['成交金額','amount'], sellQty:['賣量','委賣量','sellqty'], buyQty:['買量','委買量','buyqty'], bid:['買進','買價','bid'], ask:['賣出','賣價','ask']
     };
     const norm=v=>String(v||'').replace(/\s+/g,'').toLowerCase();
     $$('table').forEach(table=>{
@@ -59,7 +59,7 @@
         const c=$$('th,td',tr).map(x=>x.textContent.trim());
         const code=canonical(c[map.code]); if(!TARGETS[code])return;
         const row={code,name:map.name!==undefined?(c[map.name]||TARGETS[code].name):TARGETS[code].name};
-        for(const key of ['change','prev','open','pct','current','high','low','volume','bid','ask']){
+        for(const key of ['change','prev','open','pct','current','high','low','volume','prevVolume','lastQty','amount','sellQty','buyQty','bid','ask']){
           if(map[key]!==undefined)row[key]=num(c[map[key]]);
         }
         if(Number.isFinite(row.current))out[code]=row;
@@ -73,7 +73,7 @@
     for(const k of Object.keys(window)){
       try{const v=window[k]; if(Array.isArray(v)&&v.length&&typeof v[0]==='object')pools.push(v); else if(v&&Array.isArray(v.rows))pools.push(v.rows);}catch(_){ }
     }
-    pools.forEach(arr=>arr.forEach(r=>{ const raw=r?.代號??r?.code; const code=canonical(raw); if(!TARGETS[code])return; const p=num(r?.成交價??r?.current??r?.price); if(!Number.isFinite(p))return; out[code]={code,name:r?.名稱??TARGETS[code].name,current:p,open:num(r?.開盤),high:num(r?.最高),low:num(r?.最低),volume:num(r?.成交量),bid:num(r?.買進),ask:num(r?.賣出),pct:num(r?.['幅度%']),change:num(r?.漲跌)}; }));
+    pools.forEach(arr=>arr.forEach(r=>{ const raw=r?.代號??r?.code; const code=canonical(raw); if(!TARGETS[code])return; const p=num(r?.成交價??r?.current??r?.price); if(!Number.isFinite(p))return; out[code]={code,name:r?.名稱??TARGETS[code].name,current:p,open:num(r?.開盤),high:num(r?.最高),low:num(r?.最低),volume:num(r?.成交量),prevVolume:num(r?.昨量),lastQty:num(r?.單量),amount:num(r?.成交金額),sellQty:num(r?.賣量),buyQty:num(r?.買量),bid:num(r?.買進),ask:num(r?.賣出),pct:num(r?.['幅度%']),change:num(r?.漲跌)}; }));
     return out;
   }
 
@@ -93,10 +93,32 @@
       if(Number.isFinite(row.high)&&p>=row.high*.995)score+=2;
       if(Number.isFinite(row.pct)&&row.pct>=5&&Number.isFinite(row.change)&&row.change<0)score-=5;
     }
+    // DDE 即時承接力：只使用 DDE 可取得欄位，不冒充真正內外盤或五檔總量。
+    let supportScore=50, supportLabel='資料不足', supportClass='flat';
+    const dayRange=(Number.isFinite(row.high)&&Number.isFinite(row.low))?(row.high-row.low):NaN;
+    const dayPos=(Number.isFinite(p)&&Number.isFinite(dayRange)&&dayRange>0)?(p-row.low)/dayRange:NaN;
+    const volRatio=(Number.isFinite(row.volume)&&Number.isFinite(row.prevVolume)&&row.prevVolume>0)?row.volume/row.prevVolume:NaN;
+    const bookTotal=(Number.isFinite(row.buyQty)?row.buyQty:0)+(Number.isFinite(row.sellQty)?row.sellQty:0);
+    const buyRatio=bookTotal>0?(Number.isFinite(row.buyQty)?row.buyQty:0)/bookTotal:NaN;
+    if(Number.isFinite(dayPos)) supportScore += (dayPos-.5)*34;
+    if(Number.isFinite(buyRatio)) supportScore += (buyRatio-.5)*30;
+    if(Number.isFinite(row.bid)&&Number.isFinite(row.ask)&&row.ask>row.bid&&Number.isFinite(p)){
+      const quotePos=(p-row.bid)/(row.ask-row.bid);
+      supportScore += (Math.max(0,Math.min(1,quotePos))-.5)*18;
+    }
+    if(Number.isFinite(volRatio)){
+      if(volRatio>=1 && Number.isFinite(row.change)) supportScore += row.change>=0?6:-6;
+      else if(volRatio>=.5 && Number.isFinite(row.change)) supportScore += row.change>=0?3:-3;
+    }
+    supportScore=Math.max(0,Math.min(100,Math.round(supportScore)));
+    if(supportScore>=68){supportLabel='承接偏強';supportClass='up';}
+    else if(supportScore<=37){supportLabel='賣壓偏重';supportClass='down';}
+    else {supportLabel='中性震盪';supportClass='flat';}
+    score += supportScore>=68?4:supportScore<=37?-4:0;
     score=Math.max(0,Math.min(100,Math.round(score)));
     const stars=score>=92?5:score>=84?4:score>=72?3:score>=58?2:1;
     const distance=Number.isFinite(p)?(p<t.sweet[0]?(p-t.sweet[0])/t.sweet[0]*100:p>t.sweet[1]?(p-t.sweet[1])/t.sweet[1]*100:0):NaN;
-    return {...t,...row,code,score,stars,cls,action,distance};
+    return {...t,...row,code,score,stars,cls,action,distance,supportScore,supportLabel,supportClass,dayPos,volRatio,buyRatio};
   }
 
   function stars(n){return '★'.repeat(n)+'☆'.repeat(5-n)}
@@ -105,7 +127,10 @@
     const ch=Number.isFinite(x.change)?`${x.change>0?'▲ +':x.change<0?'▼ ':''}${fmt(x.change)}`:'--';
     const pct=Number.isFinite(x.pct)?`${x.pct>0?'+':''}${x.pct.toFixed(2)}%`:'--';
     const chClass=Number.isFinite(x.change)?(x.change>0?'up':x.change<0?'down':'flat'):'flat';
-    return `<article class="v30-card ${x.cls}"><div class="v30-row"><b>${rank?rank+' ':''}${esc(x.name)}</b><strong><small>現價</small>${fmt(x.current)}</strong></div><div class="v30-change ${chClass}">漲跌 ${ch}（${pct}）</div><div class="v30-stars">${stars(x.stars)} <span>${x.score}分</span></div><div class="v30-action">${esc(x.action)}</div><div class="v30-grid"><span>甜甜價 <b>${x.sweet[0]}～${x.sweet[1]}</b></span><span>距甜區 <b>${dist}</b></span><span>第一賣 <b>${x.sell1[0]}～${x.sell1[1]}</b></span><span>第二賣 <b>${x.sell2[0]}～${x.sell2[1]}</b></span><span>防守 <b>${x.stop}</b></span><span>${x.zero?'適合零股':'整張優先'}</span></div></article>`;
+    const vr=Number.isFinite(x.volRatio)?`${(x.volRatio*100).toFixed(0)}%`:'--';
+    const br=Number.isFinite(x.buyRatio)?`${(x.buyRatio*100).toFixed(0)}%`:'--';
+    const dp=Number.isFinite(x.dayPos)?`${(x.dayPos*100).toFixed(0)}%`:'--';
+    return `<article class="v30-card ${x.cls}"><div class="v30-row"><b>${rank?rank+' ':''}${esc(x.name)}</b><strong><small>現價</small>${fmt(x.current)}</strong></div><div class="v30-change ${chClass}">漲跌 ${ch}（${pct}）</div><div class="v30-stars">${stars(x.stars)} <span>${x.score}分</span></div><div class="v31-support ${x.supportClass}"><b>DDE承接力 ${x.supportScore}｜${x.supportLabel}</b><small> 買盤比 ${br}・日內位置 ${dp}・量達昨量 ${vr}</small></div><div class="v30-action">${esc(x.action)}</div><div class="v30-grid"><span>甜甜價 <b>${x.sweet[0]}～${x.sweet[1]}</b></span><span>距甜區 <b>${dist}</b></span><span>第一賣 <b>${x.sell1[0]}～${x.sell1[1]}</b></span><span>第二賣 <b>${x.sell2[0]}～${x.sell2[1]}</b></span><span>防守 <b>${x.stop}</b></span><span>${x.zero?'適合零股':'整張優先'}</span></div></article>`;
   }
 
   function updatePageHeading(){
@@ -115,7 +140,7 @@
     if(h1) h1.textContent = pageTitle;
     const sub = document.querySelector("body > header .sub, header .sub");
     if(sub){
-      sub.innerHTML = '版本：<b>V30.2</b>｜盤中資料：<b>DDE 每分鐘更新</b>｜首頁雷達：<b>每15秒重新排序</b><br>公開版不顯示任何分析師姓名、個人持股、成本或股數。';
+      sub.innerHTML = '版本：<b>V31.0</b>｜盤中資料：<b>DDE 每分鐘更新</b>｜首頁雷達：<b>每15秒重新排序</b><br>公開版不顯示任何分析師姓名、個人持股、成本或股數。';
     }
   }
 
@@ -130,8 +155,8 @@
     const holdings=['6239','2308','2327','2454','52'].map(k=>list.find(x=>x.code===k));
     let root=$('#mom-v30-root'); if(!root){root=document.createElement('section');root.id='mom-v30-root';document.body.prepend(root);}
     root.innerHTML=`<style>
-#mom-v30-root{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;background:#07111f;color:#eef6ff;padding:14px;border-bottom:4px solid #19d3c5;position:relative;z-index:99999}#mom-v30-root *{box-sizing:border-box}.v30-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.v30-head h2{margin:0;font-size:24px}.v30-badge{padding:5px 10px;border:1px solid #27b8ae;border-radius:999px;background:#0d3437;font-size:12px}.v30-time{display:flex;gap:8px 16px;flex-wrap:wrap;margin:9px 0;padding:8px 10px;background:#0d1a2b;border:1px solid #29425f;border-radius:9px;font-size:12px}.v30-live{color:#50e3a4;font-weight:800}.v30-title{margin:13px 0 7px;font-size:16px;font-weight:900}.v30-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:9px}.v30-card{padding:11px;border-radius:12px;border:1px solid #31445e;background:#101d30}.v30-card.buy{background:#0b382b;border-color:#39c28a}.v30-card.deep{background:#123f31;border-color:#59d69e}.v30-card.watch{background:#24351e;border-color:#90be5e}.v30-card.sell{background:#3c3217;border-color:#d6ac35}.v30-card.hot{background:#412719;border-color:#e07a42}.v30-card.risk{background:#431b26;border-color:#e05b76}.v30-row{display:flex;justify-content:space-between;gap:10px;font-size:17px}.v30-row strong{font-size:20px;display:flex;gap:6px;align-items:baseline}.v30-row strong small{font-size:11px;color:#9fb1c7;font-weight:700}.v30-change{font-size:12px;font-weight:800;margin:3px 0}.v30-change.up{color:#ff6b7a}.v30-change.down{color:#55d9a2}.v30-change.flat{color:#b9c7d8}.v30-stars{color:#ffd84d;font-weight:900;margin:4px 0}.v30-stars span{color:#fff;font-size:12px}.v30-action{font-weight:900;margin:5px 0}.v30-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:12px;color:#d7e2ef}.v30-note{font-size:12px;color:#aebed2;margin-top:10px}.v30-collapse{cursor:pointer;border:1px solid #47617e;background:#10243d;color:#fff;border-radius:8px;padding:6px 10px}#mom-v30-root.collapsed .v30-body{display:none}@media(max-width:600px){#mom-v30-root{padding:10px}.v30-head h2{font-size:20px}.v30-grid{grid-template-columns:1fr}}
-</style><div class="v30-head"><h2>★★★★★ 即時低接雷達</h2><div><span class="v30-badge">${VERSION}</span> <button class="v30-collapse">收合</button></div></div><div class="v30-time"><span>覆蓋載入：<b>${time(loadedAt)}</b></span><span>最後掃描：<b>${time(scanAt)}</b></span><span>最後更新：<b>${time(changedAt)}</b></span><span class="v30-live">${changedAt?'● 已讀到盤面':'○ 等待盤面資料'}</span></div><div class="v30-body"><div class="v30-title">今天最值得低接 TOP 3</div><div class="v30-wrap">${top.length?top.map((x,i)=>card(x,['①','②','③'][i])).join(''):'<article class="v30-card">啟動每分鐘更新後，這裡會自動排序。</article>'}</div><div class="v30-title">ABF 第一主線</div><div class="v30-wrap">${abf.map(x=>card(x,'')).join('')}</div><div class="v30-title">第一波掛賣雷達（公開策略，不顯示持股）</div><div class="v30-wrap">${holdings.map(x=>card(x,'')).join('')}</div><div class="v30-note">AI整理：到甜甜價仍須等止跌、不破低或站回開盤；跌破防守先停手。全站不顯示任何分析師姓名、個人持股、成本或股數。</div></div>`;
+#mom-v30-root{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;background:#07111f;color:#eef6ff;padding:14px;border-bottom:4px solid #19d3c5;position:relative;z-index:99999}#mom-v30-root *{box-sizing:border-box}.v30-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.v30-head h2{margin:0;font-size:24px}.v30-badge{padding:5px 10px;border:1px solid #27b8ae;border-radius:999px;background:#0d3437;font-size:12px}.v30-time{display:flex;gap:8px 16px;flex-wrap:wrap;margin:9px 0;padding:8px 10px;background:#0d1a2b;border:1px solid #29425f;border-radius:9px;font-size:12px}.v30-live{color:#50e3a4;font-weight:800}.v30-title{margin:13px 0 7px;font-size:16px;font-weight:900}.v30-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:9px}.v30-card{padding:11px;border-radius:12px;border:1px solid #31445e;background:#101d30}.v30-card.buy{background:#0b382b;border-color:#39c28a}.v30-card.deep{background:#123f31;border-color:#59d69e}.v30-card.watch{background:#24351e;border-color:#90be5e}.v30-card.sell{background:#3c3217;border-color:#d6ac35}.v30-card.hot{background:#412719;border-color:#e07a42}.v30-card.risk{background:#431b26;border-color:#e05b76}.v30-row{display:flex;justify-content:space-between;gap:10px;font-size:17px}.v30-row strong{font-size:20px;display:flex;gap:6px;align-items:baseline}.v30-row strong small{font-size:11px;color:#9fb1c7;font-weight:700}.v30-change{font-size:12px;font-weight:800;margin:3px 0}.v30-change.up{color:#ff6b7a}.v30-change.down{color:#55d9a2}.v30-change.flat{color:#b9c7d8}.v30-stars{color:#ffd84d;font-weight:900;margin:4px 0}.v30-stars span{color:#fff;font-size:12px}.v31-support{font-size:12px;margin:5px 0;padding:6px 7px;border-radius:7px;background:#091522;border:1px solid #31445e}.v31-support b{display:block}.v31-support small{color:#aebed2}.v31-support.up b{color:#ff7584}.v31-support.down b{color:#58dda7}.v31-support.flat b{color:#d7e2ef}.v30-action{font-weight:900;margin:5px 0}.v30-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:12px;color:#d7e2ef}.v30-note{font-size:12px;color:#aebed2;margin-top:10px}.v30-collapse{cursor:pointer;border:1px solid #47617e;background:#10243d;color:#fff;border-radius:8px;padding:6px 10px}#mom-v30-root.collapsed .v30-body{display:none}@media(max-width:600px){#mom-v30-root{padding:10px}.v30-head h2{font-size:20px}.v30-grid{grid-template-columns:1fr}}
+</style><div class="v30-head"><h2>★★★★★ 即時低接雷達</h2><div><span class="v30-badge">${VERSION}</span> <button class="v30-collapse">收合</button></div></div><div class="v30-time"><span>覆蓋載入：<b>${time(loadedAt)}</b></span><span>最後掃描：<b>${time(scanAt)}</b></span><span>最後更新：<b>${time(changedAt)}</b></span><span class="v30-live">${changedAt?'● 已讀到盤面':'○ 等待盤面資料'}</span></div><div class="v30-body"><div class="v30-title">今天最值得低接 TOP 3</div><div class="v30-wrap">${top.length?top.map((x,i)=>card(x,['①','②','③'][i])).join(''):'<article class="v30-card">啟動每分鐘更新後，這裡會自動排序。</article>'}</div><div class="v30-title">ABF 第一主線</div><div class="v30-wrap">${abf.map(x=>card(x,'')).join('')}</div><div class="v30-title">第一波掛賣雷達（公開策略，不顯示持股）</div><div class="v30-wrap">${holdings.map(x=>card(x,'')).join('')}</div><div class="v30-note">AI整理：DDE承接力以買量／賣量、成交價相對買賣價、日內高低位置、成交量速度計算；不等同真正內外盤或五檔總量。到甜甜價仍須等止跌、不破低或站回開盤；跌破防守先停手。</div></div>`;
     $('.v30-collapse',root)?.addEventListener('click',e=>{root.classList.toggle('collapsed');e.currentTarget.textContent=root.classList.contains('collapsed')?'展開':'收合';});
   }
   render(); setInterval(render,15000);
