@@ -1,15 +1,12 @@
-# local secrets
+# Local secrets - never publish
 api_key
-api_key.txt
-*api_key*
+api_key/
+api_key.*
+.env
+.env.*
 
-# logs / backups / old folders
-*.log
-*.bak*
-_old*
-old*
-*.zip
-
-# Windows temp
+# Local temporary files
+*.tmp
+*.bak
 Thumbs.db
-Desktop.ini
+.DS_Store

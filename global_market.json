@@ -1,5 +1,0 @@
-{
-  "updated": "2026/07/13 close",
-  "version": "V27.0",
-  "note": "國際盤前資料由既有 fetch_global_market_now_v24 更新；本包更新07/13收盤100檔資料。"
-}
