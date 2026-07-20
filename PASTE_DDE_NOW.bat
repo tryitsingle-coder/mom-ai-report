@@ -1,16 +1,35 @@
 @echo off
-chcp 65001 >nul
+setlocal EnableExtensions
 cd /d "%~dp0"
-echo 請先在 Excel / DDE 表格選取「表頭 + 全部股票」，按 Ctrl+C。
-echo 然後回到這個視窗按任意鍵。
-pause >nul
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\Import-DDE.ps1" -FromClipboard
-if errorlevel 1 (
-  echo.
-  echo 更新失敗。請確認複製內容第一列包含「代號」與「成交價」。
-  pause
-  exit /b 1
-)
+title Mom AI Report - DDE Update
+
+echo ==================================================
+echo Mom AI Report - DDE Clipboard Update
+echo ==================================================
+echo 1. Select the header row and all stock rows in Excel.
+echo 2. Press Ctrl+C.
+echo 3. Return here and press any key.
 echo.
-echo 更新完成。瀏覽器會在 60 秒內自動重載，也可按 Ctrl+F5。
 pause
+
+set "LOG=%TEMP%\mom_ai_dde_import.log"
+powershell.exe -NoLogo -NoProfile -STA -ExecutionPolicy Bypass -File "%~dp0tools\Import-DDE.ps1" -FromClipboard > "%LOG%" 2>&1
+set "ERR=%ERRORLEVEL%"
+type "%LOG%"
+echo.
+
+if not "%ERR%"=="0" (
+  echo ==================================================
+  echo UPDATE FAILED. Error code: %ERR%
+  echo Log file: %LOG%
+  echo ==================================================
+  pause
+  exit /b %ERR%
+)
+
+echo ==================================================
+echo UPDATE COMPLETED.
+echo Next: run OPEN_REPORT, then press Ctrl+F5 in browser.
+echo ==================================================
+pause
+exit /b 0
