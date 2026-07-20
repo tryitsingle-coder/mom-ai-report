@@ -1,10 +1,155 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mom AI Report｜即時低接雷達</title><link rel="stylesheet" href="styles.css"></head><body>
-<header><div class="head"><div><h1>★★★★★ 即時低接雷達</h1><div class="meta" id="meta"></div></div><div class="badge" id="version"></div></div></header>
-<main class="wrap">
-<section class="section"><h2>今天最值得低接 TOP 3</h2><div id="top3" class="grid top3"></div></section>
-<section class="section"><h2>ABF 第一主線</h2><div id="abf" class="grid"></div></section>
-<section class="section"><h2>核心觀察雷達</h2><div id="core" class="grid"></div></section>
-<section class="section"><h2>DDE 即時承接力說明</h2><div class="warning">承接力是用現有 DDE 欄位推估：買量／賣量、成交價在日高低位置、成交量相對昨量、是否貼近買價或賣價。它不是手機 App 的真正內外盤，也不是五檔總量。</div></section>
-<section class="section"><h2>完整 DDE 資料</h2><div class="toolbar"><input id="q" placeholder="搜尋代號／名稱"><select id="filter"><option value="all">全部</option><option value="up">上漲</option><option value="down">下跌</option><option value="sweet">甜甜區</option><option value="risk">高風險</option></select><button id="reload">重新整理</button></div><div class="tableWrap"><table id="table"></table></div></section>
-<div class="footer">公開版不顯示任何姓名、私人持股、成本或股數。低接雷達是條件式篩選，不代表保證成交或獲利。網頁資料只讀取 data/live.js，不再把舊價格硬寫在 index.html。</div>
-</main><script src="config.js"></script><script src="data/live.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI 台股盤勢儀表板｜07/20 收盤更新</title>
+  <style>
+    :root{
+      --bg:#0f172a;--panel:#111827;--panel2:#1f2937;--text:#f8fafc;--muted:#94a3b8;
+      --green:#22c55e;--green2:#86efac;--yellow:#facc15;--red:#fb7185;--blue:#60a5fa;
+      --border:#334155;--white:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#0b1220,#111827 55%,#0f172a);color:var(--text);
+      font-family:"Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif;line-height:1.55}
+    .wrap{max-width:1180px;margin:auto;padding:22px}
+    .hero,.card{background:rgba(17,24,39,.94);border:1px solid var(--border);border-radius:18px;
+      box-shadow:0 12px 30px rgba(0,0,0,.28)}
+    .hero{padding:24px;margin-bottom:16px}
+    h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}
+    h2{margin:0 0 14px;font-size:22px}
+    h3{margin:0 0 10px;font-size:18px}
+    .sub{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card{padding:18px}
+    .span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}.span-4{grid-column:span 4}
+    .pill{display:inline-block;padding:5px 10px;border-radius:999px;font-size:13px;font-weight:700}
+    .good{background:rgba(34,197,94,.15);color:var(--green2);border:1px solid rgba(34,197,94,.4)}
+    .warn{background:rgba(250,204,21,.12);color:#fde68a;border:1px solid rgba(250,204,21,.35)}
+    .bad{background:rgba(251,113,133,.12);color:#fecdd3;border:1px solid rgba(251,113,133,.35)}
+    .info{background:rgba(96,165,250,.12);color:#bfdbfe;border:1px solid rgba(96,165,250,.35)}
+    .metric{font-size:30px;font-weight:900;margin:5px 0}
+    .muted{color:var(--muted)}
+    table{width:100%;border-collapse:collapse;font-size:15px}
+    th,td{padding:12px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+    th{color:#cbd5e1;background:rgba(31,41,55,.7);position:sticky;top:0}
+    tr:last-child td{border-bottom:0}
+    .num{font-variant-numeric:tabular-nums}
+    .stars{white-space:nowrap;color:#fcd34d}
+    .focus{border-left:5px solid var(--green)}
+    .risk{border-left:5px solid var(--red)}
+    .note{padding:12px 14px;border-radius:12px;background:rgba(31,41,55,.75);margin-top:12px}
+    ul{margin:8px 0 0;padding-left:22px}
+    .footer{color:var(--muted);text-align:center;padding:20px 6px 4px;font-size:13px}
+    @media(max-width:800px){
+      .span-8,.span-6,.span-4{grid-column:span 12}
+      .wrap{padding:12px}.card,.hero{border-radius:14px;padding:15px}
+      table{font-size:13px}th,td{padding:9px 7px}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <span class="pill info">07/20 收盤版</span>
+    <h1>AI 台股盤勢儀表板</h1>
+    <div class="sub">明日策略：先看台積電 2300 防守，再判斷 PCB／ABF 是否止跌。低接、不追高、沒成交就保留現金。</div>
+  </section>
+
+  <div class="grid">
+    <section class="card span-4">
+      <h3>2330 台積電</h3>
+      <div class="metric num">2320</div>
+      <div class="muted">高 2345｜低 2300｜+1.31%</div>
+      <div class="note"><b>關鍵：</b>2300 有承接，但收盤由高點回落。明日不追開高。</div>
+    </section>
+
+    <section class="card span-4">
+      <h3>8046 南電</h3>
+      <div class="metric num">1105</div>
+      <div class="muted">高 1165｜低 1090｜-3.91%</div>
+      <div class="note"><b>關鍵：</b>尾盤接近日低，需先確認 1090～1100 能否守住。</div>
+    </section>
+
+    <section class="card span-4">
+      <h3>PCB／ABF</h3>
+      <div class="metric">偏弱分化</div>
+      <div class="muted">欣興 750｜景碩 679｜臻鼎 478.5</div>
+      <div class="note"><b>判讀：</b>金像電相對抗跌，其餘多數仍未完成止跌。</div>
+    </section>
+
+    <section class="card span-12 focus">
+      <h2>明日低接優先表</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>順位</th><th>標的</th><th>建議低接區</th><th>不追價</th><th>隔日目標</th><th>放棄／防守</th><th>評級</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td><td><b>2330 台積電</b></td><td class="num">2305～2310</td><td class="num">2315 以上</td>
+            <td class="num">2335～2345；強勢 2350</td><td>跌破 2300 且無法快速站回，暫停低接</td><td class="stars">★★★★★</td>
+          </tr>
+          <tr>
+            <td>2</td><td><b>8046 南電</b></td><td class="num">1095～1100</td><td class="num">1105 以上</td>
+            <td class="num">1125～1135；強勢 1145～1150</td><td>跌破 1090 且反彈站不回，取消短打</td><td class="stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td>3</td><td><b>3037 欣興</b></td><td class="num">742～748</td><td class="num">755 以上</td>
+            <td class="num">765～780</td><td>跌破 735 且無承接，不接</td><td class="stars">★★★☆☆</td>
+          </tr>
+          <tr>
+            <td>4</td><td><b>3189 景碩</b></td><td class="num">660～670</td><td class="num">680 以上</td>
+            <td class="num">690～705</td><td>跌破 653 前低且站不回，不接</td><td class="stars">★★★☆☆</td>
+          </tr>
+          <tr>
+            <td>觀察</td><td><b>2368 金像電</b></td><td class="num">900～910</td><td class="num">925 以上</td>
+            <td class="num">935～947</td><td>跌破 875 且站不回，轉弱</td><td class="stars">★★★☆☆</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card span-6">
+      <h2>明日開盤劇本</h2>
+      <table>
+        <thead><tr><th>情境</th><th>執行</th></tr></thead>
+        <tbody>
+          <tr><td><span class="pill good">健康拉回</span></td><td>台積電回測 2305～2310、南電回測 1095～1100並出現承接，可小量零股。</td></tr>
+          <tr><td><span class="pill warn">直接開高</span></td><td>不追；等待 09:08 後第一次回測，沒有甜區就放棄。</td></tr>
+          <tr><td><span class="pill bad">跌破支撐</span></td><td>台積電失守 2300或南電失守1090且無法站回，取消掛單。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card span-6 risk">
+      <h2>風險提醒</h2>
+      <ul>
+        <li>07/20 尾盤 PCB／ABF 明顯回落，尚不能視為全面止跌。</li>
+        <li>臻鼎、欣興、景碩均接近日低收盤，隔日可能先測低點。</li>
+        <li>短打以成交後仍保有手續費、交易稅及滑價空間為前提。</li>
+        <li>零股不要為了成交追 5～15 元；未成交不是損失。</li>
+      </ul>
+    </section>
+
+    <section class="card span-12">
+      <h2>07/20 收盤主線摘要</h2>
+      <table>
+        <thead><tr><th>族群</th><th>代表收盤</th><th>判讀</th></tr></thead>
+        <tbody>
+          <tr><td>權值</td><td>台積電 2320、鴻海 234.5、台達電 1705</td><td>台積電相對強，但多數權值尾盤轉弱。</td></tr>
+          <tr><td>PCB／ABF</td><td>南電 1105、欣興 750、景碩 679、臻鼎 478.5</td><td>族群仍弱，僅適合支撐附近的小量低接。</td></tr>
+          <tr><td>AI伺服器</td><td>緯創 143.5、緯穎 4685、智邦 2090</td><td>個股分化，緯創與緯穎相對有撐。</td></tr>
+          <tr><td>電力</td><td>華城 668、士電 200、亞力 104</td><td>相對抗跌，可列觀察但不追高。</td></tr>
+          <tr><td>被動元件</td><td>國巨 630、禾伸堂 621、華新科 277</td><td>多檔跌停或近跌停，暫不摸底。</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <div class="footer">公開版僅顯示市場價格、低接區、目標與風險提醒，不包含任何個人持股資料。</div>
+</div>
+</body>
+</html>
