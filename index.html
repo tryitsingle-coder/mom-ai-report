@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#07111f" />
   <title>Mom AI Report｜即時低接雷達</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=27.0.1" />
 </head>
 <body>
 <header>
@@ -89,8 +89,29 @@
     日常順序：PASTE_DDE_NOW → OPEN_REPORT；收盤確認後再 PUBLISH_GITHUB。
   </div>
 </main>
-<script src="config.js"></script>
-<script src="data/live.js"></script>
-<script src="app.js"></script>
+<script>
+  // Always request fresh market data, then start the app only after data is ready.
+  (function () {
+    const stamp = Date.now();
+
+    function loadScript(src, onload) {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = false;
+      script.onload = onload;
+      script.onerror = function () {
+        const meta = document.getElementById("meta");
+        if (meta) meta.textContent = "資料載入失敗：" + src + "，請按 Ctrl+F5 重試。";
+      };
+      document.body.appendChild(script);
+    }
+
+    loadScript("config.js?v=" + stamp, function () {
+      loadScript("data/live.js?v=" + stamp, function () {
+        loadScript("app.js?v=" + stamp);
+      });
+    });
+  })();
+</script>
 </body>
 </html>
