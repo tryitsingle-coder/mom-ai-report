@@ -19,7 +19,7 @@ if not exist ".git\" (
 rem Never publish local API keys.
 git rm -r --cached --ignore-unmatch api_key api_key.txt .env >nul 2>&1
 
-rem Stage the clean V32 replacement, including intended old-file deletions.
+rem Stage the V27 stable replacement, including intended old-file deletions.
 git add -A
 
 echo.
@@ -37,7 +37,7 @@ if not errorlevel 1 (
 
 set "STAMP=%date:/=-%_%time::=-%"
 set "STAMP=%STAMP: =0%"
-git commit -m "Mom AI Report V32 update %STAMP%"
+git commit -m "Mom AI Report V27 update %STAMP%"
 if errorlevel 1 (
   echo ERROR: Git commit failed.
   pause
